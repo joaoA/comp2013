@@ -1,4 +1,4 @@
-%x COMMENT CHARACTER CHARACTER_ESCAPE
+%x COMMENT CHARACTER CHARACTER_ESCAPE STRING STRING_ESCAPE
 
 %{
 	#include <string.h>
@@ -12,6 +12,7 @@
 	int countLines=1, countColumns=1, countChars = 0;
 	int aux_comments [2] = {1,1};
 	char character[30];
+	char string[500];
 
 
 %}
@@ -22,8 +23,7 @@ KEYWORDS 	auto|break|case|const|continue|default|do|double|enum|extern|float|for
 
 ID				[a-zA-Z_]([a-zA-Z0-9_])*
 INTLIT			([1-9][0-9]*)|0
-STRLIT			\"((([^\n\"])|(\\.))*)\"
-UNSTRLIT		\"((([^\n\"])|(\\.))*)
+
 
 %%
 {KEYWORDS}				{printf("RESERVED\n"); countColumns +=yyleng;}
@@ -40,7 +40,7 @@ UNSTRLIT		\"((([^\n\"])|(\\.))*)
 							countColumns=1;
 						}
 
-<COMMENT>[^{COMEND}]		{;}	
+<COMMENT>[^{COMEND}]		{countColumns +=yyleng;}	
 <COMMENT>{COMEND}		{
 							BEGIN(INITIAL);
 							countColumns +=yyleng;
@@ -110,6 +110,53 @@ UNSTRLIT		\"((([^\n\"])|(\\.))*)
 						countChars++;
 					}
 
+"\""				{
+						BEGIN STRING;
+						aux_comments[0] = countLines;
+						aux_comments[1] = countColumns;
+						countColumns += yyleng;
+						countChars = 0;
+						strcpy(string, "");	
+					}
+
+<STRING>\n			{
+						BEGIN (INITIAL);
+						countColumns = 1;
+						countLines++;
+						printf("Line %d, col %d: unterminated string constant\n", aux_comments[0], aux_comments[1]);
+					}
+
+<STRING>"\\"		{	
+						BEGIN STRING_ESCAPE;
+						countColumns +=yyleng;
+						strcat(string, yytext);
+					}
+
+<STRING_ESCAPE>\n {
+						BEGIN 0; 
+						countColumns = 1;
+						countLines++;
+						printf("Line %d, col %d: unterminated string constant\n", aux_comments[0], aux_comments[1]);
+						BEGIN (INITIAL);
+					}
+
+<STRING_ESCAPE>.	{
+						BEGIN STRING;
+						countColumns +=yyleng;
+						strcat(string, yytext);
+					}
+
+<STRING>"\""		{
+						BEGIN (INITIAL);
+						countColumns += yyleng;
+						printf("STRLIT(\"%s\")\n", string);
+					}
+
+<STRING>.			{
+						countColumns +=yyleng;
+						strcat(string, yytext);	
+					}
+
 
 "if"				{printf("IF\n"); countColumns +=yyleng;}
 "else"				{printf("ELSE\n"); countColumns +=yyleng;}
@@ -159,22 +206,21 @@ UNSTRLIT		\"((([^\n\"])|(\\.))*)
 
 
 {INTLIT}			{printf("INTLIT(%s)\n", yytext); countColumns +=yyleng;}
-{STRLIT}			{printf("STRLIT(%s)\n", yytext); countColumns +=yyleng;}
-{UNSTRLIT}			{printf("Line %d, col %d: unterminated string constant\n", countLines, countColumns); countColumns +=yyleng;}
 {ID}				{printf("ID(%s)\n",yytext); countColumns +=yyleng;}
 
 
-.	{
-		countColumns +=yyleng;
-		printf("Line %d, col %d: illegal character ('%s')\n", countLines, countColumns, yytext);
-	}
+
 
 [ \t]+ 				{; countColumns +=yyleng;}
 \n 					{
 						countLines++; 
 						countColumns=1;
 					}
-
+.	{
+		
+		printf("Line %d, col %d: illegal character ('%s')\n", countLines, countColumns, yytext);
+		countColumns +=yyleng;
+	}
 
 %%
 int main()
