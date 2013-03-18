@@ -40,11 +40,12 @@ INTLIT			([1-9][0-9]*)|0
 							countColumns=1;
 						}
 
-<COMMENT>[^{COMEND}]		{countColumns +=yyleng;}	
 <COMMENT>{COMEND}		{
 							BEGIN(INITIAL);
 							countColumns +=yyleng;
 						}	
+
+<COMMENT>.		{countColumns +=yyleng;}	
 
 <COMMENT><<EOF>>		{
 							printf("Line %d, col %d: unterminated comment\n",aux_comments[0],aux_comments[1]); 
@@ -217,7 +218,6 @@ INTLIT			([1-9][0-9]*)|0
 						countColumns=1;
 					}
 .	{
-		
 		printf("Line %d, col %d: illegal character ('%s')\n", countLines, countColumns, yytext);
 		countColumns +=yyleng;
 	}
