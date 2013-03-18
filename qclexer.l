@@ -8,7 +8,7 @@
 
 	int validationIntLit(char* text);
 
-	char c;
+	char c,d;
 	int countLines=1, countColumns=1, countChars = 0;
 	int aux_comments [2] = {1,1};
 	char character[30];
