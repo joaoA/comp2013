@@ -68,16 +68,36 @@ UNSTRLIT		\"((([^\n\"])|(\\.))*)
 						BEGIN (INITIAL);
 					}
 
-<CHARACTER>"\\"		{
+<CHARACTER>"\\"		{	
+						BEGIN CHARACTER_ESCAPE;
 						countColumns +=yyleng;
-						countChars = 0;
+						if(countChars==0){
+							countChars = 0;
+						} else {
+							countChars = 2;
+						}
 						strcat(character, yytext);
 					}
+
+<CHARACTER_ESCAPE>\n {
+						BEGIN 0; 
+						countColumns = 1;
+						countLines++;
+						printf("Line %d, col %d: unterminated char constant\n", aux_comments[0], aux_comments[1]);
+						BEGIN (INITIAL);
+					}
+
+<CHARACTER_ESCAPE>.	{
+						BEGIN CHARACTER;
+						countColumns +=yyleng;
+						countChars++;
+						strcat(character, yytext);
+					}		
 
 <CHARACTER>"'"		{
 						countColumns += yyleng;
 						BEGIN(INITIAL);
-						if(countChars <= 1){
+						if(countChars == 1){
 							printf("CHRLIT('%s')\n", character);
 						} else {
 							printf("Line %d, col %d: multi-character char constant\n", aux_comments[0], aux_comments[1]);
@@ -146,6 +166,7 @@ UNSTRLIT		\"((([^\n\"])|(\\.))*)
 
 .	{
 		countColumns +=yyleng;
+		printf("Line %d, col %d: illegal character ('%s')\n", countLines, countColumns, yytext);
 	}
 
 [ \t]+ 				{; countColumns +=yyleng;}
