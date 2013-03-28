@@ -19,7 +19,7 @@
 COMBEG		"/*"		
 COMEND		"*/"
 
-KEYWORDS 	auto|break|case|const|continue|default|do|double|enum|extern|float|for|goto|long|register|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile
+KEYWORDS 	auto|break|case|const|continue|default|do|double|enum|extern|float|for|goto|long|register|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|"++"|"--"
 
 ID				[a-zA-Z_]([a-zA-Z0-9_])*
 INTLIT			([1-9][0-9]*)|0
