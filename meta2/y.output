@@ -40,12 +40,13 @@ Grammar
     0 $accept: statement $end
 
     1 statement: expression
+    2          | statement expression
 
-    2 expression: INTLIT
-    3           | MINUS INTLIT
-    4           | CHRLIT
-    5           | STRLIT
-    6           | ID
+    3 expression: INTLIT
+    4           | MINUS INTLIT
+    5           | CHRLIT
+    6           | STRLIT
+    7           | ID
 
 
 Terminals, with rules where they appear
@@ -80,16 +81,16 @@ LSQ (282)
 RSQ (283)
 LPAR (284)
 RPAR (285)
-MINUS (286) 3
+MINUS (286) 4
 PLUS (287)
 MOD (288)
 NOT (289)
 OR (290)
 INT (291)
-INTLIT (292) 2 3
-CHRLIT (293) 4
-STRLIT (294) 5
-ID (295) 6
+INTLIT (292) 3 4
+CHRLIT (293) 5
+STRLIT (294) 6
+ID (295) 7
 
 
 Nonterminals, with rules where they appear
@@ -97,20 +98,21 @@ Nonterminals, with rules where they appear
 $accept (41)
     on left: 0
 statement (42)
-    on left: 1, on right: 0
+    on left: 1 2, on right: 0 2
 expression (43)
-    on left: 2 3 4 5 6, on right: 1
+    on left: 3 4 5 6 7, on right: 1 2
 
 
 state 0
 
     0 $accept: . statement $end
     1 statement: . expression
-    2 expression: . INTLIT
-    3           | . MINUS INTLIT
-    4           | . CHRLIT
-    5           | . STRLIT
-    6           | . ID
+    2          | . statement expression
+    3 expression: . INTLIT
+    4           | . MINUS INTLIT
+    5           | . CHRLIT
+    6           | . STRLIT
+    7           | . ID
 
     MINUS   shift, and go to state 1
     INTLIT  shift, and go to state 2
@@ -124,44 +126,57 @@ state 0
 
 state 1
 
-    3 expression: MINUS . INTLIT
+    4 expression: MINUS . INTLIT
 
     INTLIT  shift, and go to state 8
 
 
 state 2
 
-    2 expression: INTLIT .
+    3 expression: INTLIT .
 
-    $default  reduce using rule 2 (expression)
+    $default  reduce using rule 3 (expression)
 
 
 state 3
 
-    4 expression: CHRLIT .
-
-    $default  reduce using rule 4 (expression)
-
-
-state 4
-
-    5 expression: STRLIT .
+    5 expression: CHRLIT .
 
     $default  reduce using rule 5 (expression)
 
 
-state 5
+state 4
 
-    6 expression: ID .
+    6 expression: STRLIT .
 
     $default  reduce using rule 6 (expression)
+
+
+state 5
+
+    7 expression: ID .
+
+    $default  reduce using rule 7 (expression)
 
 
 state 6
 
     0 $accept: statement . $end
+    2 statement: statement . expression
+    3 expression: . INTLIT
+    4           | . MINUS INTLIT
+    5           | . CHRLIT
+    6           | . STRLIT
+    7           | . ID
 
-    $end  shift, and go to state 9
+    $end    shift, and go to state 9
+    MINUS   shift, and go to state 1
+    INTLIT  shift, and go to state 2
+    CHRLIT  shift, and go to state 3
+    STRLIT  shift, and go to state 4
+    ID      shift, and go to state 5
+
+    expression  go to state 10
 
 
 state 7
@@ -173,9 +188,9 @@ state 7
 
 state 8
 
-    3 expression: MINUS INTLIT .
+    4 expression: MINUS INTLIT .
 
-    $default  reduce using rule 3 (expression)
+    $default  reduce using rule 4 (expression)
 
 
 state 9
@@ -183,3 +198,10 @@ state 9
     0 $accept: statement $end .
 
     $default  accept
+
+
+state 10
+
+    2 statement: statement expression .
+
+    $default  reduce using rule 2 (statement)

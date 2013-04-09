@@ -16,8 +16,7 @@
 	char character[30];
 	char string[500];
 
-	countLines=1;
-	countColumns=1;
+
 
 %}
 COMBEG		"/*"		
