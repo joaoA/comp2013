@@ -1,0 +1,149 @@
+Terminals which are not used
+
+   RESERVED
+   ELSE
+   WHILE
+   ATOI
+   ITOA
+   CHAR
+   PRINTF
+   RETURN
+   EQ
+   ASSIGN
+   GE
+   GT
+   LE
+   LT
+   NE
+   AMP
+   AND
+   AST
+   DIV
+   COMMA
+   SEMI
+   LBRACE
+   RBRACE
+   LSQ
+   RSQ
+   LPAR
+   RPAR
+   MINUS
+   PLUS
+   MOD
+   NOT
+   OR
+   INT
+
+
+Grammar
+
+    0 $accept: statement $end
+
+    1 statement: expression '\n'
+
+    2 expression: IF '\n'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 1 2
+error (256)
+RESERVED (258)
+IF (259) 2
+ELSE (260)
+WHILE (261)
+ATOI (262)
+ITOA (263)
+CHAR (264)
+PRINTF (265)
+RETURN (266)
+EQ (267)
+ASSIGN (268)
+GE (269)
+GT (270)
+LE (271)
+LT (272)
+NE (273)
+AMP (274)
+AND (275)
+AST (276)
+DIV (277)
+COMMA (278)
+SEMI (279)
+LBRACE (280)
+RBRACE (281)
+LSQ (282)
+RSQ (283)
+LPAR (284)
+RPAR (285)
+MINUS (286)
+PLUS (287)
+MOD (288)
+NOT (289)
+OR (290)
+INT (291)
+
+
+Nonterminals, with rules where they appear
+
+$accept (38)
+    on left: 0
+statement (39)
+    on left: 1, on right: 0
+expression (40)
+    on left: 2, on right: 1
+
+
+state 0
+
+    0 $accept: . statement $end
+    1 statement: . expression '\n'
+    2 expression: . IF '\n'
+
+    IF  shift, and go to state 1
+
+    statement   go to state 2
+    expression  go to state 3
+
+
+state 1
+
+    2 expression: IF . '\n'
+
+    '\n'  shift, and go to state 4
+
+
+state 2
+
+    0 $accept: statement . $end
+
+    $end  shift, and go to state 5
+
+
+state 3
+
+    1 statement: expression . '\n'
+
+    '\n'  shift, and go to state 6
+
+
+state 4
+
+    2 expression: IF '\n' .
+
+    $default  reduce using rule 2 (expression)
+
+
+state 5
+
+    0 $accept: statement $end .
+
+    $default  accept
+
+
+state 6
+
+    1 statement: expression '\n' .
+
+    $default  reduce using rule 1 (statement)
