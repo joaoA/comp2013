@@ -1,0 +1,7 @@
+lex ficha10.exemplo.l && yacc -d ficha10.exemplo.y && cc -o f10 lex.yy.c y.tab.c functions.c shows.c semantic.c translate.c
+echo
+echo Compilacao de test.s 
+./f10<test.s
+gcc -o resultado result.c
+./resultado
+

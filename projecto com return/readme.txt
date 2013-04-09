@@ -1,0 +1,1 @@
+Tive a tentar meter booleans, mas acho que ta a fazer mal no translate, tive la a mudar algumas coisas mas acho que mesmo assim não está a dar, não sei como meter akilo dos booleans no C reduzido. Pensei em fazer um switch e conforme fosse o valor do boolean imprimir 0 ou 1, mas acho que não pode ser assim. . .tenho que ver isso melhor amanha. . .

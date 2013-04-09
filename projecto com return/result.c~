@@ -1,0 +1,100 @@
+#include "frame.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "structures.h"
+
+int main()
+{
+int _ra;
+frame* fp=NULL;
+frame* sp=NULL;
+char g0;
+int g1;
+double g2;
+
+/*BLOCO DO PROCEDIMENTO fun1 */
+/*Prologo*/
+goto fun1skip;
+fun1:
+fp=sp;
+sp=(frame*)malloc(sizeof(frame));
+sp->parent=fp;
+sp->return_address=_ra;
+/*Corpo do procedimento*/
+/*Declaracao da variavel a */
+sp->locals[0]=(int*)malloc(sizeof(int));
+*((int*)sp->locals[0])=124;
+printf("%d\n", *((int*)(sp->locals[0])));
+/*Epilogo*/
+_ra=sp->return_address;
+sp=sp->parent;
+fp=sp->parent;
+goto redirector;
+fun1skip:
+
+/*BLOCO MAIN */
+sp=(frame*)malloc(sizeof(frame));
+
+/*vardecs*/
+/*Declaracao da variavel x */
+sp->locals[0]=(double*)malloc(sizeof(double));
+/*Declaracao da variavel c */
+sp->locals[1]=(int*)malloc(sizeof(int));
+/*Declaracao da variavel f */
+sp->locals[2]=(double*)malloc(sizeof(double));
+/*Declaracao da variavel a */
+sp->locals[3]=(int*)malloc(sizeof(int));
+
+/*statements*/
+g0='b';
+*((int*)sp->locals[1])=3.0*1.0+5.0+1.0/1.0;
+*((int*)sp->locals[3])=2+1;
+*((double*)sp->locals[0])=*((int*)sp->locals[1]);
+g2=*((int*)sp->locals[1]);
+*((int*)sp->locals[1])=g2;
+g2=*((int*)sp->locals[3])+*((int*)sp->locals[3])**((int*)sp->locals[1]);
+beforewhile0:
+if(*((int*)sp->locals[1])!=0){
+
+goto while0;
+} 
+
+goto whileskip0;
+while0:
+printf("%d\n", *((int*)(sp->locals[1])));
+*((int*)sp->locals[1])=*((int*)sp->locals[1])-1;
+
+goto beforewhile0;
+whileskip0:
+beforewhile1:
+if(*((int*)sp->locals[1])!=9){
+
+goto while1;
+} 
+
+goto whileskip1;
+while1:
+printf("%d\n", *((int*)(sp->locals[1])));
+*((int*)sp->locals[1])=*((int*)sp->locals[1])+1;
+
+goto beforewhile1;
+whileskip1:
+if(*((int*)sp->locals[1])==0){
+printf("%d\n", *((int*)(sp->locals[1])));
+printf("%f\n", *((double*)(sp->locals[0])));
+printf("%f\n", g2);
+printf("%d\n", *((int*)(sp->locals[3])));
+
+goto ifskip0;
+}
+printf("%d\n", *((int*)(sp->locals[1])));
+
+ifskip0:
+/*Redirector*/
+goto exit;
+redirector:
+exit:
+;
+
+}
+
