@@ -72,7 +72,11 @@
      MOD = 288,
      NOT = 289,
      OR = 290,
-     INT = 291
+     INT = 291,
+     INTLIT = 292,
+     CHRLIT = 293,
+     STRLIT = 294,
+     ID = 295
    };
 #endif
 /* Tokens.  */
@@ -110,12 +114,26 @@
 #define NOT 289
 #define OR 290
 #define INT 291
+#define INTLIT 292
+#define CHRLIT 293
+#define STRLIT 294
+#define ID 295
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 13 "qcparser.y"
+{
+	char* valorInteiro;
+	char* valorChar;
+	char* valorString;
+	char* valorID;
+}
+/* Line 1529 of yacc.c.  */
+#line 136 "y.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

@@ -1,6 +1,7 @@
 Terminals which are not used
 
    RESERVED
+   IF
    ELSE
    WHILE
    ATOI
@@ -27,7 +28,6 @@ Terminals which are not used
    RSQ
    LPAR
    RPAR
-   MINUS
    PLUS
    MOD
    NOT
@@ -39,18 +39,21 @@ Grammar
 
     0 $accept: statement $end
 
-    1 statement: expression '\n'
+    1 statement: expression
 
-    2 expression: IF '\n'
+    2 expression: INTLIT
+    3           | MINUS INTLIT
+    4           | CHRLIT
+    5           | STRLIT
+    6           | ID
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'\n' (10) 1 2
 error (256)
 RESERVED (258)
-IF (259) 2
+IF (259)
 ELSE (260)
 WHILE (261)
 ATOI (262)
@@ -77,73 +80,106 @@ LSQ (282)
 RSQ (283)
 LPAR (284)
 RPAR (285)
-MINUS (286)
+MINUS (286) 3
 PLUS (287)
 MOD (288)
 NOT (289)
 OR (290)
 INT (291)
+INTLIT (292) 2 3
+CHRLIT (293) 4
+STRLIT (294) 5
+ID (295) 6
 
 
 Nonterminals, with rules where they appear
 
-$accept (38)
+$accept (41)
     on left: 0
-statement (39)
+statement (42)
     on left: 1, on right: 0
-expression (40)
-    on left: 2, on right: 1
+expression (43)
+    on left: 2 3 4 5 6, on right: 1
 
 
 state 0
 
     0 $accept: . statement $end
-    1 statement: . expression '\n'
-    2 expression: . IF '\n'
+    1 statement: . expression
+    2 expression: . INTLIT
+    3           | . MINUS INTLIT
+    4           | . CHRLIT
+    5           | . STRLIT
+    6           | . ID
 
-    IF  shift, and go to state 1
+    MINUS   shift, and go to state 1
+    INTLIT  shift, and go to state 2
+    CHRLIT  shift, and go to state 3
+    STRLIT  shift, and go to state 4
+    ID      shift, and go to state 5
 
-    statement   go to state 2
-    expression  go to state 3
+    statement   go to state 6
+    expression  go to state 7
 
 
 state 1
 
-    2 expression: IF . '\n'
+    3 expression: MINUS . INTLIT
 
-    '\n'  shift, and go to state 4
+    INTLIT  shift, and go to state 8
 
 
 state 2
 
-    0 $accept: statement . $end
-
-    $end  shift, and go to state 5
-
-
-state 3
-
-    1 statement: expression . '\n'
-
-    '\n'  shift, and go to state 6
-
-
-state 4
-
-    2 expression: IF '\n' .
+    2 expression: INTLIT .
 
     $default  reduce using rule 2 (expression)
 
 
+state 3
+
+    4 expression: CHRLIT .
+
+    $default  reduce using rule 4 (expression)
+
+
+state 4
+
+    5 expression: STRLIT .
+
+    $default  reduce using rule 5 (expression)
+
+
 state 5
 
-    0 $accept: statement $end .
+    6 expression: ID .
 
-    $default  accept
+    $default  reduce using rule 6 (expression)
 
 
 state 6
 
-    1 statement: expression '\n' .
+    0 $accept: statement . $end
+
+    $end  shift, and go to state 9
+
+
+state 7
+
+    1 statement: expression .
 
     $default  reduce using rule 1 (statement)
+
+
+state 8
+
+    3 expression: MINUS INTLIT .
+
+    $default  reduce using rule 3 (expression)
+
+
+state 9
+
+    0 $accept: statement $end .
+
+    $default  accept

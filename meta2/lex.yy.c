@@ -979,7 +979,8 @@ YY_RULE_SETUP
 						countColumns += yyleng;
 						BEGIN(INITIAL);
 						if(countChars == 1){
-							printf("CHRLIT('%s')\n", character);
+							yylval.valorChar=character;
+							return CHRLIT;
 						} else {
 							printf("Line %d, col %d: multi-character char constant\n", aux_comments[0], aux_comments[1]);
 						}
@@ -987,7 +988,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 112 "qcparser.l"
+#line 113 "qcparser.l"
 {
 						countColumns +=yyleng;
 						strcat(character, yytext);
@@ -996,7 +997,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 118 "qcparser.l"
+#line 119 "qcparser.l"
 {
 						BEGIN STRING;
 						aux_comments[0] = countLines;
@@ -1009,7 +1010,7 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 127 "qcparser.l"
+#line 128 "qcparser.l"
 {
 						BEGIN (INITIAL);
 						countColumns = 1;
@@ -1019,7 +1020,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 134 "qcparser.l"
+#line 135 "qcparser.l"
 {	
 						BEGIN STRING_ESCAPE;
 						countColumns +=yyleng;
@@ -1029,7 +1030,7 @@ YY_RULE_SETUP
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 140 "qcparser.l"
+#line 141 "qcparser.l"
 {
 						BEGIN 0; 
 						countColumns = 1;
@@ -1040,7 +1041,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 148 "qcparser.l"
+#line 149 "qcparser.l"
 {
 						BEGIN STRING;
 						countColumns +=yyleng;
@@ -1049,16 +1050,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 154 "qcparser.l"
+#line 155 "qcparser.l"
 {
 						BEGIN (INITIAL);
 						countColumns += yyleng;
-						printf("STRLIT(\"%s\")\n", string);
+						yylval.valorString=string;
+						return STRLIT;
 					}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 160 "qcparser.l"
+#line 162 "qcparser.l"
 {
 						countColumns +=yyleng;
 						strcat(string, yytext);	
@@ -1066,188 +1068,190 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 166 "qcparser.l"
+#line 168 "qcparser.l"
 {countColumns +=yyleng; return IF;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 167 "qcparser.l"
+#line 169 "qcparser.l"
 {countColumns +=yyleng; return ELSE;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 168 "qcparser.l"
+#line 170 "qcparser.l"
 {countColumns +=yyleng; return WHILE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 170 "qcparser.l"
+#line 172 "qcparser.l"
 {countColumns +=yyleng; return ATOI;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 171 "qcparser.l"
+#line 173 "qcparser.l"
 {countColumns +=yyleng; return ITOA;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 173 "qcparser.l"
+#line 175 "qcparser.l"
 {countColumns +=yyleng; return CHAR;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 174 "qcparser.l"
+#line 176 "qcparser.l"
 {countColumns +=yyleng; return INT;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 176 "qcparser.l"
+#line 178 "qcparser.l"
 {countColumns +=yyleng; return PRINTF;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 177 "qcparser.l"
+#line 179 "qcparser.l"
 {countColumns +=yyleng; return RETURN;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 180 "qcparser.l"
+#line 182 "qcparser.l"
 {countColumns +=yyleng; return EQ;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 181 "qcparser.l"
+#line 183 "qcparser.l"
 {countColumns +=yyleng; return ASSIGN;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 182 "qcparser.l"
+#line 184 "qcparser.l"
 {countColumns +=yyleng; return GE;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 183 "qcparser.l"
+#line 185 "qcparser.l"
 {countColumns +=yyleng; return GT;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 184 "qcparser.l"
+#line 186 "qcparser.l"
 {countColumns +=yyleng; return LE;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 185 "qcparser.l"
+#line 187 "qcparser.l"
 {countColumns +=yyleng; return LT;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 186 "qcparser.l"
+#line 188 "qcparser.l"
 {countColumns +=yyleng; return NE;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 188 "qcparser.l"
+#line 190 "qcparser.l"
 {countColumns +=yyleng; return AMP;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 189 "qcparser.l"
+#line 191 "qcparser.l"
 {countColumns +=yyleng; return AND;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 191 "qcparser.l"
+#line 193 "qcparser.l"
 {countColumns +=yyleng; return AST;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 193 "qcparser.l"
+#line 195 "qcparser.l"
 {countColumns +=yyleng; return DIV;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 194 "qcparser.l"
+#line 196 "qcparser.l"
 {countColumns +=yyleng; return COMMA;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 195 "qcparser.l"
+#line 197 "qcparser.l"
 {countColumns +=yyleng; return SEMI;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 197 "qcparser.l"
+#line 199 "qcparser.l"
 {countColumns +=yyleng; return LBRACE;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 198 "qcparser.l"
+#line 200 "qcparser.l"
 {countColumns +=yyleng; return RBRACE;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 199 "qcparser.l"
+#line 201 "qcparser.l"
 {countColumns +=yyleng; return LSQ;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 200 "qcparser.l"
+#line 202 "qcparser.l"
 {countColumns +=yyleng; return RSQ;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 201 "qcparser.l"
+#line 203 "qcparser.l"
 {countColumns +=yyleng; return LPAR;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 202 "qcparser.l"
+#line 204 "qcparser.l"
 {countColumns +=yyleng; return RPAR;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 204 "qcparser.l"
+#line 206 "qcparser.l"
 {countColumns +=yyleng; return MINUS;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 205 "qcparser.l"
+#line 207 "qcparser.l"
 {countColumns +=yyleng; return PLUS;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 206 "qcparser.l"
+#line 208 "qcparser.l"
 {countColumns +=yyleng; return MOD;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 207 "qcparser.l"
+#line 209 "qcparser.l"
 {countColumns +=yyleng; return NOT;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 208 "qcparser.l"
+#line 210 "qcparser.l"
 {countColumns +=yyleng; return OR;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 213 "qcparser.l"
-{printf("INTLIT(%s)\n", yytext); countColumns +=yyleng;}
+#line 215 "qcparser.l"
+{countColumns +=yyleng; yylval.valorInteiro=(char *) strdup(yytext);
+					return INTLIT;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 214 "qcparser.l"
-{printf("ID(%s)\n",yytext); countColumns +=yyleng;}
+#line 217 "qcparser.l"
+{countColumns +=yyleng;yylval.valorInteiro=(char *) strdup(yytext);
+					return ID;}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 219 "qcparser.l"
+#line 223 "qcparser.l"
 {; countColumns +=yyleng;}
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
 YY_RULE_SETUP
-#line 220 "qcparser.l"
+#line 224 "qcparser.l"
 {
 						countLines++; 
 						countColumns=1;
@@ -1255,7 +1259,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 224 "qcparser.l"
+#line 228 "qcparser.l"
 {
 		printf("Line %d, col %d: illegal character ('%s')\n", countLines, countColumns, yytext);
 		countColumns +=yyleng;
@@ -1263,10 +1267,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 229 "qcparser.l"
+#line 233 "qcparser.l"
 ECHO;
 	YY_BREAK
-#line 1270 "lex.yy.c"
+#line 1274 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CHARACTER):
 case YY_STATE_EOF(CHARACTER_ESCAPE):
@@ -2267,7 +2271,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 229 "qcparser.l"
+#line 233 "qcparser.l"
 
 
 

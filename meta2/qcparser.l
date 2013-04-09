@@ -103,7 +103,8 @@ INTLIT			([1-9][0-9]*)|0
 						countColumns += yyleng;
 						BEGIN(INITIAL);
 						if(countChars == 1){
-							printf("CHRLIT('%s')\n", character);
+							yylval.valorChar=character;
+							return CHRLIT;
 						} else {
 							printf("Line %d, col %d: multi-character char constant\n", aux_comments[0], aux_comments[1]);
 						}
@@ -154,7 +155,8 @@ INTLIT			([1-9][0-9]*)|0
 <STRING>"\""		{
 						BEGIN (INITIAL);
 						countColumns += yyleng;
-						printf("STRLIT(\"%s\")\n", string);
+						yylval.valorString=string;
+						return STRLIT;
 					}
 
 <STRING>.			{
@@ -210,8 +212,10 @@ INTLIT			([1-9][0-9]*)|0
 
 
 
-{INTLIT}			{printf("INTLIT(%s)\n", yytext); countColumns +=yyleng;}
-{ID}				{printf("ID(%s)\n",yytext); countColumns +=yyleng;}
+{INTLIT}			{countColumns +=yyleng; yylval.valorInteiro=(char *) strdup(yytext);
+					return INTLIT;}
+{ID}				{countColumns +=yyleng;yylval.valorInteiro=(char *) strdup(yytext);
+					return ID;}
 
 
 
