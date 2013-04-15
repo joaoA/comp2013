@@ -156,15 +156,7 @@
 
 extern int countLines;
 extern int countColumns;
-extern char character[30];
-extern char string[500];
-extern char* intlit;
-extern char* id;
 extern int yyleng;
-extern int is_char;
-extern int is_str;
-extern int is_id;
-extern int is_intlit;
 extern char* yytext;
 
 void yyerror (char *s);
@@ -191,7 +183,7 @@ void yyerror (char *s);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 28 "qcparser.y"
+#line 20 "qcparser.y"
 {
 	char* valorInteiro;
 	char* valorChar;
@@ -199,7 +191,7 @@ typedef union YYSTYPE
 	char* valorID;
 }
 /* Line 193 of yacc.c.  */
-#line 203 "y.tab.c"
+#line 195 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -212,7 +204,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 216 "y.tab.c"
+#line 208 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -528,14 +520,14 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    50,    51,    54,    55,    56,    57,    60,
-      63,    64,    67,    70,    73,    74,    77,    80,    81,    84,
-      87,    90,    91,    94,    95,    98,   101,   102,   105,   106,
-     109,   110,   111,   112,   113,   114,   117,   118,   121,   122,
-     125,   126,   127,   128,   129,   130,   131,   132,   133,   134,
-     135,   136,   137,   138,   139,   140,   141,   142,   143,   144,
-     145,   146,   147,   148,   149,   150,   151,   152,   153,   156,
-     157,   160,   161
+       0,    41,    41,    42,    43,    46,    47,    48,    49,    52,
+      55,    56,    59,    62,    65,    66,    69,    72,    73,    76,
+      79,    82,    83,    86,    87,    90,    93,    94,    97,    98,
+     101,   102,   103,   104,   105,   106,   109,   110,   113,   114,
+     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
+     127,   128,   129,   130,   131,   132,   133,   134,   135,   136,
+     137,   138,   139,   140,   141,   142,   143,   144,   145,   148,
+     149,   152,   153
 };
 #endif
 
@@ -1608,7 +1600,7 @@ yyreduce:
     {
       
 /* Line 1267 of yacc.c.  */
-#line 1612 "y.tab.c"
+#line 1604 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1822,7 +1814,7 @@ yyreturn:
 }
 
 
-#line 164 "qcparser.y"
+#line 156 "qcparser.y"
 
 int main()
 {
@@ -1837,10 +1829,8 @@ void yyerror (char *s) {
 
 	if(strcmp(yytext, "") == 0){
 		countColumns++;
-		printf("Line %d, col %d: %s: %s\n", countLines, countColumns, s, yytext);
-		return;
 	}
-		printf("Line %d, col %d: %s: %s\n", countLines, countColumns, s, yytext);
+	printf("Line %d, col %d: %s: %s\n", countLines, countColumns, s, yytext);
 	
 }
 

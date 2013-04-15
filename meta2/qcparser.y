@@ -3,15 +3,7 @@
 
 extern int countLines;
 extern int countColumns;
-extern char character[30];
-extern char string[500];
-extern char* intlit;
-extern char* id;
 extern int yyleng;
-extern int is_char;
-extern int is_str;
-extern int is_id;
-extern int is_intlit;
 extern char* yytext;
 
 void yyerror (char *s);
@@ -175,10 +167,8 @@ void yyerror (char *s) {
 
 	if(strcmp(yytext, "") == 0){
 		countColumns++;
-		printf("Line %d, col %d: %s: %s\n", countLines, countColumns, s, yytext);
-		return;
 	}
-		printf("Line %d, col %d: %s: %s\n", countLines, countColumns, s, yytext);
+	printf("Line %d, col %d: %s: %s\n", countLines, countColumns, s, yytext);
 	
 }
 

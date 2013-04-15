@@ -14,14 +14,8 @@
 	int aux_comments [2] = {1,1};
 	char character[30];
 	char string[500];
-	char* intlit;
-	char* id;
 	int countLines=1;
 	int countColumns=1;
-	int is_char = 0;
-	int is_str = 0;
-	int is_id = 0;
-	int is_intlit = 0;
 
 
 %}
@@ -109,7 +103,6 @@ INTLIT			([1-9][0-9]*)|0
 						BEGIN(INITIAL);
 						if(countChars == 1){
 							yylval.valorChar=character;
-							is_char = 1;
 							return CHRLIT;
 						} else {
 							printf("Line %d, col %d: multi-character char constant\n", aux_comments[0], aux_comments[1]);
@@ -162,7 +155,6 @@ INTLIT			([1-9][0-9]*)|0
 						BEGIN (INITIAL);
 						countColumns += yyleng;
 						yylval.valorString=string;
-						is_str = 1;
 						return STRLIT;
 					}
 
@@ -219,9 +211,9 @@ INTLIT			([1-9][0-9]*)|0
 
 
 
-{INTLIT}			{countColumns +=yyleng; yylval.valorInteiro=(char *) strdup(yytext); intlit = yytext; is_intlit=1; 
+{INTLIT}			{countColumns +=yyleng; yylval.valorInteiro=(char *) strdup(yytext);
 					return INTLIT;}
-{ID}				{countColumns +=yyleng;yylval.valorInteiro=(char *) strdup(yytext); id = yytext; is_id = 1;
+{ID}				{countColumns +=yyleng;yylval.valorInteiro=(char *) strdup(yytext);
 					return ID;}
 
 
