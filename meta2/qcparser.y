@@ -1,5 +1,8 @@
 %{
+	
 #include<stdio.h>
+
+#include "structures.h"
 
 extern int countLines;
 extern int countColumns;
