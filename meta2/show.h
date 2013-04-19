@@ -1,4 +1,4 @@
 #include "structures.h"
 
-
-void show_ast_tree(is_start* isStart);
+void show_program(is_expression* program);
+void show_expression(int nivel, is_expression* ie);

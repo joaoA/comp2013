@@ -3,29 +3,53 @@
 #include<stdio.h>
 
 #include "structures.h"
+#include "show.h"
+#include "functions.h"
 
 extern int countLines;
 extern int countColumns;
 extern int yyleng;
-extern char* yytext;
+extern char* yytext; 
+
+/******************************************************************************************************/
+/****************								BODE LIST							   ****************/
+/******************************************************************************************************/
+
+/* vamos ter que passar esta merda de alguma forma para a variavel valorInteiro que tá na union */
+
+/******************************************************************************************************/
+
 
 void yyerror (char *s);
+
+
+/*is_expression* myProgram;  a unica struct dclarada aqui será a start, isto é para testes*/
+
 
 %}
 %token RESERVED IF ELSE WHILE ATOI ITOA CHAR PRINTF RETURN EQ ASSIGN GE GT LE LT NE AMP AND AST
 %token DIV COMMA SEMI LBRACE RBRACE LSQ RSQ LPAR RPAR MINUS PLUS MOD NOT OR INT
 
+// %token<yytext> INTLIT   -> BODE HERE!!  ISTO TEM QUE ACONTEDER PARA CONSEGUIRES ATRIBUIR O VALOR DE INLIT | CHARLIT| (..) À RESPECTIVA ESTRUTURA
 %token INTLIT
 %token CHRLIT
 %token STRLIT
 %token ID
+
+
 
 %union{
 	char* valorInteiro;
 	char* valorChar;
 	char* valorString;
 	char* valorID;
+	//is_expression *expr;
+
+	
 }
+
+// %type<expr>expression
+
 
 %left COMMA
 %right ASSIGN
@@ -40,10 +64,13 @@ void yyerror (char *s);
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
 %nonassoc ELSE 
 
+
+
+
 %%
-start: functionDefinition new_twelve
-		|	functionDeclaration new_twelve
-		| 	declaration new_twelve
+start:      functionDefinition new_twelve 	{/* insert_function_defenition ; myProgram=$$;*/};
+		|	functionDeclaration new_twelve	{/* insert_function_declaration ; myProgram=$$*/};
+		| 	declaration new_twelve			{/* insert_declaration ; myProgram=$$*/};
 		;
 
 new_twelve: new_twelve functionDefinition
@@ -144,9 +171,9 @@ expression: expression ASSIGN expression
 		|	LPAR expression RPAR
 		|	STRLIT
 		|	CHRLIT
-		|	INTLIT
+		|	INTLIT											{/*myProgram=$1*/};
 		|	ID
-		  ;
+		;
 
 new_one: expression new_two
 		|
@@ -160,7 +187,7 @@ new_two: new_two COMMA expression
 int main()
 {
 	yyparse();
-	
+	//show_program(myProgram);	//mostra a árvore que acabou de ser construida
 	return 0;
 }
 
