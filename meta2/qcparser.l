@@ -7,7 +7,6 @@
 	#include <ctype.h>
 	#include "y.tab.h"
 
-	int validationIntLit(char* text);
 
 	char c,d;
 	int countChars = 0;
@@ -211,9 +210,9 @@ INTLIT			([1-9][0-9]*)|0
 
 
 
-{INTLIT}			{countColumns +=yyleng; yylval.valorInteiro=(char *) strdup(yytext);
+{INTLIT}			{countColumns +=yyleng; yylval.valorInteiro=(int) atoi(yytext);
 					return INTLIT;}
-{ID}				{countColumns +=yyleng;yylval.valorInteiro=(char *) strdup(yytext);
+{ID}				{countColumns +=yyleng;yylval.valorID=(char *) strdup(yytext);
 					return ID;}
 
 

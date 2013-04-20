@@ -1,10 +1,11 @@
 %{
-	
-#include<stdio.h>
 
+#include <stdio.h>	
 #include "structures.h"
-#include "show.h"
 #include "functions.h"
+#include "show.h"
+
+
 
 extern int countLines;
 extern int countColumns;
@@ -23,32 +24,30 @@ extern char* yytext;
 void yyerror (char *s);
 
 
-/*is_expression* myProgram;  a unica struct dclarada aqui será a start, isto é para testes*/
+is_start* myProgram; 
 
 
 %}
 %token RESERVED IF ELSE WHILE ATOI ITOA CHAR PRINTF RETURN EQ ASSIGN GE GT LE LT NE AMP AND AST
 %token DIV COMMA SEMI LBRACE RBRACE LSQ RSQ LPAR RPAR MINUS PLUS MOD NOT OR INT
 
-// %token<yytext> INTLIT   -> BODE HERE!!  ISTO TEM QUE ACONTEDER PARA CONSEGUIRES ATRIBUIR O VALOR DE INLIT | CHARLIT| (..) À RESPECTIVA ESTRUTURA
-%token INTLIT
-%token CHRLIT
-%token STRLIT
-%token ID
-
-
-
 %union{
-	char* valorInteiro;
+	int valorInteiro;
 	char* valorChar;
 	char* valorString;
 	char* valorID;
-	//is_expression *expr;
-
-	
+	is_expression* expr; 		
 }
 
-// %type<expr>expression
+
+
+// %token<yytext> INTLIT   -> BODE HERE!!  ISTO TEM QUE ACONTEDER PARA CONSEGUIRES ATRIBUIR O VALOR DE INLIT | CHARLIT| (..) À RESPECTIVA ESTRUTURA
+%token<valorInteiro> INTLIT
+%token<valorChar> CHRLIT
+%token<valorString> STRLIT
+%token<valorID> ID
+
+%type<expr> expression
 
 
 %left COMMA
@@ -171,7 +170,7 @@ expression: expression ASSIGN expression
 		|	LPAR expression RPAR
 		|	STRLIT
 		|	CHRLIT
-		|	INTLIT											{/*myProgram=$1*/};
+		|	INTLIT											{};
 		|	ID
 		;
 

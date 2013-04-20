@@ -6,7 +6,7 @@ typedef enum {d_intlit, d_charlit, d_strlit, d_id, u_infix_exp, u_unary_exp, d_n
 typedef enum {is_or, is_and, is_eq, is_ne, is_lt, is_gt, is_le, is_ge, is_add, is_sub, is_mul, is_div, is_mod, is_not, is_minus, is_plus, is_addr, id_deref, is_store, is_call, is_print, is_atoi, is_itoa }is_operator;
 typedef enum {d_if_else, d_return, d_while} disc_statement;
 typedef enum {d_declarator, d_array_declarator} disc_declaration;
-typedef enum {d_func_declaration, d_declaration} disc_start;
+typedef enum {d_func_declaration, d_func_definition, d_declaration} disc_start;
 
 /*is_expression*/
 typedef struct _s1{
@@ -19,8 +19,6 @@ typedef struct _s1{
 		struct is_infix_expression *u_infix_exp;
 		struct is_unary_expression *u_unary_exp;
 	}data_expression;
-
-
 }is_expression;
 
 /*is_infix_expression*/
@@ -123,6 +121,8 @@ typedef struct _s17{
 	union{
 		struct is_declaration *u_declaration;
 		struct is_func_declaration *u_func_declaration;
+		struct is_func_definition *u_func_definition;
+	
 	}data_start;
 	struct _s17 *next;
 }is_start;
