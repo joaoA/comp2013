@@ -30,7 +30,11 @@ is_start* myProgram;
 	char* valorChar;
 	char* valorString;
 	char* valorID;
-	is_program_list* strt;
+	is_start* strt;
+	is_declaration *isD;
+	is_func_declaration *isFDec;
+	is_func_definition *isFDef;
+
 }
 
 
@@ -38,8 +42,10 @@ is_start* myProgram;
 %token<valorChar> CHRLIT
 %token<valorString> STRLIT
 %token<valorID> ID
-
 %type<strt> start
+%type<isFDef> functionDefinition
+%type<isFDec> functionDeclaration
+%type<isD> declaration
 
 
 
@@ -60,16 +66,15 @@ is_start* myProgram;
 
 
 %%
-start:      new_twelve functionDefinition  	//{insert_functionDefinition();};
-		|	new_twelve functionDeclaration 	//{insert_functionDefinition();};
-		| 	new_twelve declaration 			{insert_functionDefinition();};
+start:      start functionDefinition  	{$$=insert_start(1,$1,NULL,NULL,$2);}
+		|	start functionDeclaration 	{$$=insert_start(2,$1,NULL,$2,NULL);}
+		| 	start declaration 			{$$=insert_start(0,$1,$2,NULL,NULL);}
+		|	functionDefinition			{$$=insert_start(1,NULL,NULL,NULL,$1);myProgram=$$;}
+		|	functionDeclaration			{$$=insert_start(2,NULL,NULL,$1,NULL);myProgram=$$;}
+		|	declaration 				{$$=insert_start(0,NULL,$1,NULL,NULL);myProgram=$$;}
 		;
 
-new_twelve: new_twelve functionDefinition
-		|	new_twelve functionDeclaration
-		|	new_twelve declaration
-		| 
-		;
+
 
 functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four RBRACE
 		;
