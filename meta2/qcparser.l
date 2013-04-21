@@ -5,7 +5,10 @@
 	#include <stdlib.h>
 	#include <stdio.h>
 	#include <ctype.h>
+	#include "structures.h"
 	#include "y.tab.h"
+
+
 
 
 	char c,d;
@@ -15,7 +18,6 @@
 	char string[500];
 	int countLines=1;
 	int countColumns=1;
-
 
 %}
 COMBEG		"/*"		

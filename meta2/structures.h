@@ -122,7 +122,6 @@ typedef struct _s17{
 		struct is_declaration *u_declaration;
 		struct is_func_declaration *u_func_declaration;
 		struct is_func_definition *u_func_definition;
-	
 	}data_start;
 	struct _s17 *next;
 }is_start;
