@@ -1,6 +1,8 @@
 %{
 
-#include <stdio.h>	
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "structures.h"
 #include "functions.h"
 #include "show.h"
@@ -12,17 +14,9 @@ extern int countColumns;
 extern int yyleng;
 extern char* yytext; 
 
-/******************************************************************************************************/
-/****************								BODE LIST							   ****************/
-/******************************************************************************************************/
-
-/* vamos ter que passar esta merda de alguma forma para a variavel valorInteiro que tá na union */
-
-/******************************************************************************************************/
-
 
 void yyerror (char *s);
-
+int yylex(void);
 
 is_start* myProgram; 
 
@@ -36,18 +30,17 @@ is_start* myProgram;
 	char* valorChar;
 	char* valorString;
 	char* valorID;
-	is_expression* expr; 		
+	is_program_list* strt;
 }
 
 
-
-// %token<yytext> INTLIT   -> BODE HERE!!  ISTO TEM QUE ACONTEDER PARA CONSEGUIRES ATRIBUIR O VALOR DE INLIT | CHARLIT| (..) À RESPECTIVA ESTRUTURA
 %token<valorInteiro> INTLIT
 %token<valorChar> CHRLIT
 %token<valorString> STRLIT
 %token<valorID> ID
 
-%type<expr> expression
+%type<strt> start
+
 
 
 %left COMMA
@@ -67,9 +60,9 @@ is_start* myProgram;
 
 
 %%
-start:      functionDefinition new_twelve 	{/* insert_function_defenition ; myProgram=$$;*/};
-		|	functionDeclaration new_twelve	{/* insert_function_declaration ; myProgram=$$*/};
-		| 	declaration new_twelve			{/* insert_declaration ; myProgram=$$*/};
+start:      new_twelve functionDefinition  	//{insert_functionDefinition();};
+		|	new_twelve functionDeclaration 	//{insert_functionDefinition();};
+		| 	new_twelve declaration 			{insert_functionDefinition();};
 		;
 
 new_twelve: new_twelve functionDefinition
@@ -127,7 +120,7 @@ new_seven: LSQ expression RSQ
 		|
 		;
 
-statement: new_five SEMI
+statement:  new_five SEMI
 		|	LBRACE new_four RBRACE
 		|	IF LPAR expression RPAR statement 
 		|	IF LPAR expression RPAR statement ELSE statement
