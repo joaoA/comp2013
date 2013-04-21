@@ -1,53 +1,40 @@
 %{
-
+	
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+
 #include "structures.h"
 #include "functions.h"
-#include "show.h"
-
-
 
 extern int countLines;
 extern int countColumns;
 extern int yyleng;
-extern char* yytext; 
-
+extern char* yytext;
 
 void yyerror (char *s);
 int yylex(void);
 
-is_start* myProgram; 
-
+is_node *myProgram;
 
 %}
 %token RESERVED IF ELSE WHILE ATOI ITOA CHAR PRINTF RETURN EQ ASSIGN GE GT LE LT NE AMP AND AST
 %token DIV COMMA SEMI LBRACE RBRACE LSQ RSQ LPAR RPAR MINUS PLUS MOD NOT OR INT
+
+%token <valorInteiro> INTLIT
+%token <valorChar> CHRLIT
+%token <valorString> STRLIT
+%token <valorID> ID
+
+%type <node> expression new_one new_two
 
 %union{
 	int valorInteiro;
 	char* valorChar;
 	char* valorString;
 	char* valorID;
-	is_start* strt;
-	is_declaration *isD;
-	is_func_declaration *isFDec;
-	is_func_definition *isFDef;
-
+	is_node *node;
 }
-
-
-%token<valorInteiro> INTLIT
-%token<valorChar> CHRLIT
-%token<valorString> STRLIT
-%token<valorID> ID
-%type<strt> start
-%type<isFDef> functionDefinition
-%type<isFDec> functionDeclaration
-%type<isD> declaration
-
-
 
 %left COMMA
 %right ASSIGN
@@ -62,19 +49,17 @@ is_start* myProgram;
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
 %nonassoc ELSE 
 
-
-
-
 %%
-start:      start functionDefinition  	{$$=insert_start(1,$1,NULL,NULL,$2);}
-		|	start functionDeclaration 	{$$=insert_start(2,$1,NULL,$2,NULL);}
-		| 	start declaration 			{$$=insert_start(0,$1,$2,NULL,NULL);}
-		|	functionDefinition			{$$=insert_start(1,NULL,NULL,NULL,$1);myProgram=$$;}
-		|	functionDeclaration			{$$=insert_start(2,NULL,NULL,$1,NULL);myProgram=$$;}
-		|	declaration 				{$$=insert_start(0,NULL,$1,NULL,NULL);myProgram=$$;}
+start: functionDefinition new_twelve
+		|	functionDeclaration new_twelve
+		| 	declaration new_twelve
 		;
 
-
+new_twelve: new_twelve functionDefinition
+		|	new_twelve functionDeclaration
+		|	new_twelve declaration
+		| 
+		;
 
 functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four RBRACE
 		;
@@ -125,12 +110,12 @@ new_seven: LSQ expression RSQ
 		|
 		;
 
-statement:  new_five SEMI
+statement: new_five SEMI
 		|	LBRACE new_four RBRACE
 		|	IF LPAR expression RPAR statement 
 		|	IF LPAR expression RPAR statement ELSE statement
-		|	WHILE LPAR expression RPAR statement
-		|	RETURN expression SEMI
+		|	WHILE LPAR expression RPAR statement				{$$=insert_while(d_while, $3, $5);}
+		|	RETURN expression SEMI								{$$=insert_return(d_return, $2);}
 		;
 
 new_four: new_four statement
@@ -141,50 +126,50 @@ new_five: expression
 		|
 		;
 
-expression: expression ASSIGN expression
-		|	expression OR expression
-		|	expression AND expression
-		|	expression GE expression
-		|	expression LE expression
-		|	expression GT expression
-		|	expression LT expression
-		|	expression NE expression
-		|	expression EQ expression
-		|	expression MOD expression
-		|	expression DIV expression
-		|	expression AST expression
-		|	expression MINUS expression
-		|	expression PLUS expression
-		|	NOT expression
-		|	MINUS expression
-		|	PLUS expression
-		|	AST expression
-		|	AMP expression
-		|	expression LSQ expression RSQ
-		|	ID LPAR new_one RPAR
-		|	ATOI LPAR expression RPAR 
-		|	PRINTF LPAR expression RPAR
-		| 	ITOA LPAR expression COMMA expression RPAR
-		|	LPAR expression RPAR
-		|	STRLIT
-		|	CHRLIT
-		|	INTLIT											{};
-		|	ID
+expression: expression ASSIGN expression 					{$$=insert_infix_expression(d_store, $1, $3);}
+		|	expression OR expression 						{$$=insert_infix_expression(d_or, $1, $3);}
+		|	expression AND expression 						{$$=insert_infix_expression(d_and, $1, $3);}
+		|	expression GE expression 						{$$=insert_infix_expression(d_ge, $1, $3);}
+		|	expression LE expression 						{$$=insert_infix_expression(d_le, $1, $3);}
+		|	expression GT expression 						{$$=insert_infix_expression(d_gt, $1, $3);}
+		|	expression LT expression 						{$$=insert_infix_expression(d_lt, $1, $3);}
+		|	expression NE expression 						{$$=insert_infix_expression(d_ne, $1, $3);}
+		|	expression EQ expression 						{$$=insert_infix_expression(d_eq, $1, $3);}
+		|	expression MOD expression 						{$$=insert_infix_expression(d_mod, $1, $3);}
+		|	expression DIV expression  						{$$=insert_infix_expression(d_div, $1, $3);}
+		|	expression AST expression       				{$$=insert_infix_expression(d_mul, $1, $3);}
+		|	expression MINUS expression 					{$$=insert_infix_expression(d_minus, $1, $3);}
+		|	expression PLUS expression   					{$$=insert_infix_expression(d_plus, $1, $3);}
+		|	NOT expression 									{$$=insert_unary_expression(d_not, $2);}
+		|	MINUS expression 								{$$=insert_unary_expression(d_minus, $2);}
+		|	PLUS expression 								{$$=insert_unary_expression(d_plus, $2);}
+		|	AST expression 									{$$=insert_unary_expression(d_mul, $2);}
+		|	AMP expression 									{$$=insert_unary_expression(d_addr, $2);}
+		|	expression LSQ expression RSQ					{$$=insert_infix_expression(d_deref, $1, $3);}
+		|	ID LPAR new_one RPAR							{$$=insert_link(insert_string(d_id, yytext), $3);}
+		|	ATOI LPAR expression RPAR 						{$$=insert_atoi(d_atoi, $3);}
+		|	PRINTF LPAR expression RPAR						{$$=insert_printf(d_print, $3);}
+		| 	ITOA LPAR expression COMMA expression RPAR		{$$=insert_itoa(d_itoa, $3, $5);}
+		|	LPAR expression RPAR							{$$=$2;}
+		|	STRLIT											{$$=insert_string(d_strlit, $1);}
+		|	CHRLIT											{$$=insert_string(d_charlit, $1);}
+		|	INTLIT											{$$=insert_number(d_intlit, $1);}
+		|	ID 												{$$=insert_string(d_id, $1);}
+		  ;
+
+new_one: expression new_two									{$$=insert_link($1, $2);}
+		|													{$$=insert_token(d_null);}
 		;
 
-new_one: expression new_two
-		|
-		;
-
-new_two: new_two COMMA expression
-		|
+new_two: new_two COMMA expression							{$$=insert_link($1, $3);}
+		|													{$$=insert_token(d_null);}
 		;
 
 %%
 int main()
 {
 	yyparse();
-	//show_program(myProgram);	//mostra a árvore que acabou de ser construida
+	
 	return 0;
 }
 

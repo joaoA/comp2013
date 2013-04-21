@@ -1,14 +1,34 @@
 #ifndef _STRUCTURES_
 #define _STRUCTURES_
 
-typedef enum {d_char, d_int} disc_declarator;
+
+typedef enum {d_char, d_int, d_intlit, d_charlit, d_strlit, d_id, d_infix_exp, d_unary_exp, d_null,
+			d_or, d_and, d_eq, d_ne, d_lt, d_gt, d_le, d_ge, d_add, d_sub, d_mul, d_div, d_mod, d_not, 
+			d_minus, d_plus, d_addr, d_deref, d_store, d_call, d_print, d_atoi, d_itoa,
+			d_if, d_else, d_return, d_while, d_declarator, d_array_declarator,
+			d_func_declaration, d_declaration, d_param_declaration, d_pointer} disc_node; 
+
+typedef union {
+	int number;
+	char* string;
+}info;
+
+typedef struct _s1
+{
+	disc_node d_node;
+	info data;
+
+	struct _s1 *child;
+	struct _s1 *next;
+}is_node;
+
+/*typedef enum {d_char, d_int} disc_declarator;
 typedef enum {d_intlit, d_charlit, d_strlit, d_id, u_infix_exp, u_unary_exp, d_null } disc_terminal;
 typedef enum {is_or, is_and, is_eq, is_ne, is_lt, is_gt, is_le, is_ge, is_add, is_sub, is_mul, is_div, is_mod, is_not, is_minus, is_plus, is_addr, id_deref, is_store, is_call, is_print, is_atoi, is_itoa }is_operator;
 typedef enum {d_if_else, d_return, d_while} disc_statement;
 typedef enum {d_declarator, d_array_declarator} disc_declaration;
-typedef enum {d_func_declaration, d_func_definition, d_declaration} disc_start;
+typedef enum {d_func_declaration, d_declaration} disc_start;
 
-/*is_expression*/
 typedef struct _s1{
 	disc_terminal d_terminal;
 	union{
@@ -19,16 +39,16 @@ typedef struct _s1{
 		struct is_infix_expression *u_infix_exp;
 		struct is_unary_expression *u_unary_exp;
 	}data_expression;
+
+
 }is_expression;
 
-/*is_infix_expression*/
 typedef struct _s2{
 	is_expression *expression1;
 	is_operator oprtor;
 	is_expression *expression2;
 }is_infix_expression;
 
-/*is_unary_expression*/
 typedef struct _s3{
 	is_operator oprtor;
 	is_expression *expression1;
@@ -115,15 +135,13 @@ typedef struct _s13{
 
 
 
-/*is_start*/
 typedef struct _s17{
 	disc_start d_start;
 	union{
 		struct is_declaration *u_declaration;
 		struct is_func_declaration *u_func_declaration;
-		struct is_func_definition *u_func_definition;
 	}data_start;
 	struct _s17 *next;
 }is_start;
-
+*/
 #endif

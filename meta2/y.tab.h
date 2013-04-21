@@ -124,15 +124,16 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 23 "qcparser.y"
+#line 31 "qcparser.y"
 {
-	char* valorInteiro;
+	int valorInteiro;
 	char* valorChar;
 	char* valorString;
 	char* valorID;
+	is_node *node;
 }
 /* Line 1529 of yacc.c.  */
-#line 136 "y.tab.h"
+#line 137 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

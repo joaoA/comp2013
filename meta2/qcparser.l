@@ -8,8 +8,7 @@
 	#include "structures.h"
 	#include "y.tab.h"
 
-
-
+	int validationIntLit(char* text);
 
 	char c,d;
 	int countChars = 0;
@@ -18,6 +17,7 @@
 	char string[500];
 	int countLines=1;
 	int countColumns=1;
+
 
 %}
 COMBEG		"/*"		

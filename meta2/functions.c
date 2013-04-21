@@ -5,81 +5,104 @@
 #include <stdlib.h>
 
 
-is_expression* insert_INTLIT(int number)
-{
-	is_expression* ie=(is_expression*)malloc(sizeof(is_expression));
-	ie->d_terminal=d_intlit;			//Coloca etiqueta a informar que é um numero
-	ie->data_expression.number=number;	//Guarda o conteúdo
+is_node* insert_number(disc_node type, int number){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node=type;			//Coloca etiqueta a informar que é um numero
+	ie->data.number=number;	//Guarda o conteúdo
 	return ie;		
 }
 
-is_expression* insert_STRLIT(char *string)
-{
-	is_expression* ie=(is_expression*)malloc(sizeof(is_expression));
-	ie->d_terminal=d_intlit;			//Coloca etiqueta a informar que é um numero
-	ie->data_expression.string=string;	//Guarda o conteúdo
+is_node* insert_string(disc_node type, char *string){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node=type;			//Coloca etiqueta a informar que é um numero
+	ie->data.string=string;	//Guarda o conteúdo
 	return ie;		
 }
 
+is_node* insert_itoa(disc_node type, is_node *son1, is_node *son2){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node=type;			//Coloca etiqueta a informar que é um numero
+	
+	son1->next = son2;
+	ie->child = son1;
 
-
-is_start* insert_start(int opt,is_start *list, is_declaration *declaration , is_func_declaration *func_declaration, is_func_definition *func_definition)
-{
-	/* por enquanto isto fica comentado até se irem fazendo as funçoes para baixo */
-
-	is_start *is=(is_start*)malloc(sizeof(is_start));
-	is_start* aux;
-	is->next=NULL;
-
-	if(opt==0){
-		is_declaration *id = (is_declaration*)malloc(sizeof(is_declaration));
-		/*id=insert_declartion(declaration);*/
-		printf("\ndeclaration\n\n");
-
-		is->d_start=d_declaration;
-		// is->data_start.u_declaration = id;
-		if(list!=NULL){
-			for(aux=list; aux->next!=NULL; aux=aux->next); /*procura ultimo no' e adiciona*/
-			aux->next=is;
-		}
-		else
-			return is;   /* caso seja o primeiro e unico elemento da lista  */
-
-
-	}
-	else if (opt==1){
-		is_func_definition *ifd = (is_func_definition*)malloc(sizeof(is_func_definition));
-		// ifd=insert_func_definition(func_definition);
-		printf("\nfunc_definition\n\n");
-
-		is->d_start=d_func_definition;
-		// is->data_start.u_func_definition = ifd;
-		if(list!=NULL){
-			for(aux=list; aux->next!=NULL; aux=aux->next); /*procura ultimo no' e adiciona*/
-			aux->next=is;
-		}
-		else
-			return is;		/* caso seja o primeiro e unico elemento da lista  */
-
-	}
-	else if(opt==2){
-		is_func_declaration *ifdec = (is_func_declaration*)malloc(sizeof(is_func_declaration));
-		// ifdec=insert_func_declartion(func_declaration);
-		printf("\nfunc_declaration\n\n");
-
-		is->d_start=d_func_declaration;
-		// is->data_start.u_func_declaration = ifdec;
-		if(list!=NULL){
-			for(aux=list; aux->next!=NULL; aux=aux->next); /*procura ultimo no' e adiciona*/
-			aux->next=is;
-		}
-		else
-			return is;		/* caso seja o primeiro e unico elemento da lista  */
-
-	}
-
-	return list;
-
-
-
+	printf("ITOA\n");
+	return ie;	
 }
+
+is_node* insert_printf(disc_node type, is_node *son1){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node=type;			//Coloca etiqueta a informar que é um numero
+	
+	ie->child = son1;
+
+	printf("PRINT\n");
+	return ie;	
+}
+
+is_node* insert_atoi(disc_node type, is_node *son1){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node=type;			//Coloca etiqueta a informar que é um numero
+	
+	ie->child = son1;
+
+	printf("ATOI\n");
+	return ie;	
+}
+
+is_node* insert_link(is_node *expression1, is_node *expression2){
+	is_expression_list* aux;
+			
+	for(aux=expression1; aux->next!=NULL; aux=aux->next);
+
+	expression1->next = expression2;
+	return expression1;	
+}
+
+is_node* insert_token(disc_node type){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node=type;			//Coloca etiqueta a informar que é um numero
+	return ie;		
+}
+
+is_node* insert_infix_expression(disc_node type, is_node *son1, is_node *son2){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node = type;
+
+	son1->next = son2;
+	ie->child = son1;
+
+	return ie;
+}
+
+is_node* insert_unary_expression(disc_node type, is_node *son1){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node = type;
+
+	ie->child = son1;
+
+	return ie;
+}
+
+is_node* insert_return(disc_node type, is_node *son1){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node = type;
+
+	ie->child = son1;
+
+	return ie;
+}
+
+is_node* insert_while(disc_node type, is_node *expression1, is_node *statement1){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node = type;
+
+	expression1->next = statement1;
+	ie->child = expression1;
+
+	return ie;
+}
+
+
+
+
