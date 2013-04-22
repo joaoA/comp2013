@@ -63,36 +63,10 @@ start: 		start functionDefinition    {$$=insert_link($1, $2);}
 
 
 functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four RBRACE 	{
-														is_node * cenas = $5;
-														is_node *anterior;
-														is_node *body;
-														while(cenas->next!=NULL){
-															anterior=cenas;
-															cenas=cenas->next;
-														}	
-
-														/* descer tb nos childs !? */
-															
-														disc_node tipo = anterior->d_node;
-														
-														switch(tipo){
-															case d_return:
-																$5=reverse($5);
-																$4=reverse($4);
-																body = insert_func_body(d_func_body, $4, $5); 
-																$$=insert_function_definition(d_func_definition, $1, $2, body);		
-															break;
-															default:
-																$5=reverse($5);
-																$4=reverse($4);
-																body = insert_func_body(d_func_body, $4, $5); 
-																is_node * empty = insert_null_node();
-																$$=insert_link(insert_function_definition(d_func_definition, $1, $2, body),empty);
-															break;	
-														}
-
-
-														
+														$5=reverse($5);
+														$4=reverse($4);
+														is_node *body = insert_func_body(d_func_body, $4, $5); 
+														$$=insert_function_definition(d_func_definition, $1, $2, body);
 													}
 		;
 
@@ -191,7 +165,15 @@ statement: SEMI													{$$=insert_token(d_null);}
 																		$$=insert_if(d_if,$3,$5);
 
 																}
-		|	WHILE LPAR expression RPAR statement				{$$=insert_while(d_while, $3, $5);}
+		|	WHILE LPAR expression RPAR statement				{
+																int conta = contaStatements($5);
+																
+																if(conta==0)
+																	$$=insert_while(d_while, $3, insert_null_node());
+																else
+																	$$=insert_while(d_while, $3, $5);
+																}
+
 		|	RETURN expression SEMI								{$$=insert_return(d_return, $2);}
 		;
 
