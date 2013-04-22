@@ -206,7 +206,12 @@ is_node* insert_function_definition(disc_node type, is_node *expression1, is_nod
 }
 
 is_node* insert_nulls(is_node *expression1, is_node *expression2){
+	is_node* ie=(is_node*)malloc(sizeof(is_node));
+	ie->d_node = d_null;
+
 	expression2->next = expression1;
-	return expression2;
+	ie->child = expression2;
+
+	return ie;
 }
 

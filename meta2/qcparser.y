@@ -37,18 +37,16 @@ is_node *myProgram;
 	is_node *node;
 }
 
-%left COMMA
 %right ASSIGN
-%left OR
+%left OR 
 %left AND
-%left AMP
-%left EQ NE
-%left LT LE GT GE
 %left PLUS MINUS
 %left AST DIV MOD
-%right NOT
-%left LPAR RPAR LSQ RSQ LBRACE RBRACE
-%nonassoc ELSE 
+%left EQ GE GT LE LT NE
+%right NOT AMP
+%left LSQ RSQ
+%left LPAR RPAR
+%nonassoc IF ELSE
 
 %%
 start: 		start functionDefinition    {$$=insert_link($1, $2);}
@@ -161,7 +159,7 @@ expression: expression ASSIGN expression 					{$$=insert_infix_expression(d_stor
 		  ;
 
 new_one: expression new_two									{$$=insert_nulls($1, $2);}
-		|													{$$=insert_token(d_null);}
+		| 													{$$=insert_token(d_null);}
 		;
 
 new_two: new_two COMMA expression							{$$=insert_nulls($1, $3);}
@@ -172,7 +170,8 @@ new_two: new_two COMMA expression							{$$=insert_nulls($1, $3);}
 int main()
 {
 	yyparse();
-	show_program(myProgram);
+	printf("Program\n");
+	show_program(myProgram, 1);
 	return 0;
 }
 

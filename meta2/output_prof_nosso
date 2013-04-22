@@ -14,6 +14,7 @@ Id(argc)
 d_param_declaration
 d_char
 d_pointer
+d_pointer
 Id(argv)
 d_declaration
 d_int
@@ -29,6 +30,10 @@ Id(a)
 IntLit(0)
 is_print
 StrLit("\n")
+is_print
+is_itoa
+Id(b)
+Id(buffer)
 is_print
 StrLit("\n")
 is_print

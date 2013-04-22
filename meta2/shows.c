@@ -13,22 +13,17 @@ void add_space(int n)
 		printf("  ");
 }
 
-void show_program(is_node * program)
+void show_program(is_node * program, int ident)
 {
 	is_node * aux = program;
 	
-	int space=0;
-
 	if(aux!=NULL)
+		add_space(ident);
 		show_expression(aux);
 	if(aux->child!=NULL)
-		show_program(aux->child);
+		show_program(aux->child, ident++);
 	if(aux->next!=NULL)
-		show_program(aux->next);
-	/*for(aux=program; aux!=NULL; aux=aux->next)
-	{
-		show_expression(aux);
-	}*/
+		show_program(aux->next, ident);
 }
 
 void show_expression(is_node * no){
@@ -108,7 +103,7 @@ void show_expression(is_node * no){
 			printf("is_not\n");
 		break;
 		case d_minus:
-			printf("is_minus\n");
+			printf("is_sub\n");
 		break;
 		case d_plus:
 			printf("is_plus\n");
