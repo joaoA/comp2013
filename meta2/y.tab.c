@@ -1632,7 +1632,7 @@ yyreduce:
 
   case 4:
 #line 58 "qcparser.y"
-    {(yyval.node)=insert_start_declaration(d_declaration, (yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
+    {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
     break;
 
   case 5:
@@ -1662,7 +1662,7 @@ yyreduce:
 
   case 9:
 #line 73 "qcparser.y"
-    {(yyval.node)=insert_nulls((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
+    {(yyval.node)=insert_link((yyvsp[(2) - (2)].node), (yyvsp[(1) - (2)].node));}
     break;
 
   case 10:
@@ -1697,7 +1697,7 @@ yyreduce:
 
   case 16:
 #line 90 "qcparser.y"
-    {(yyval.node)=insert_nulls((yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
+    {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 17:
@@ -1717,7 +1717,7 @@ yyreduce:
 
   case 20:
 #line 100 "qcparser.y"
-    {(yyval.node)=insert_nulls((yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
+    {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 21:
@@ -1749,7 +1749,7 @@ yyreduce:
 
   case 25:
 #line 118 "qcparser.y"
-    {(yyval.node)=insert_nulls((yyvsp[(1) - (2)].node), insert_token(d_pointer));}
+    {(yyval.node)=insert_link(insert_token(d_pointer), (yyvsp[(1) - (2)].node));}
     break;
 
   case 26:
@@ -1838,12 +1838,12 @@ yyreduce:
 
   case 36:
 #line 172 "qcparser.y"
-    {(yyval.node)=insert_nulls((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
+    {(yyval.node)=insert_link((yyvsp[(2) - (2)].node), (yyvsp[(1) - (2)].node));}
     break;
 
   case 37:
 #line 173 "qcparser.y"
-    {(yyval.node)=insert_token(d_null);}
+    {(yyval.node)=insert_token(d_null); }
     break;
 
   case 38:
@@ -2003,7 +2003,7 @@ yyreduce:
 
   case 69:
 #line 211 "qcparser.y"
-    {(yyval.node)=insert_nulls((yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
+    {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 70:

@@ -242,11 +242,14 @@ is_node* insert_function_declaration(disc_node type, is_node *expression1, is_no
 is_node* insert_function_definition(disc_node type, is_node *expression1, is_node *expression2, is_node *expression3){
 	is_node* ie=(is_node*)malloc(sizeof(is_node));
 	ie->d_node = type;
-
+	is_node *aux;
 	is_node *aux2 = expression1;	
 	while(aux2->next != NULL){ aux2=aux2->next;}
-	aux2->next = expression2;
-	is_node *aux = expression2;	
+	if(expression2->d_node == d_null || expression2->d_node == d_param_list ){
+		aux = expression2->child;	
+	} else {
+		aux = expression2;	
+	}
 	aux2->next = aux;
 	while(aux->next != NULL){ aux=aux->next;}
 	aux->next = expression3;
@@ -282,22 +285,23 @@ is_node* insert_start_declaration(disc_node type, is_node *expression1, is_node 
 }
 
 is_node *reverse(is_node *node){
-	is_node *ie = NULL, *next;
 
-	while(node!=NULL){
-		next = node->next;
-		node->next = ie;
-		ie = node;
-		node = next;
-	}
+	is_node* new_root = 0;
+	  while (node) {
+	    is_node* next = node->next;
+	    node->next = new_root;
+	    new_root = node;
+	    node = next;
+	  }
 
-	return ie;
+	return new_root;
 }
 
 is_node* insert_func_body(disc_node type, is_node *expression1, is_node *expression2){
 	is_node* ie=(is_node*)malloc(sizeof(is_node));
 	ie->d_node = type;
 
+	
 	is_node *aux = expression1;
 	while(aux->next != NULL){aux=aux->next;}
 	aux->next = expression2;

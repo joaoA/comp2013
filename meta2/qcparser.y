@@ -55,7 +55,7 @@ is_node *myProgram;
 %%
 start: 		start functionDefinition    {$$=insert_link($1, $2);}
 		|	start functionDeclaration 	{$$=insert_link($1, $2);}
-		| 	start declaration           {$$=insert_start_declaration(d_declaration, $1, $2);}
+		| 	start declaration           {$$=insert_link($1, $2);}
 		|   functionDefinition          {$$=$1; myProgram=$$;} 
 		|   functionDeclaration  		{$$=$1; myProgram=$$;}
 		|   declaration 				{$$=$1; myProgram=$$;}
@@ -70,7 +70,7 @@ functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four 
 													}
 		;
 
-new_eleven: new_eleven declaration  						{$$=insert_nulls($1, $2);}
+new_eleven: new_eleven declaration  						{$$=insert_link($2, $1);}
 		| 													{$$=insert_token(d_null);}
 		;
 
@@ -87,7 +87,7 @@ new_ten: parameterList 										{$$=$1;}
 parameterList: parameterDeclaration new_nine				{/*$$=insert_param_list(d_param_list, $1, $2);*/$$=insert_link($1, $2); $$->next = reverse($$->next);}
 		;
 
-new_nine: new_nine COMMA parameterDeclaration 				{$$=insert_nulls($1, $3);}
+new_nine: new_nine COMMA parameterDeclaration 				{$$=insert_link($3, $1);}
 		|													{$$=insert_token(d_null);}
 		;
 
@@ -97,7 +97,7 @@ parameterDeclaration: typeSpecifier new_six ID 				{$$=insert_param_declaration(
 declaration: typeSpecifier declarator new_eight SEMI		{$3=reverse($3); $$=insert_declaration(d_declaration, $1,$2, $3);}
 		;
 
-new_eight: new_eight COMMA declarator 						{$$=insert_nulls($1, $3);}
+new_eight: new_eight COMMA declarator 						{$$=insert_link($3, $1);}
 		|													{$$=insert_token(d_null);}
 		;
 
@@ -115,7 +115,7 @@ declarator: new_six ID new_seven	{
 									}
 		;
 
-new_six: new_six AST				{$$=insert_nulls($1, insert_token(d_pointer));}
+new_six: new_six AST				{$$=insert_link(insert_token(d_pointer), $1);}
 		|							{$$=insert_token(d_null);}
 		;
 
@@ -169,8 +169,8 @@ statement: SEMI													{$$=insert_token(d_null);}
 		|	RETURN expression SEMI								{$$=insert_return(d_return, $2);}
 		;
 
-new_four: new_four statement									{$$=insert_nulls($1, $2);}
-		|														{$$=insert_token(d_null);}
+new_four: new_four statement									{$$=insert_link($2, $1);}
+		|														{$$=insert_token(d_null); }
 		;
 
 expression: expression ASSIGN expression 					{$$=insert_infix_expression(d_store, $1, $3);}
@@ -208,7 +208,7 @@ new_one: expression new_two									{$$=insert_link($1, $2);}
 		| 													{$$=insert_token(d_null);}
 		;
 
-new_two: new_two COMMA expression							{$$=insert_nulls($1, $3);}
+new_two: new_two COMMA expression							{$$=insert_link($3, $1);}
 		|													{$$=insert_token(d_null);}
 		;
 

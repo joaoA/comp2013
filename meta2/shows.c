@@ -16,12 +16,14 @@ void add_space(int n)
 void show_program(is_node * program, int ident)
 {
 	is_node * aux = program;
-	
+	disc_node tipo;
 	if(aux!=NULL){
+		tipo = aux->d_node;
 		if(aux->d_node!=d_null)
 			show_expression(aux, ident);
-		if(aux->child!=NULL)
+		if(aux->child!=NULL && (tipo != d_null && tipo != d_stat && tipo != d_infix_exp && tipo != d_unary_exp && tipo != d_param_list))
 			show_program(aux->child, ident+1);
+		else if(aux->child!=NULL ){show_program(aux->child, ident);}
 		if(aux->next!=NULL)
 			show_program(aux->next, ident);
 	}
@@ -32,7 +34,7 @@ void show_expression(is_node * no, int ident){
 	disc_node tipo = no->d_node;
 
 	//printf("ENTROU AQUI!\n");
-	if(tipo != d_null && tipo != d_stat && tipo != d_infix_exp && tipo != d_unary_exp && tipo != d_param_list){
+	if(tipo != d_null && tipo != d_stat && tipo != d_infix_exp && tipo != d_unary_exp && tipo != d_param_list) {
 		add_space(ident);
 	}
 
