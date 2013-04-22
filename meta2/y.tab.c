@@ -537,11 +537,11 @@ static const yytype_uint8 yyrline[] =
        0,    56,    56,    57,    58,    59,    60,    61,    65,    73,
       74,    77,    80,    83,    84,    87,    90,    91,    94,    97,
      100,   101,   104,   105,   108,   118,   119,   122,   123,   126,
-     127,   128,   140,   161,   168,   169,   172,   173,   176,   177,
-     178,   179,   180,   181,   182,   183,   184,   185,   186,   187,
-     188,   189,   190,   191,   192,   193,   194,   195,   196,   197,
-     198,   199,   200,   201,   202,   203,   204,   207,   208,   211,
-     212
+     127,   128,   140,   161,   171,   180,   183,   184,   187,   188,
+     189,   190,   191,   192,   193,   194,   195,   196,   197,   198,
+     199,   200,   201,   202,   203,   204,   205,   206,   207,   208,
+     209,   210,   211,   212,   213,   214,   215,   218,   219,   222,
+     223
 };
 #endif
 
@@ -1818,202 +1818,212 @@ yyreduce:
   case 33:
 #line 161 "qcparser.y"
     {
-																	if((yyvsp[(5) - (5)].node)->d_node == d_null)
-																		(yyval.node)=insert_if(d_if, (yyvsp[(3) - (5)].node), insert_null_node());
-																	else
-																		(yyval.node)=insert_if(d_if,(yyvsp[(3) - (5)].node),(yyvsp[(5) - (5)].node));
+
+
+																	if((yyvsp[(5) - (5)].node)->d_node == d_null){
+																		(yyvsp[(5) - (5)].node) = insert_token(d_print_null);
+ 	 																	(yyval.node)=insert_if(d_if,(yyvsp[(3) - (5)].node),insert_link(insert_token(d_print_null),(yyvsp[(5) - (5)].node)));
+																 	}else
+																 		(yyval.node) = insert_if(d_if,(yyvsp[(3) - (5)].node),insert_link((yyvsp[(5) - (5)].node), insert_token(d_print_null)));
 
 																}
     break;
 
   case 34:
-#line 168 "qcparser.y"
-    {(yyval.node)=insert_while(d_while, (yyvsp[(3) - (5)].node), (yyvsp[(5) - (5)].node));}
+#line 171 "qcparser.y"
+    {
+																int conta = contaStatements((yyvsp[(5) - (5)].node));
+																
+																if(conta==0)
+																	(yyval.node)=insert_while(d_while, (yyvsp[(3) - (5)].node), insert_null_node());
+																else
+																	(yyval.node)=insert_while(d_while, (yyvsp[(3) - (5)].node), (yyvsp[(5) - (5)].node));
+																}
     break;
 
   case 35:
-#line 169 "qcparser.y"
+#line 180 "qcparser.y"
     {(yyval.node)=insert_return(d_return, (yyvsp[(2) - (3)].node));}
     break;
 
   case 36:
-#line 172 "qcparser.y"
+#line 183 "qcparser.y"
     {(yyval.node)=insert_link((yyvsp[(2) - (2)].node), (yyvsp[(1) - (2)].node));}
     break;
 
   case 37:
-#line 173 "qcparser.y"
+#line 184 "qcparser.y"
     {(yyval.node)=insert_token(d_null); }
     break;
 
   case 38:
-#line 176 "qcparser.y"
+#line 187 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_store, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 39:
-#line 177 "qcparser.y"
+#line 188 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_or, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 40:
-#line 178 "qcparser.y"
+#line 189 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_and, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 41:
-#line 179 "qcparser.y"
+#line 190 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_ge, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 42:
-#line 180 "qcparser.y"
+#line 191 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_le, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 43:
-#line 181 "qcparser.y"
+#line 192 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_gt, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 44:
-#line 182 "qcparser.y"
+#line 193 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_lt, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 45:
-#line 183 "qcparser.y"
+#line 194 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_ne, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 46:
-#line 184 "qcparser.y"
+#line 195 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_eq, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 47:
-#line 185 "qcparser.y"
+#line 196 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_mod, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 48:
-#line 186 "qcparser.y"
+#line 197 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_div, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 49:
-#line 187 "qcparser.y"
+#line 198 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_mul, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 50:
-#line 188 "qcparser.y"
+#line 199 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_sub, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 51:
-#line 189 "qcparser.y"
+#line 200 "qcparser.y"
     {(yyval.node)=insert_infix_expression(d_add, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 52:
-#line 190 "qcparser.y"
+#line 201 "qcparser.y"
     {(yyval.node)=insert_unary_expression(d_not, (yyvsp[(2) - (2)].node));}
     break;
 
   case 53:
-#line 191 "qcparser.y"
+#line 202 "qcparser.y"
     {(yyval.node)=insert_unary_expression(d_minus, (yyvsp[(2) - (2)].node));}
     break;
 
   case 54:
-#line 192 "qcparser.y"
+#line 203 "qcparser.y"
     {(yyval.node)=insert_unary_expression(d_plus, (yyvsp[(2) - (2)].node));}
     break;
 
   case 55:
-#line 193 "qcparser.y"
+#line 204 "qcparser.y"
     {(yyval.node)=insert_unary_expression(d_deref, (yyvsp[(2) - (2)].node));}
     break;
 
   case 56:
-#line 194 "qcparser.y"
+#line 205 "qcparser.y"
     {(yyval.node)=insert_unary_expression(d_addr, (yyvsp[(2) - (2)].node));}
     break;
 
   case 57:
-#line 195 "qcparser.y"
+#line 206 "qcparser.y"
     {is_node *add = insert_add(d_add, (yyvsp[(1) - (4)].node), (yyvsp[(3) - (4)].node)); (yyval.node)=insert_unary_expression(d_deref, add);}
     break;
 
   case 58:
-#line 196 "qcparser.y"
+#line 207 "qcparser.y"
     {is_node * tmp = reverse((yyvsp[(3) - (4)].node)->next); (yyvsp[(3) - (4)].node)->next = tmp; tmp=insert_link(insert_string(d_id, (yyvsp[(1) - (4)].valorID)), (yyvsp[(3) - (4)].node)); (yyval.node)=insert_call(d_call, tmp);}
     break;
 
   case 59:
-#line 197 "qcparser.y"
+#line 208 "qcparser.y"
     {(yyval.node)=insert_atoi(d_atoi, (yyvsp[(3) - (4)].node));}
     break;
 
   case 60:
-#line 198 "qcparser.y"
+#line 209 "qcparser.y"
     {(yyval.node)=insert_printf(d_print, (yyvsp[(3) - (4)].node));}
     break;
 
   case 61:
-#line 199 "qcparser.y"
+#line 210 "qcparser.y"
     {(yyval.node)=insert_itoa(d_itoa, (yyvsp[(3) - (6)].node), (yyvsp[(5) - (6)].node));}
     break;
 
   case 62:
-#line 200 "qcparser.y"
+#line 211 "qcparser.y"
     {(yyval.node)=(yyvsp[(2) - (3)].node);}
     break;
 
   case 63:
-#line 201 "qcparser.y"
+#line 212 "qcparser.y"
     {(yyval.node)=insert_string(d_strlit, (yyvsp[(1) - (1)].valorString));}
     break;
 
   case 64:
-#line 202 "qcparser.y"
+#line 213 "qcparser.y"
     {(yyval.node)=insert_string(d_charlit, (yyvsp[(1) - (1)].valorChar));}
     break;
 
   case 65:
-#line 203 "qcparser.y"
+#line 214 "qcparser.y"
     {(yyval.node)=insert_number(d_intlit, (yyvsp[(1) - (1)].valorInteiro));}
     break;
 
   case 66:
-#line 204 "qcparser.y"
+#line 215 "qcparser.y"
     {(yyval.node)=insert_string(d_id, (yyvsp[(1) - (1)].valorID));}
     break;
 
   case 67:
-#line 207 "qcparser.y"
+#line 218 "qcparser.y"
     {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
     break;
 
   case 68:
-#line 208 "qcparser.y"
+#line 219 "qcparser.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 69:
-#line 211 "qcparser.y"
+#line 222 "qcparser.y"
     {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 70:
-#line 212 "qcparser.y"
+#line 223 "qcparser.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2017 "y.tab.c"
+#line 2027 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2227,7 +2237,7 @@ yyreturn:
 }
 
 
-#line 215 "qcparser.y"
+#line 226 "qcparser.y"
 
 int main()
 {

@@ -159,10 +159,13 @@ statement: SEMI													{$$=insert_token(d_null);}
 
 																
 		|	IF LPAR expression RPAR statement 					{
-																	if($5->d_node == d_null)
-																		$$=insert_if(d_if, $3, insert_null_node());
-																	else
-																		$$=insert_if(d_if,$3,$5);
+
+
+																	if($5->d_node == d_null){
+																		$5 = insert_token(d_print_null);
+ 	 																	$$=insert_if(d_if,$3,insert_link(insert_token(d_print_null),$5));
+																 	}else
+																 		$$ = insert_if(d_if,$3,insert_link($5, insert_token(d_print_null)));
 
 																}
 		|	WHILE LPAR expression RPAR statement				{
