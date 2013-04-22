@@ -979,7 +979,7 @@ YY_RULE_SETUP
 						countColumns += yyleng;
 						BEGIN(INITIAL);
 						if(countChars == 1){
-							yylval.valorChar=character;
+							yylval.valorChar=(char *)strdup(character);
 							return CHRLIT;
 						} else {
 							printf("Line %d, col %d: multi-character char constant\n", aux_comments[0], aux_comments[1]);
@@ -1054,7 +1054,7 @@ YY_RULE_SETUP
 {
 						BEGIN (INITIAL);
 						countColumns += yyleng;
-						yylval.valorString=string;
+						yylval.valorString=(char *) strdup(string);
 						return STRLIT;
 					}
 	YY_BREAK

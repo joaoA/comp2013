@@ -103,7 +103,7 @@ INTLIT			([1-9][0-9]*)|0
 						countColumns += yyleng;
 						BEGIN(INITIAL);
 						if(countChars == 1){
-							yylval.valorChar=character;
+							yylval.valorChar=(char *)strdup(character);
 							return CHRLIT;
 						} else {
 							printf("Line %d, col %d: multi-character char constant\n", aux_comments[0], aux_comments[1]);
@@ -155,7 +155,7 @@ INTLIT			([1-9][0-9]*)|0
 <STRING>"\""		{
 						BEGIN (INITIAL);
 						countColumns += yyleng;
-						yylval.valorString=string;
+						yylval.valorString=(char *) strdup(string);
 						return STRLIT;
 					}
 

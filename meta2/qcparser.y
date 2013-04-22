@@ -42,15 +42,13 @@ is_node *myProgram;
 %left OR
 %left AND
 %left EQ NE
-%left LT GT GE LE
+%left LT GT LE GE
 %left PLUS MINUS
-%left DIV AST MOD
-%left NOT 
+%left AST DIV MOD
+%right NOT AMP
 %nonassoc UMINUS UPLUS
-%right AMP
-%left LPAR RPAR LSQ RSQ LBRACE RBRACE
-
-%nonassoc ELSE
+%left LPAR RPAR LBRACE RBRACE LSQ RSQ
+%nonassoc IF ELSE
 
 %%
 start: 		start functionDefinition    {$$=insert_link($1, $2);}
