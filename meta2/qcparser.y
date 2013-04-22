@@ -63,10 +63,36 @@ start: 		start functionDefinition    {$$=insert_link($1, $2);}
 
 
 functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four RBRACE 	{
-														$5=reverse($5);
-														$4=reverse($4);
-														is_node *body = insert_func_body(d_func_body, $4, $5); 
-														$$=insert_function_definition(d_func_definition, $1, $2, body);
+														is_node * cenas = $5;
+														is_node *anterior;
+														is_node *body;
+														while(cenas->next!=NULL){
+															anterior=cenas;
+															cenas=cenas->next;
+														}	
+
+														/* descer tb nos childs !? */
+															
+														disc_node tipo = anterior->d_node;
+														
+														switch(tipo){
+															case d_return:
+																$5=reverse($5);
+																$4=reverse($4);
+																body = insert_func_body(d_func_body, $4, $5); 
+																$$=insert_function_definition(d_func_definition, $1, $2, body);		
+															break;
+															default:
+																$5=reverse($5);
+																$4=reverse($4);
+																body = insert_func_body(d_func_body, $4, $5); 
+																is_node * empty = insert_null_node();
+																$$=insert_link(insert_function_definition(d_func_definition, $1, $2, body),empty);
+															break;	
+														}
+
+
+														
 													}
 		;
 
