@@ -1,0 +1,10 @@
+int *id, id[12], id;
+char *id()
+{
+    if (12)
+	if (id())
+	    return 12;
+	else {
+    } else
+	return !"str";
+}

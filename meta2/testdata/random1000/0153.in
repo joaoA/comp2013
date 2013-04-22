@@ -1,0 +1,9 @@
+int id()
+{
+    return itoa('c'
+		|| itoa(12, "str") - id(itoa((id()), 'c'), !atoi('c')
+					|| id['c' <=
+					      id(printf(12)
+						 || id())] >= id,
+					12) < atoi(id()), id);
+}

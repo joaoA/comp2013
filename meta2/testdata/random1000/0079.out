@@ -1,0 +1,18 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      IfElse
+        Eq
+          IntLit(12)
+          Call
+            Id(id)
+        Null
+        Null
+  Declaration
+    Char
+    ArrayDeclarator
+      Id(id)
+      IntLit(12)

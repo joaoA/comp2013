@@ -1,0 +1,3 @@
+char id[12];
+int *id[12];
+char *id;

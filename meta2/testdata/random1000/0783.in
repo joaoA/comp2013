@@ -1,0 +1,7 @@
+char id()
+{
+    return "str" * id > atoi(('c')) && 12 <= *(id) % 12
+	|| id(-atoi(id()))[itoa(&id, 'c')];
+}
+
+char *id(int *id);

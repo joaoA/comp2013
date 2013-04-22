@@ -1,0 +1,11 @@
+char **id(char id)
+{
+    if ((id != 12
+	 || atoi(id(12, 12 + &'c')) !=
+	 itoa(itoa
+	      (12 / id(), id() =
+	       id(atoi(id() || -"str"['c']), !itoa(!"str"[12], "str"),
+		  -id()) / id()), 'c' || 'c'))) {
+    } else {
+    }
+}

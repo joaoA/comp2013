@@ -9,7 +9,7 @@ void add_space(int n)
 {
 	int i;
 
-	for(i = 0 ;i<n;i++)
+	for(i = 0;i<n;i++)
 		printf("  ");
 }
 
@@ -17,20 +17,24 @@ void show_program(is_node * program, int ident)
 {
 	is_node * aux = program;
 	
-	if(aux!=NULL)
-		add_space(ident);
-		show_expression(aux);
-	if(aux->child!=NULL)
-		show_program(aux->child, ident++);
-	if(aux->next!=NULL)
-		show_program(aux->next, ident);
+	if(aux!=NULL){
+		if(aux->d_node!=d_null)
+			show_expression(aux, ident);
+		if(aux->child!=NULL)
+			show_program(aux->child, ident+1);
+		if(aux->next!=NULL)
+			show_program(aux->next, ident);
+	}
 }
 
-void show_expression(is_node * no){
+void show_expression(is_node * no, int ident){
 
 	disc_node tipo = no->d_node;
 
 	//printf("ENTROU AQUI!\n");
+	if(tipo != d_null && tipo != d_stat && tipo != d_infix_exp && tipo != d_unary_exp && tipo != d_param_list){
+		add_space(ident);
+	}
 
 	switch(tipo){
 		case d_intlit:
@@ -46,137 +50,144 @@ void show_expression(is_node * no){
 			printf("Id(%s)\n",no->data.string);
 		break;
 		case d_int:
-			printf("d_int\n");
+			printf("Int\n");
 		break;
 		case d_char:
-			printf("d_char\n");
+			printf("Char\n");
 		break;
-		case d_null:
+		case d_null: 
+		case d_stat:
 			//printf("d_null\n");
 		break;
 		case d_infix_exp:
-			printf("d_infix_expression\n");
+			//printf("d_infix_expression\n");
 		break;
 		case d_unary_exp:
-			printf("d_unary_expression\n");
+			//printf("d_unary_expression\n");
 		break;
 		case d_or:
-			printf("is_or\n");
+			printf("Or\n");
 		break;
 		case d_and:
-			printf("is_and\n");
+			printf("And\n");
 		break;
 		case d_eq:
-			printf("is_eq\n");
+			printf("Eq\n");
 		break;
 		case d_ne:
-			printf("is_ne\n");
+			printf("Ne\n");
 		break;
 		case d_lt:
-			printf("is_lt\n");
+			printf("Lt\n");
 		break;
 		case d_gt:
-			printf("is_gt\n");
+			printf("Gt\n");
 		break;
 		case d_le:
-			printf("is_le\n");
+			printf("Le\n");
 		break;
 		case d_ge:
-			printf("is_ge\n");
+			printf("Ge\n");
 		break;
 		case d_add:
-			printf("is_add\n");
+			printf("Add\n");
 		break;
 		case d_sub:
-			printf("is_sub\n");
+			printf("Sub\n");
 		break;
 		case d_mul:
-			printf("is_mul\n");
+			printf("Mul\n");
 		break;
 		case d_div:
-			printf("is_div\n");
+			printf("Div\n");
 		break;
 		case d_mod:
-			printf("is_mod\n");
+			printf("Mod\n");
 		break;
 		case d_not:
-			printf("is_not\n");
+			printf("Not\n");
 		break;
 		case d_minus:
-			printf("is_sub\n");
+			printf("Minus\n");
 		break;
 		case d_plus:
-			printf("is_plus\n");
+			printf("Plus\n");
 		break;
 		case d_addr:
-			printf("is_addr\n");
+			printf("Addr\n");
 		break;
 		case d_deref:
-			printf("is_deref\n");
+			printf("Deref\n");
 		break;
 		case d_store:
-			printf("is_store\n");
+			printf("Store\n");
 		break;
 		case d_call:
-			printf("is_call\n");
+			printf("Call\n");
 		break;
 		case d_print:
-			printf("is_print\n");
+			printf("Print\n");
 		break;
 		case d_atoi:
-			printf("is_atoi\n");
+			printf("Atoi\n");
 		break;
 		case d_itoa:
-			printf("is_itoa\n");
+			printf("Itoa\n");
 		break;
 		case d_if:
-			printf("d_if\n");
+			printf("IfElse\n");
 		break;
 
 		case d_if_else:
-			printf("d_ifelse\n");
+			printf("IfElse\n");
 		break;
 		case d_while:
-			printf("d_while\n");
+			printf("While\n");
 		break;
 
 		case d_declarator:
-			printf("d_declarator\n");
+			printf("Declarator\n");
 		break;
 
 		case d_array_declarator:
-			printf("d_array_declarator\n");
+			printf("ArrayDeclarator\n");
 		break;
 
 		case d_func_declarator:
-			printf("d_func_declarator\n");
+			printf("FuncDeclarator\n");
 		break;
 
 		case d_func_declaration:
-			printf("d_func_declaration\n");
+			printf("FuncDeclaration\n");
 		break;
 		case d_func_definition:
-			printf("d_func_definition\n");
+			printf("FuncDefinition\n");
 		break;
 
 		case d_declaration:
-			printf("d_declaration\n");
+			printf("Declaration\n");
 		break;
 		case d_param_declaration:
-			printf("d_param_declaration\n");
+			printf("ParamDeclaration\n");
 		break;
 		case d_param_list:
-			printf("d_param_list\n");
+			//printf("d_param_list\n");
+		break;
+		case d_print_null:
+			printf("Null\n" );
 		break;
 		case d_return:
-			printf("d_return\n");
+			printf("Return\n");
 		break;
 		case d_pointer:
-			printf("d_pointer\n");
+			printf("Pointer\n");
 		break;
-		default:
-			printf("MERDA\n");
-			break;
+		case d_func_body:
+			printf("FuncBody\n");
+		break;
+		case d_compound_stat:
+			printf("CompoundStat\n");
+		break;
 
 
 	}

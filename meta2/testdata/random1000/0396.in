@@ -1,0 +1,17 @@
+char *id(int *id);
+char *id()
+{
+    int *id;
+
+    return id(printf("str") || "str");
+    *itoa(&id(id[id()] || id()),
+	  printf("str" && printf(id('c' = ('c' || 'c') != id(), 12[id()])))
+	  && 'c' < (id)) - 12 > id(id(+printf(id <= +"str" % 'c'))) =
+	printf(id);
+}
+
+char **id()
+{;
+} int *id(char *id)
+{
+}

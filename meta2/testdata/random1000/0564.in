@@ -1,0 +1,7 @@
+char id();
+char **id()
+{
+    char id[12];
+
+    (12);
+}

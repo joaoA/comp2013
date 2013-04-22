@@ -1,0 +1,9 @@
+Program
+  Declaration
+    Char
+    Declarator
+      Id(id)
+  Declaration
+    Int
+    Declarator
+      Id(id)

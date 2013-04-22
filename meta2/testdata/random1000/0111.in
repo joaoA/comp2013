@@ -1,0 +1,9 @@
+char id[12];
+char *id();
+char id()
+{
+    'c' < *id() || (printf("str" % id)
+		    && +'c' - itoa("str", id)) =
+	itoa((+printf('c')), atoi(id()) <= 'c' = id() <= "str"['c'][id()])
+	|| *(printf("str")) * "str";
+}

@@ -1,0 +1,3 @@
+char id(int id);
+char id();
+char id();

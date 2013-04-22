@@ -1,0 +1,8 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Call
+        Id(id)

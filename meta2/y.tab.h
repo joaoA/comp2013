@@ -73,10 +73,12 @@
      NOT = 289,
      OR = 290,
      INT = 291,
-     INTLIT = 292,
-     CHRLIT = 293,
-     STRLIT = 294,
-     ID = 295
+     UMINUS = 292,
+     UPLUS = 293,
+     INTLIT = 294,
+     CHRLIT = 295,
+     STRLIT = 296,
+     ID = 297
    };
 #endif
 /* Tokens.  */
@@ -114,10 +116,12 @@
 #define NOT 289
 #define OR 290
 #define INT 291
-#define INTLIT 292
-#define CHRLIT 293
-#define STRLIT 294
-#define ID 295
+#define UMINUS 292
+#define UPLUS 293
+#define INTLIT 294
+#define CHRLIT 295
+#define STRLIT 296
+#define ID 297
 
 
 
@@ -133,7 +137,7 @@ typedef union YYSTYPE
 	is_node *node;
 }
 /* Line 1529 of yacc.c.  */
-#line 137 "y.tab.h"
+#line 141 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

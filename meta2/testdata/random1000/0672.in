@@ -1,0 +1,26 @@
+char *id()
+{
+    int id[12], id;
+
+    if (id(id(), "str"[("str")])[id] || "str" == id() < id % (id()))
+	return (atoi("str")) = 'c' != 12;
+    else
+	while (id)
+	    if ((id || id("str")))
+		itoa(id
+		     (((id ==
+			id(*"str"
+			   && atoi(id())[&"str" +
+					 itoa(-atoi(id() = atoi(id)),
+					      id() != id[id()])],
+			   printf(12 >= id)) * id(id(id = 12 % 12, 12, 12 =
+						     id)
+						  || itoa(*"str",
+							  printf(id)[id()]
+							  =
+							  printf("str")) <
+						  printf(id())["str" <=
+							       id()],
+						  12))))
+		     && id(), atoi(id('c' % id >= 12)));
+}

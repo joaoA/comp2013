@@ -1,0 +1,9 @@
+char id()
+{
+    int *id, *id, *id[12];
+    int *id[12];
+
+    return 'c' >= 'c';
+}
+
+int *id(int id, int *id);

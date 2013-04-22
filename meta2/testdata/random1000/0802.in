@@ -1,0 +1,13 @@
+char id(int id)
+{
+    char *id[12], id[12];
+
+    atoi(id) = 'c';
+} int *id(char id, int id, int *id)
+{
+    int *id;
+
+    while (id)
+	return printf(*"str"); {
+	}
+}

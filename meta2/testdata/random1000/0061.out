@@ -1,0 +1,6 @@
+Program
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Pointer
+      Id(id)

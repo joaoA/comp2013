@@ -1,0 +1,7 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      IntLit(12)

@@ -1,0 +1,10 @@
+int **id(int id)
+{
+    int **id;
+
+    !itoa('c', id()) = id() || id();;
+    while (id())
+	if (atoi("str"));
+}
+
+int **id(int *id);

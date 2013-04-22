@@ -1,0 +1,16 @@
+int *id();
+int **id(char *id, char * *id)
+{
+    if (12 - id[printf(12 || "str")])
+	if ((id())['c' && "str"])
+	    return "str";
+	else
+	    !*'c' = 'c';
+    id("str" -
+       itoa(&'c' =
+	    printf(id
+		   (12, 12, id(), id >= id
+		    || 'c' >= itoa(*id() || id, (atoi("str")) = id
+				   || itoa('c', (atoi(id)))))),
+	    id())[12]['c'] >= id((id())));
+}

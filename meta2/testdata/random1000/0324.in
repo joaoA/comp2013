@@ -1,0 +1,10 @@
+int id()
+{
+    int *id;
+    char **id;
+
+    id(12,
+       "str" * 12 > (12 =
+		     printf(12))[itoa(itoa('c', 12), 12 > &12 / 12)],
+       id());
+}

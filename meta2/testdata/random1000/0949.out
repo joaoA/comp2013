@@ -1,0 +1,12 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Char
+        Id(id)
+      ParamDeclaration
+        Char
+        Id(id)
+    FuncBody

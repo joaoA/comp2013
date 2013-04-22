@@ -1,0 +1,8 @@
+char id()
+{
+    char *id[12];
+    char id;
+
+    if ('c')
+	return 'c';
+}

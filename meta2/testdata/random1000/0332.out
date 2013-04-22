@@ -1,0 +1,12 @@
+Program
+  Declaration
+    Char
+    ArrayDeclarator
+      Pointer
+      Pointer
+      Pointer
+      Id(id)
+      IntLit(12)
+    Declarator
+      Pointer
+      Id(id)

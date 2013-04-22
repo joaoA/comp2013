@@ -1,0 +1,7 @@
+int id()
+{
+    while (id)
+	return 12;
+}
+
+char *id[12];

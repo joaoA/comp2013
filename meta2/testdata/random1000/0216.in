@@ -1,0 +1,44 @@
+int **id()
+{
+    char id[12], *id[12];
+
+    return ("str");
+}
+
+char id(int id);
+int id(char id, char * *id)
+{
+    char *id[12];
+
+    return id(("str" / 12) - id() = printf(id()) == "str" || 12 * ("str"));
+    (&*atoi
+     (itoa(atoi(itoa(id(), 'c')), +"str")
+      && 'c'[id(itoa(12, 12), id() - id())] <= printf("str")) % itoa("str",
+								     id
+								     ('c')
+								     +
+								     'c') =
+     "str"
+     && id(id()) < 12 =
+     atoi(id >
+	  atoi(id
+	       (itoa
+		(id(),
+		 printf(id
+			|| itoa("str",
+				(id(id[id()], &id(), 12 && 12 < 'c'))
+				&& "str"[id] || 12))) - itoa(id, "str")
+		|| 12 && id() - 12 * (itoa(*'c', id())
+				      && 12)[12 -
+					     *itoa(itoa(12[id()], id()),
+						   (id()) <= id =
+						   (atoi(id())))
+					     || 'c'] = itoa('c'
+							    && 12,
+							    (12 >
+							     "str"[id()]
+							     && id()['c']
+							     !=
+							     12)))))) -
+  (id() == id);
+}

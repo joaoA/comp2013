@@ -1,0 +1,7 @@
+char **id(char id, int *id)
+{
+    int *id, *id;
+    int id;
+
+    return id(id()) - "str";;
+}

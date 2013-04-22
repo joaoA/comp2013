@@ -1,0 +1,14 @@
+char id[12];
+int *id()
+{
+} int id(char *id, int *id)
+{
+    int *id, id[12];
+
+    while (+itoa
+	   ("str",
+	    id(id[itoa(12, id && 'c')],
+	       (printf(printf(itoa(12, 'c')) = id[+id()] > id())
+		|| 12 < "str"[atoi(atoi(id()))] = "str" =
+		12 > &printf(12) = 'c' <= id || id))) % 12);
+}

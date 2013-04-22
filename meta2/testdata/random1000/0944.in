@@ -1,0 +1,11 @@
+char *id;
+char id(char id);
+char *id()
+{
+    char id;
+
+    return id(itoa("str", id = "str") % 12, (id < 'c' - !&*'c' >= id),
+	      12);;
+}
+
+int id[12], *id;

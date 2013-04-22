@@ -1,0 +1,25 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Declaration
+        Char
+        Declarator
+          Pointer
+          Id(id)
+        ArrayDeclarator
+          Id(id)
+          IntLit(12)
+      Declaration
+        Int
+        ArrayDeclarator
+          Id(id)
+          IntLit(12)
+  Declaration
+    Char
+    ArrayDeclarator
+      Pointer
+      Id(id)
+      IntLit(12)

@@ -1,0 +1,9 @@
+int **id, id[12];
+char id[12];
+char *id()
+{
+    int *id[12];
+
+    while (atoi((! !12 * 12 == "str")))
+	while ("str" && 'c');
+}

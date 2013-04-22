@@ -1,0 +1,7 @@
+char id()
+{
+    return id * id();
+}
+
+int **id, *id[12], *id, id;
+int *id();

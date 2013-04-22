@@ -1,0 +1,6 @@
+Program
+  Declaration
+    Char
+    ArrayDeclarator
+      Id(id)
+      IntLit(12)

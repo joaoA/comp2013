@@ -1,0 +1,7 @@
+char id()
+{
+    while ('c' < id(+id)[itoa(id(), id('c'))] && 12 < id())
+	return id;
+}
+
+char id();

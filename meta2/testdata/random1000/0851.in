@@ -1,0 +1,11 @@
+int id[12];
+char id()
+{
+    int *id;
+    char id;
+
+    return 12
+	|| itoa(id,
+		*(atoi(('c'[12] * id || "str" = 'c') == ("str"))) <
+		id(itoa(id(), 12)[id == id() + id])) > id;
+}

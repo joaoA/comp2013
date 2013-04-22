@@ -1,0 +1,17 @@
+char *id()
+{
+    if (id)
+	return printf(atoi('c'));
+}
+
+int **id()
+{
+    char id[12];
+
+    char id, *id[12], **id[12]; {
+}} int *id(int * * * *id, char *id)
+{
+    char id;
+    int id, id[12];
+    char id[12], id, *id[12];
+}

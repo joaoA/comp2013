@@ -1,0 +1,6 @@
+char id()
+{
+    if (12 == id());
+}
+
+char id[12];

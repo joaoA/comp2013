@@ -1,0 +1,12 @@
+int *id()
+{
+    if ((id()))
+	while (12)
+	    id();
+    else
+	return id();
+}
+
+char *id(int * *id)
+{
+}

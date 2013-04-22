@@ -1,0 +1,9 @@
+char id(int id)
+{
+    if (id) {
+	return "str";
+    }
+}
+
+char *id();
+char *id[12], *id[12];

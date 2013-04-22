@@ -1,0 +1,10 @@
+Program
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Id(id)
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody

@@ -1,0 +1,4 @@
+int id(int * *id, char id, int * *id);
+int id()
+{
+}

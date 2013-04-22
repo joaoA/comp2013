@@ -1,0 +1,9 @@
+char *id(int id, int * *id, char * * *id)
+{
+    char *id[12], **id; {
+    } return ((id) && id());
+}
+
+char *id()
+{ {
+}} int *id();

@@ -21,5 +21,15 @@ is_node* insert_param_declaration(disc_node type, is_node *expression1, is_node 
 is_node* insert_param_list(disc_node type, is_node *expression1, is_node *expression2);
 is_node* insert_function_declarator(disc_node type, is_node *expression1, is_node *expression2, is_node *expression3);
 is_node* insert_function_declaration(disc_node type, is_node *expression1, is_node *expression2);
-is_node* insert_function_definition(disc_node type, is_node *expression1, is_node *expression2, is_node *expression3, is_node *expression4);
+is_node* insert_function_definition(disc_node type, is_node *expression1, is_node *expression2, is_node *expression3);
 is_node* insert_nulls(is_node *expression1, is_node *expression2);
+is_node* insert_start_declaration(disc_node type, is_node *expression1, is_node *expression2);
+is_node *reverse(is_node *node);
+is_node* insert_func_body(disc_node type, is_node *expression1, is_node *expression2);
+int compoundStatCounter(is_node *node);
+is_node* insert_compound(disc_node type, is_node *expression1);
+is_node* insert_add(disc_node type, is_node *expression1,is_node *expression2);
+is_node* insert_call(disc_node type, is_node *son1);
+is_node * insert_null_node();
+int flatten(is_node * lista, is_node * actual);
+int contaStatements(is_node * head);

@@ -1,0 +1,27 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Int
+        Id(id)
+      ParamDeclaration
+        Char
+        Pointer
+        Id(id)
+    FuncBody
+      While
+        ChrLit('c')
+        Null
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Char
+        Pointer
+        Id(id)
+      ParamDeclaration
+        Int
+        Id(id)

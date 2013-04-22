@@ -1,0 +1,7 @@
+int *id();
+int id(int id)
+{
+    if (id()) {
+    }
+    'c';
+}

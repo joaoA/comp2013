@@ -1,0 +1,13 @@
+char id()
+{
+    char *id[12], id;
+
+    return "str" /
+	itoa(itoa
+	     ((id && 12)[+(atoi('c'))] > "str"
+	      && id(12, id() || 12 == id + 'c'
+		    && id()), id() != ("str" == atoi(12 * id) =
+				       "str"['c'])), id);
+}
+
+int id, **id;

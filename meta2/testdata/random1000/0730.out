@@ -1,0 +1,11 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      ChrLit('c')
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Id(id)

@@ -1,0 +1,9 @@
+char id;
+char *id()
+{;
+    return *id(id, id(),
+	       itoa(printf(12[12]),
+		    'c' / itoa(('c') == "str"[id()], "str" && "str"))
+	       && "str" = 'c' && id() < 12 / 'c'[(atoi(id = "str"))])
+	|| id <= "str";
+}

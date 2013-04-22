@@ -1,0 +1,4 @@
+char id()
+{
+    char id[12], id[12], id[12];
+}

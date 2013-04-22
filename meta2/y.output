@@ -52,8 +52,8 @@ Grammar
    28 statement: SEMI
    29          | expression SEMI
    30          | LBRACE new_four RBRACE
-   31          | IF LPAR expression RPAR statement
-   32          | IF LPAR expression RPAR statement ELSE statement
+   31          | IF LPAR expression RPAR statement ELSE statement
+   32          | IF LPAR expression RPAR statement
    33          | WHILE LPAR expression RPAR statement
    34          | RETURN expression SEMI
 
@@ -103,7 +103,7 @@ $end (0) 0
 error (256)
 RESERVED (258)
 IF (259) 31 32
-ELSE (260) 32
+ELSE (260) 31
 WHILE (261) 33
 ATOI (262) 58
 ITOA (263) 60
@@ -135,58 +135,60 @@ MOD (288) 46
 NOT (289) 51
 OR (290) 38
 INT (291) 21
-INTLIT (292) 64
-CHRLIT (293) 63
-STRLIT (294) 62
-ID (295) 11 17 23 57 65
+UMINUS (292)
+UPLUS (293)
+INTLIT (294) 64
+CHRLIT (295) 63
+STRLIT (296) 62
+ID (297) 11 17 23 57 65
 
 
 Nonterminals, with rules where they appear
 
-$accept (41)
+$accept (43)
     on left: 0
-start (42)
+start (44)
     on left: 1 2 3 4 5 6, on right: 0 1 2 3
-functionDefinition (43)
+functionDefinition (45)
     on left: 7, on right: 1 4
-new_eleven (44)
+new_eleven (46)
     on left: 8 9, on right: 7 8
-functionDeclaration (45)
+functionDeclaration (47)
     on left: 10, on right: 2 5
-functionDeclarator (46)
+functionDeclarator (48)
     on left: 11, on right: 7 10
-new_ten (47)
+new_ten (49)
     on left: 12 13, on right: 11
-parameterList (48)
+parameterList (50)
     on left: 14, on right: 12
-new_nine (49)
+new_nine (51)
     on left: 15 16, on right: 14 15
-parameterDeclaration (50)
+parameterDeclaration (52)
     on left: 17, on right: 14 15
-declaration (51)
+declaration (53)
     on left: 18, on right: 3 6 8
-new_eight (52)
+new_eight (54)
     on left: 19 20, on right: 18 19
-typeSpecifier (53)
+typeSpecifier (55)
     on left: 21 22, on right: 7 10 17 18
-declarator (54)
+declarator (56)
     on left: 23, on right: 18 19
-new_six (55)
+new_six (57)
     on left: 24 25, on right: 11 17 23 24
-new_seven (56)
+new_seven (58)
     on left: 26 27, on right: 23
-statement (57)
+statement (59)
     on left: 28 29 30 31 32 33 34, on right: 31 32 33 35
-new_four (58)
+new_four (60)
     on left: 35 36, on right: 7 30 35
-expression (59)
+expression (61)
     on left: 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
     55 56 57 58 59 60 61 62 63 64 65, on right: 26 29 31 32 33 34 37
     38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 58 59
     60 61 66 68
-new_one (60)
+new_one (62)
     on left: 66 67, on right: 57
-new_two (61)
+new_two (63)
     on left: 68 69, on right: 66 68
 
 
@@ -540,8 +542,8 @@ state 28
    28 statement: . SEMI
    29          | . expression SEMI
    30          | . LBRACE new_four RBRACE
-   31          | . IF LPAR expression RPAR statement
-   32          | . IF LPAR expression RPAR statement ELSE statement
+   31          | . IF LPAR expression RPAR statement ELSE statement
+   32          | . IF LPAR expression RPAR statement
    33          | . WHILE LPAR expression RPAR statement
    34          | . RETURN expression SEMI
    35 new_four: new_four . statement
@@ -1042,8 +1044,8 @@ state 48
 
 state 49
 
-   31 statement: IF . LPAR expression RPAR statement
-   32          | IF . LPAR expression RPAR statement ELSE statement
+   31 statement: IF . LPAR expression RPAR statement ELSE statement
+   32          | IF . LPAR expression RPAR statement
 
     LPAR  shift, and go to state 87
 
@@ -1393,26 +1395,20 @@ state 62
    48           | expression . AST expression
    49           | expression . MINUS expression
    50           | expression . PLUS expression
-   54           | AST expression .  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   54           | AST expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
     LSQ  shift, and go to state 78
 
     $default  reduce using rule 54 (expression)
 
-    Conflict between rule 54 and token EQ resolved as shift (AST < EQ).
+    Conflict between rule 54 and token EQ resolved as reduce (EQ < AST).
     Conflict between rule 54 and token ASSIGN resolved as reduce (ASSIGN < AST).
-    Conflict between rule 54 and token GE resolved as shift (AST < GE).
-    Conflict between rule 54 and token GT resolved as shift (AST < GT).
-    Conflict between rule 54 and token LE resolved as shift (AST < LE).
-    Conflict between rule 54 and token LT resolved as shift (AST < LT).
-    Conflict between rule 54 and token NE resolved as shift (AST < NE).
+    Conflict between rule 54 and token GE resolved as reduce (GE < AST).
+    Conflict between rule 54 and token GT resolved as reduce (GT < AST).
+    Conflict between rule 54 and token LE resolved as reduce (LE < AST).
+    Conflict between rule 54 and token LT resolved as reduce (LT < AST).
+    Conflict between rule 54 and token NE resolved as reduce (NE < AST).
     Conflict between rule 54 and token AND resolved as reduce (AND < AST).
     Conflict between rule 54 and token AST resolved as reduce (%left AST).
     Conflict between rule 54 and token DIV resolved as reduce (%left DIV).
@@ -1476,37 +1472,28 @@ state 64
    48           | expression . AST expression
    49           | expression . MINUS expression
    50           | expression . PLUS expression
-   52           | MINUS expression .  [ASSIGN, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
+   52           | MINUS expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
-    AST  shift, and go to state 76
-    DIV  shift, and go to state 77
     LSQ  shift, and go to state 78
-    MOD  shift, and go to state 82
 
     $default  reduce using rule 52 (expression)
 
-    Conflict between rule 52 and token EQ resolved as shift (MINUS < EQ).
-    Conflict between rule 52 and token ASSIGN resolved as reduce (ASSIGN < MINUS).
-    Conflict between rule 52 and token GE resolved as shift (MINUS < GE).
-    Conflict between rule 52 and token GT resolved as shift (MINUS < GT).
-    Conflict between rule 52 and token LE resolved as shift (MINUS < LE).
-    Conflict between rule 52 and token LT resolved as shift (MINUS < LT).
-    Conflict between rule 52 and token NE resolved as shift (MINUS < NE).
-    Conflict between rule 52 and token AND resolved as reduce (AND < MINUS).
-    Conflict between rule 52 and token AST resolved as shift (MINUS < AST).
-    Conflict between rule 52 and token DIV resolved as shift (MINUS < DIV).
-    Conflict between rule 52 and token LSQ resolved as shift (MINUS < LSQ).
-    Conflict between rule 52 and token MINUS resolved as reduce (%left MINUS).
-    Conflict between rule 52 and token PLUS resolved as reduce (%left PLUS).
-    Conflict between rule 52 and token MOD resolved as shift (MINUS < MOD).
-    Conflict between rule 52 and token OR resolved as reduce (OR < MINUS).
+    Conflict between rule 52 and token EQ resolved as reduce (EQ < UMINUS).
+    Conflict between rule 52 and token ASSIGN resolved as reduce (ASSIGN < UMINUS).
+    Conflict between rule 52 and token GE resolved as reduce (GE < UMINUS).
+    Conflict between rule 52 and token GT resolved as reduce (GT < UMINUS).
+    Conflict between rule 52 and token LE resolved as reduce (LE < UMINUS).
+    Conflict between rule 52 and token LT resolved as reduce (LT < UMINUS).
+    Conflict between rule 52 and token NE resolved as reduce (NE < UMINUS).
+    Conflict between rule 52 and token AND resolved as reduce (AND < UMINUS).
+    Conflict between rule 52 and token AST resolved as reduce (AST < UMINUS).
+    Conflict between rule 52 and token DIV resolved as reduce (DIV < UMINUS).
+    Conflict between rule 52 and token LSQ resolved as shift (UMINUS < LSQ).
+    Conflict between rule 52 and token MINUS resolved as reduce (MINUS < UMINUS).
+    Conflict between rule 52 and token PLUS resolved as reduce (PLUS < UMINUS).
+    Conflict between rule 52 and token MOD resolved as reduce (MOD < UMINUS).
+    Conflict between rule 52 and token OR resolved as reduce (OR < UMINUS).
 
 
 state 65
@@ -1525,37 +1512,28 @@ state 65
    48           | expression . AST expression
    49           | expression . MINUS expression
    50           | expression . PLUS expression
-   53           | PLUS expression .  [ASSIGN, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
+   53           | PLUS expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
-    AST  shift, and go to state 76
-    DIV  shift, and go to state 77
     LSQ  shift, and go to state 78
-    MOD  shift, and go to state 82
 
     $default  reduce using rule 53 (expression)
 
-    Conflict between rule 53 and token EQ resolved as shift (PLUS < EQ).
-    Conflict between rule 53 and token ASSIGN resolved as reduce (ASSIGN < PLUS).
-    Conflict between rule 53 and token GE resolved as shift (PLUS < GE).
-    Conflict between rule 53 and token GT resolved as shift (PLUS < GT).
-    Conflict between rule 53 and token LE resolved as shift (PLUS < LE).
-    Conflict between rule 53 and token LT resolved as shift (PLUS < LT).
-    Conflict between rule 53 and token NE resolved as shift (PLUS < NE).
-    Conflict between rule 53 and token AND resolved as reduce (AND < PLUS).
-    Conflict between rule 53 and token AST resolved as shift (PLUS < AST).
-    Conflict between rule 53 and token DIV resolved as shift (PLUS < DIV).
-    Conflict between rule 53 and token LSQ resolved as shift (PLUS < LSQ).
-    Conflict between rule 53 and token MINUS resolved as reduce (%left MINUS).
-    Conflict between rule 53 and token PLUS resolved as reduce (%left PLUS).
-    Conflict between rule 53 and token MOD resolved as shift (PLUS < MOD).
-    Conflict between rule 53 and token OR resolved as reduce (OR < PLUS).
+    Conflict between rule 53 and token EQ resolved as reduce (EQ < UPLUS).
+    Conflict between rule 53 and token ASSIGN resolved as reduce (ASSIGN < UPLUS).
+    Conflict between rule 53 and token GE resolved as reduce (GE < UPLUS).
+    Conflict between rule 53 and token GT resolved as reduce (GT < UPLUS).
+    Conflict between rule 53 and token LE resolved as reduce (LE < UPLUS).
+    Conflict between rule 53 and token LT resolved as reduce (LT < UPLUS).
+    Conflict between rule 53 and token NE resolved as reduce (NE < UPLUS).
+    Conflict between rule 53 and token AND resolved as reduce (AND < UPLUS).
+    Conflict between rule 53 and token AST resolved as reduce (AST < UPLUS).
+    Conflict between rule 53 and token DIV resolved as reduce (DIV < UPLUS).
+    Conflict between rule 53 and token LSQ resolved as shift (UPLUS < LSQ).
+    Conflict between rule 53 and token MINUS resolved as reduce (MINUS < UPLUS).
+    Conflict between rule 53 and token PLUS resolved as reduce (PLUS < UPLUS).
+    Conflict between rule 53 and token MOD resolved as reduce (MOD < UPLUS).
+    Conflict between rule 53 and token OR resolved as reduce (OR < UPLUS).
 
 
 state 66
@@ -2438,8 +2416,8 @@ state 86
 
 state 87
 
-   31 statement: IF LPAR . expression RPAR statement
-   32          | IF LPAR . expression RPAR statement ELSE statement
+   31 statement: IF LPAR . expression RPAR statement ELSE statement
+   32          | IF LPAR . expression RPAR statement
    37 expression: . expression ASSIGN expression
    38           | . expression OR expression
    39           | . expression AND expression
@@ -2580,8 +2558,8 @@ state 90
    29          | . expression SEMI
    30          | . LBRACE new_four RBRACE
    30          | LBRACE new_four . RBRACE
-   31          | . IF LPAR expression RPAR statement
-   32          | . IF LPAR expression RPAR statement ELSE statement
+   31          | . IF LPAR expression RPAR statement ELSE statement
+   32          | . IF LPAR expression RPAR statement
    33          | . WHILE LPAR expression RPAR statement
    34          | . RETURN expression SEMI
    35 new_four: new_four . statement
@@ -2823,8 +2801,8 @@ state 98
    42           | expression . GT expression
    43           | expression . LT expression
    44           | expression . NE expression
-   45           | expression . EQ expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   45           | expression EQ expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   45           | expression . EQ expression  [EQ, ASSIGN, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
+   45           | expression EQ expression .  [EQ, ASSIGN, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
    46           | expression . MOD expression
    47           | expression . DIV expression
    48           | expression . AST expression
@@ -2832,24 +2810,33 @@ state 98
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    LSQ  shift, and go to state 78
+    GE     shift, and go to state 70
+    GT     shift, and go to state 71
+    LE     shift, and go to state 72
+    LT     shift, and go to state 73
+    AST    shift, and go to state 76
+    DIV    shift, and go to state 77
+    LSQ    shift, and go to state 78
+    MINUS  shift, and go to state 80
+    PLUS   shift, and go to state 81
+    MOD    shift, and go to state 82
 
     $default  reduce using rule 45 (expression)
 
     Conflict between rule 45 and token EQ resolved as reduce (%left EQ).
     Conflict between rule 45 and token ASSIGN resolved as reduce (ASSIGN < EQ).
-    Conflict between rule 45 and token GE resolved as reduce (%left GE).
-    Conflict between rule 45 and token GT resolved as reduce (%left GT).
-    Conflict between rule 45 and token LE resolved as reduce (%left LE).
-    Conflict between rule 45 and token LT resolved as reduce (%left LT).
+    Conflict between rule 45 and token GE resolved as shift (EQ < GE).
+    Conflict between rule 45 and token GT resolved as shift (EQ < GT).
+    Conflict between rule 45 and token LE resolved as shift (EQ < LE).
+    Conflict between rule 45 and token LT resolved as shift (EQ < LT).
     Conflict between rule 45 and token NE resolved as reduce (%left NE).
     Conflict between rule 45 and token AND resolved as reduce (AND < EQ).
-    Conflict between rule 45 and token AST resolved as reduce (AST < EQ).
-    Conflict between rule 45 and token DIV resolved as reduce (DIV < EQ).
+    Conflict between rule 45 and token AST resolved as shift (EQ < AST).
+    Conflict between rule 45 and token DIV resolved as shift (EQ < DIV).
     Conflict between rule 45 and token LSQ resolved as shift (EQ < LSQ).
-    Conflict between rule 45 and token MINUS resolved as reduce (MINUS < EQ).
-    Conflict between rule 45 and token PLUS resolved as reduce (PLUS < EQ).
-    Conflict between rule 45 and token MOD resolved as reduce (MOD < EQ).
+    Conflict between rule 45 and token MINUS resolved as shift (EQ < MINUS).
+    Conflict between rule 45 and token PLUS resolved as shift (EQ < PLUS).
+    Conflict between rule 45 and token MOD resolved as shift (EQ < MOD).
     Conflict between rule 45 and token OR resolved as reduce (OR < EQ).
 
 
@@ -2912,8 +2899,8 @@ state 100
    37 expression: expression . ASSIGN expression
    38           | expression . OR expression
    39           | expression . AND expression
-   40           | expression . GE expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   40           | expression GE expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   40           | expression . GE expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
+   40           | expression GE expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
    41           | expression . LE expression
    42           | expression . GT expression
    43           | expression . LT expression
@@ -2926,24 +2913,29 @@ state 100
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    LSQ  shift, and go to state 78
+    AST    shift, and go to state 76
+    DIV    shift, and go to state 77
+    LSQ    shift, and go to state 78
+    MINUS  shift, and go to state 80
+    PLUS   shift, and go to state 81
+    MOD    shift, and go to state 82
 
     $default  reduce using rule 40 (expression)
 
-    Conflict between rule 40 and token EQ resolved as reduce (%left EQ).
+    Conflict between rule 40 and token EQ resolved as reduce (EQ < GE).
     Conflict between rule 40 and token ASSIGN resolved as reduce (ASSIGN < GE).
     Conflict between rule 40 and token GE resolved as reduce (%left GE).
     Conflict between rule 40 and token GT resolved as reduce (%left GT).
     Conflict between rule 40 and token LE resolved as reduce (%left LE).
     Conflict between rule 40 and token LT resolved as reduce (%left LT).
-    Conflict between rule 40 and token NE resolved as reduce (%left NE).
+    Conflict between rule 40 and token NE resolved as reduce (NE < GE).
     Conflict between rule 40 and token AND resolved as reduce (AND < GE).
-    Conflict between rule 40 and token AST resolved as reduce (AST < GE).
-    Conflict between rule 40 and token DIV resolved as reduce (DIV < GE).
+    Conflict between rule 40 and token AST resolved as shift (GE < AST).
+    Conflict between rule 40 and token DIV resolved as shift (GE < DIV).
     Conflict between rule 40 and token LSQ resolved as shift (GE < LSQ).
-    Conflict between rule 40 and token MINUS resolved as reduce (MINUS < GE).
-    Conflict between rule 40 and token PLUS resolved as reduce (PLUS < GE).
-    Conflict between rule 40 and token MOD resolved as reduce (MOD < GE).
+    Conflict between rule 40 and token MINUS resolved as shift (GE < MINUS).
+    Conflict between rule 40 and token PLUS resolved as shift (GE < PLUS).
+    Conflict between rule 40 and token MOD resolved as shift (GE < MOD).
     Conflict between rule 40 and token OR resolved as reduce (OR < GE).
 
 
@@ -2954,8 +2946,8 @@ state 101
    39           | expression . AND expression
    40           | expression . GE expression
    41           | expression . LE expression
-   42           | expression . GT expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   42           | expression GT expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   42           | expression . GT expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
+   42           | expression GT expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
    43           | expression . LT expression
    44           | expression . NE expression
    45           | expression . EQ expression
@@ -2966,24 +2958,29 @@ state 101
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    LSQ  shift, and go to state 78
+    AST    shift, and go to state 76
+    DIV    shift, and go to state 77
+    LSQ    shift, and go to state 78
+    MINUS  shift, and go to state 80
+    PLUS   shift, and go to state 81
+    MOD    shift, and go to state 82
 
     $default  reduce using rule 42 (expression)
 
-    Conflict between rule 42 and token EQ resolved as reduce (%left EQ).
+    Conflict between rule 42 and token EQ resolved as reduce (EQ < GT).
     Conflict between rule 42 and token ASSIGN resolved as reduce (ASSIGN < GT).
     Conflict between rule 42 and token GE resolved as reduce (%left GE).
     Conflict between rule 42 and token GT resolved as reduce (%left GT).
     Conflict between rule 42 and token LE resolved as reduce (%left LE).
     Conflict between rule 42 and token LT resolved as reduce (%left LT).
-    Conflict between rule 42 and token NE resolved as reduce (%left NE).
+    Conflict between rule 42 and token NE resolved as reduce (NE < GT).
     Conflict between rule 42 and token AND resolved as reduce (AND < GT).
-    Conflict between rule 42 and token AST resolved as reduce (AST < GT).
-    Conflict between rule 42 and token DIV resolved as reduce (DIV < GT).
+    Conflict between rule 42 and token AST resolved as shift (GT < AST).
+    Conflict between rule 42 and token DIV resolved as shift (GT < DIV).
     Conflict between rule 42 and token LSQ resolved as shift (GT < LSQ).
-    Conflict between rule 42 and token MINUS resolved as reduce (MINUS < GT).
-    Conflict between rule 42 and token PLUS resolved as reduce (PLUS < GT).
-    Conflict between rule 42 and token MOD resolved as reduce (MOD < GT).
+    Conflict between rule 42 and token MINUS resolved as shift (GT < MINUS).
+    Conflict between rule 42 and token PLUS resolved as shift (GT < PLUS).
+    Conflict between rule 42 and token MOD resolved as shift (GT < MOD).
     Conflict between rule 42 and token OR resolved as reduce (OR < GT).
 
 
@@ -2993,8 +2990,8 @@ state 102
    38           | expression . OR expression
    39           | expression . AND expression
    40           | expression . GE expression
-   41           | expression . LE expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   41           | expression LE expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   41           | expression . LE expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
+   41           | expression LE expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
    42           | expression . GT expression
    43           | expression . LT expression
    44           | expression . NE expression
@@ -3006,24 +3003,29 @@ state 102
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    LSQ  shift, and go to state 78
+    AST    shift, and go to state 76
+    DIV    shift, and go to state 77
+    LSQ    shift, and go to state 78
+    MINUS  shift, and go to state 80
+    PLUS   shift, and go to state 81
+    MOD    shift, and go to state 82
 
     $default  reduce using rule 41 (expression)
 
-    Conflict between rule 41 and token EQ resolved as reduce (%left EQ).
+    Conflict between rule 41 and token EQ resolved as reduce (EQ < LE).
     Conflict between rule 41 and token ASSIGN resolved as reduce (ASSIGN < LE).
     Conflict between rule 41 and token GE resolved as reduce (%left GE).
     Conflict between rule 41 and token GT resolved as reduce (%left GT).
     Conflict between rule 41 and token LE resolved as reduce (%left LE).
     Conflict between rule 41 and token LT resolved as reduce (%left LT).
-    Conflict between rule 41 and token NE resolved as reduce (%left NE).
+    Conflict between rule 41 and token NE resolved as reduce (NE < LE).
     Conflict between rule 41 and token AND resolved as reduce (AND < LE).
-    Conflict between rule 41 and token AST resolved as reduce (AST < LE).
-    Conflict between rule 41 and token DIV resolved as reduce (DIV < LE).
+    Conflict between rule 41 and token AST resolved as shift (LE < AST).
+    Conflict between rule 41 and token DIV resolved as shift (LE < DIV).
     Conflict between rule 41 and token LSQ resolved as shift (LE < LSQ).
-    Conflict between rule 41 and token MINUS resolved as reduce (MINUS < LE).
-    Conflict between rule 41 and token PLUS resolved as reduce (PLUS < LE).
-    Conflict between rule 41 and token MOD resolved as reduce (MOD < LE).
+    Conflict between rule 41 and token MINUS resolved as shift (LE < MINUS).
+    Conflict between rule 41 and token PLUS resolved as shift (LE < PLUS).
+    Conflict between rule 41 and token MOD resolved as shift (LE < MOD).
     Conflict between rule 41 and token OR resolved as reduce (OR < LE).
 
 
@@ -3035,8 +3037,8 @@ state 103
    40           | expression . GE expression
    41           | expression . LE expression
    42           | expression . GT expression
-   43           | expression . LT expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   43           | expression LT expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   43           | expression . LT expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
+   43           | expression LT expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
    44           | expression . NE expression
    45           | expression . EQ expression
    46           | expression . MOD expression
@@ -3046,24 +3048,29 @@ state 103
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    LSQ  shift, and go to state 78
+    AST    shift, and go to state 76
+    DIV    shift, and go to state 77
+    LSQ    shift, and go to state 78
+    MINUS  shift, and go to state 80
+    PLUS   shift, and go to state 81
+    MOD    shift, and go to state 82
 
     $default  reduce using rule 43 (expression)
 
-    Conflict between rule 43 and token EQ resolved as reduce (%left EQ).
+    Conflict between rule 43 and token EQ resolved as reduce (EQ < LT).
     Conflict between rule 43 and token ASSIGN resolved as reduce (ASSIGN < LT).
     Conflict between rule 43 and token GE resolved as reduce (%left GE).
     Conflict between rule 43 and token GT resolved as reduce (%left GT).
     Conflict between rule 43 and token LE resolved as reduce (%left LE).
     Conflict between rule 43 and token LT resolved as reduce (%left LT).
-    Conflict between rule 43 and token NE resolved as reduce (%left NE).
+    Conflict between rule 43 and token NE resolved as reduce (NE < LT).
     Conflict between rule 43 and token AND resolved as reduce (AND < LT).
-    Conflict between rule 43 and token AST resolved as reduce (AST < LT).
-    Conflict between rule 43 and token DIV resolved as reduce (DIV < LT).
+    Conflict between rule 43 and token AST resolved as shift (LT < AST).
+    Conflict between rule 43 and token DIV resolved as shift (LT < DIV).
     Conflict between rule 43 and token LSQ resolved as shift (LT < LSQ).
-    Conflict between rule 43 and token MINUS resolved as reduce (MINUS < LT).
-    Conflict between rule 43 and token PLUS resolved as reduce (PLUS < LT).
-    Conflict between rule 43 and token MOD resolved as reduce (MOD < LT).
+    Conflict between rule 43 and token MINUS resolved as shift (LT < MINUS).
+    Conflict between rule 43 and token PLUS resolved as shift (LT < PLUS).
+    Conflict between rule 43 and token MOD resolved as shift (LT < MOD).
     Conflict between rule 43 and token OR resolved as reduce (OR < LT).
 
 
@@ -3076,8 +3083,8 @@ state 104
    41           | expression . LE expression
    42           | expression . GT expression
    43           | expression . LT expression
-   44           | expression . NE expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   44           | expression NE expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   44           | expression . NE expression  [EQ, ASSIGN, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
+   44           | expression NE expression .  [EQ, ASSIGN, NE, AND, COMMA, SEMI, RSQ, RPAR, OR]
    45           | expression . EQ expression
    46           | expression . MOD expression
    47           | expression . DIV expression
@@ -3086,24 +3093,33 @@ state 104
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    LSQ  shift, and go to state 78
+    GE     shift, and go to state 70
+    GT     shift, and go to state 71
+    LE     shift, and go to state 72
+    LT     shift, and go to state 73
+    AST    shift, and go to state 76
+    DIV    shift, and go to state 77
+    LSQ    shift, and go to state 78
+    MINUS  shift, and go to state 80
+    PLUS   shift, and go to state 81
+    MOD    shift, and go to state 82
 
     $default  reduce using rule 44 (expression)
 
     Conflict between rule 44 and token EQ resolved as reduce (%left EQ).
     Conflict between rule 44 and token ASSIGN resolved as reduce (ASSIGN < NE).
-    Conflict between rule 44 and token GE resolved as reduce (%left GE).
-    Conflict between rule 44 and token GT resolved as reduce (%left GT).
-    Conflict between rule 44 and token LE resolved as reduce (%left LE).
-    Conflict between rule 44 and token LT resolved as reduce (%left LT).
+    Conflict between rule 44 and token GE resolved as shift (NE < GE).
+    Conflict between rule 44 and token GT resolved as shift (NE < GT).
+    Conflict between rule 44 and token LE resolved as shift (NE < LE).
+    Conflict between rule 44 and token LT resolved as shift (NE < LT).
     Conflict between rule 44 and token NE resolved as reduce (%left NE).
     Conflict between rule 44 and token AND resolved as reduce (AND < NE).
-    Conflict between rule 44 and token AST resolved as reduce (AST < NE).
-    Conflict between rule 44 and token DIV resolved as reduce (DIV < NE).
+    Conflict between rule 44 and token AST resolved as shift (NE < AST).
+    Conflict between rule 44 and token DIV resolved as shift (NE < DIV).
     Conflict between rule 44 and token LSQ resolved as shift (NE < LSQ).
-    Conflict between rule 44 and token MINUS resolved as reduce (MINUS < NE).
-    Conflict between rule 44 and token PLUS resolved as reduce (PLUS < NE).
-    Conflict between rule 44 and token MOD resolved as reduce (MOD < NE).
+    Conflict between rule 44 and token MINUS resolved as shift (NE < MINUS).
+    Conflict between rule 44 and token PLUS resolved as shift (NE < PLUS).
+    Conflict between rule 44 and token MOD resolved as shift (NE < MOD).
     Conflict between rule 44 and token OR resolved as reduce (OR < NE).
 
 
@@ -3171,29 +3187,23 @@ state 106
    45           | expression . EQ expression
    46           | expression . MOD expression
    47           | expression . DIV expression
-   48           | expression . AST expression  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   48           | expression AST expression .  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   48           | expression . AST expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   48           | expression AST expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
    49           | expression . MINUS expression
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
     LSQ  shift, and go to state 78
 
     $default  reduce using rule 48 (expression)
 
-    Conflict between rule 48 and token EQ resolved as shift (AST < EQ).
+    Conflict between rule 48 and token EQ resolved as reduce (EQ < AST).
     Conflict between rule 48 and token ASSIGN resolved as reduce (ASSIGN < AST).
-    Conflict between rule 48 and token GE resolved as shift (AST < GE).
-    Conflict between rule 48 and token GT resolved as shift (AST < GT).
-    Conflict between rule 48 and token LE resolved as shift (AST < LE).
-    Conflict between rule 48 and token LT resolved as shift (AST < LT).
-    Conflict between rule 48 and token NE resolved as shift (AST < NE).
+    Conflict between rule 48 and token GE resolved as reduce (GE < AST).
+    Conflict between rule 48 and token GT resolved as reduce (GT < AST).
+    Conflict between rule 48 and token LE resolved as reduce (LE < AST).
+    Conflict between rule 48 and token LT resolved as reduce (LT < AST).
+    Conflict between rule 48 and token NE resolved as reduce (NE < AST).
     Conflict between rule 48 and token AND resolved as reduce (AND < AST).
     Conflict between rule 48 and token AST resolved as reduce (%left AST).
     Conflict between rule 48 and token DIV resolved as reduce (%left DIV).
@@ -3216,30 +3226,24 @@ state 107
    44           | expression . NE expression
    45           | expression . EQ expression
    46           | expression . MOD expression
-   47           | expression . DIV expression  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   47           | expression DIV expression .  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   47           | expression . DIV expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   47           | expression DIV expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
    48           | expression . AST expression
    49           | expression . MINUS expression
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
     LSQ  shift, and go to state 78
 
     $default  reduce using rule 47 (expression)
 
-    Conflict between rule 47 and token EQ resolved as shift (DIV < EQ).
+    Conflict between rule 47 and token EQ resolved as reduce (EQ < DIV).
     Conflict between rule 47 and token ASSIGN resolved as reduce (ASSIGN < DIV).
-    Conflict between rule 47 and token GE resolved as shift (DIV < GE).
-    Conflict between rule 47 and token GT resolved as shift (DIV < GT).
-    Conflict between rule 47 and token LE resolved as shift (DIV < LE).
-    Conflict between rule 47 and token LT resolved as shift (DIV < LT).
-    Conflict between rule 47 and token NE resolved as shift (DIV < NE).
+    Conflict between rule 47 and token GE resolved as reduce (GE < DIV).
+    Conflict between rule 47 and token GT resolved as reduce (GT < DIV).
+    Conflict between rule 47 and token LE resolved as reduce (LE < DIV).
+    Conflict between rule 47 and token LT resolved as reduce (LT < DIV).
+    Conflict between rule 47 and token NE resolved as reduce (NE < DIV).
     Conflict between rule 47 and token AND resolved as reduce (AND < DIV).
     Conflict between rule 47 and token AST resolved as reduce (%left AST).
     Conflict between rule 47 and token DIV resolved as reduce (%left DIV).
@@ -3301,17 +3305,11 @@ state 109
    46           | expression . MOD expression
    47           | expression . DIV expression
    48           | expression . AST expression
-   49           | expression . MINUS expression  [ASSIGN, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
-   49           | expression MINUS expression .  [ASSIGN, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
+   49           | expression . MINUS expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
+   49           | expression MINUS expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
     AST  shift, and go to state 76
     DIV  shift, and go to state 77
     LSQ  shift, and go to state 78
@@ -3319,13 +3317,13 @@ state 109
 
     $default  reduce using rule 49 (expression)
 
-    Conflict between rule 49 and token EQ resolved as shift (MINUS < EQ).
+    Conflict between rule 49 and token EQ resolved as reduce (EQ < MINUS).
     Conflict between rule 49 and token ASSIGN resolved as reduce (ASSIGN < MINUS).
-    Conflict between rule 49 and token GE resolved as shift (MINUS < GE).
-    Conflict between rule 49 and token GT resolved as shift (MINUS < GT).
-    Conflict between rule 49 and token LE resolved as shift (MINUS < LE).
-    Conflict between rule 49 and token LT resolved as shift (MINUS < LT).
-    Conflict between rule 49 and token NE resolved as shift (MINUS < NE).
+    Conflict between rule 49 and token GE resolved as reduce (GE < MINUS).
+    Conflict between rule 49 and token GT resolved as reduce (GT < MINUS).
+    Conflict between rule 49 and token LE resolved as reduce (LE < MINUS).
+    Conflict between rule 49 and token LT resolved as reduce (LT < MINUS).
+    Conflict between rule 49 and token NE resolved as reduce (NE < MINUS).
     Conflict between rule 49 and token AND resolved as reduce (AND < MINUS).
     Conflict between rule 49 and token AST resolved as shift (MINUS < AST).
     Conflict between rule 49 and token DIV resolved as shift (MINUS < DIV).
@@ -3351,16 +3349,10 @@ state 110
    47           | expression . DIV expression
    48           | expression . AST expression
    49           | expression . MINUS expression
-   50           | expression . PLUS expression  [ASSIGN, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
-   50           | expression PLUS expression .  [ASSIGN, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
+   50           | expression . PLUS expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
+   50           | expression PLUS expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, OR]
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
     AST  shift, and go to state 76
     DIV  shift, and go to state 77
     LSQ  shift, and go to state 78
@@ -3368,13 +3360,13 @@ state 110
 
     $default  reduce using rule 50 (expression)
 
-    Conflict between rule 50 and token EQ resolved as shift (PLUS < EQ).
+    Conflict between rule 50 and token EQ resolved as reduce (EQ < PLUS).
     Conflict between rule 50 and token ASSIGN resolved as reduce (ASSIGN < PLUS).
-    Conflict between rule 50 and token GE resolved as shift (PLUS < GE).
-    Conflict between rule 50 and token GT resolved as shift (PLUS < GT).
-    Conflict between rule 50 and token LE resolved as shift (PLUS < LE).
-    Conflict between rule 50 and token LT resolved as shift (PLUS < LT).
-    Conflict between rule 50 and token NE resolved as shift (PLUS < NE).
+    Conflict between rule 50 and token GE resolved as reduce (GE < PLUS).
+    Conflict between rule 50 and token GT resolved as reduce (GT < PLUS).
+    Conflict between rule 50 and token LE resolved as reduce (LE < PLUS).
+    Conflict between rule 50 and token LT resolved as reduce (LT < PLUS).
+    Conflict between rule 50 and token NE resolved as reduce (NE < PLUS).
     Conflict between rule 50 and token AND resolved as reduce (AND < PLUS).
     Conflict between rule 50 and token AST resolved as shift (PLUS < AST).
     Conflict between rule 50 and token DIV resolved as shift (PLUS < DIV).
@@ -3396,31 +3388,25 @@ state 111
    43           | expression . LT expression
    44           | expression . NE expression
    45           | expression . EQ expression
-   46           | expression . MOD expression  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
-   46           | expression MOD expression .  [ASSIGN, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   46           | expression . MOD expression  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
+   46           | expression MOD expression .  [EQ, ASSIGN, GE, GT, LE, LT, NE, AND, AST, DIV, COMMA, SEMI, RSQ, RPAR, MINUS, PLUS, MOD, OR]
    47           | expression . DIV expression
    48           | expression . AST expression
    49           | expression . MINUS expression
    50           | expression . PLUS expression
    56           | expression . LSQ expression RSQ
 
-    EQ   shift, and go to state 68
-    GE   shift, and go to state 70
-    GT   shift, and go to state 71
-    LE   shift, and go to state 72
-    LT   shift, and go to state 73
-    NE   shift, and go to state 74
     LSQ  shift, and go to state 78
 
     $default  reduce using rule 46 (expression)
 
-    Conflict between rule 46 and token EQ resolved as shift (MOD < EQ).
+    Conflict between rule 46 and token EQ resolved as reduce (EQ < MOD).
     Conflict between rule 46 and token ASSIGN resolved as reduce (ASSIGN < MOD).
-    Conflict between rule 46 and token GE resolved as shift (MOD < GE).
-    Conflict between rule 46 and token GT resolved as shift (MOD < GT).
-    Conflict between rule 46 and token LE resolved as shift (MOD < LE).
-    Conflict between rule 46 and token LT resolved as shift (MOD < LT).
-    Conflict between rule 46 and token NE resolved as shift (MOD < NE).
+    Conflict between rule 46 and token GE resolved as reduce (GE < MOD).
+    Conflict between rule 46 and token GT resolved as reduce (GT < MOD).
+    Conflict between rule 46 and token LE resolved as reduce (LE < MOD).
+    Conflict between rule 46 and token LT resolved as reduce (LT < MOD).
+    Conflict between rule 46 and token NE resolved as reduce (NE < MOD).
     Conflict between rule 46 and token AND resolved as reduce (AND < MOD).
     Conflict between rule 46 and token AST resolved as reduce (%left AST).
     Conflict between rule 46 and token DIV resolved as reduce (%left DIV).
@@ -3506,8 +3492,8 @@ state 114
 
 state 115
 
-   31 statement: IF LPAR expression . RPAR statement
-   32          | IF LPAR expression . RPAR statement ELSE statement
+   31 statement: IF LPAR expression . RPAR statement ELSE statement
+   32          | IF LPAR expression . RPAR statement
    37 expression: expression . ASSIGN expression
    38           | expression . OR expression
    39           | expression . AND expression
@@ -3693,10 +3679,10 @@ state 126
    28 statement: . SEMI
    29          | . expression SEMI
    30          | . LBRACE new_four RBRACE
-   31          | . IF LPAR expression RPAR statement
-   31          | IF LPAR expression RPAR . statement
-   32          | . IF LPAR expression RPAR statement ELSE statement
-   32          | IF LPAR expression RPAR . statement ELSE statement
+   31          | . IF LPAR expression RPAR statement ELSE statement
+   31          | IF LPAR expression RPAR . statement ELSE statement
+   32          | . IF LPAR expression RPAR statement
+   32          | IF LPAR expression RPAR . statement
    33          | . WHILE LPAR expression RPAR statement
    34          | . RETURN expression SEMI
    37 expression: . expression ASSIGN expression
@@ -3757,8 +3743,8 @@ state 127
    28 statement: . SEMI
    29          | . expression SEMI
    30          | . LBRACE new_four RBRACE
-   31          | . IF LPAR expression RPAR statement
-   32          | . IF LPAR expression RPAR statement ELSE statement
+   31          | . IF LPAR expression RPAR statement ELSE statement
+   32          | . IF LPAR expression RPAR statement
    33          | . WHILE LPAR expression RPAR statement
    33          | WHILE LPAR expression RPAR . statement
    34          | . RETURN expression SEMI
@@ -3904,14 +3890,14 @@ state 129
 
 state 130
 
-   31 statement: IF LPAR expression RPAR statement .  [IF, WHILE, ATOI, ITOA, PRINTF, RETURN, AMP, AST, SEMI, LBRACE, RBRACE, LPAR, MINUS, PLUS, NOT, INTLIT, CHRLIT, STRLIT, ID]
-   32          | IF LPAR expression RPAR statement . ELSE statement
+   31 statement: IF LPAR expression RPAR statement . ELSE statement
+   32          | IF LPAR expression RPAR statement .  [IF, WHILE, ATOI, ITOA, PRINTF, RETURN, AMP, AST, SEMI, LBRACE, RBRACE, LPAR, MINUS, PLUS, NOT, INTLIT, CHRLIT, STRLIT, ID]
 
     ELSE  shift, and go to state 134
 
-    $default  reduce using rule 31 (statement)
+    $default  reduce using rule 32 (statement)
 
-    Conflict between rule 31 and token ELSE resolved as shift (RPAR < ELSE).
+    Conflict between rule 32 and token ELSE resolved as shift (RPAR < ELSE).
 
 
 state 131
@@ -3971,9 +3957,9 @@ state 134
    28 statement: . SEMI
    29          | . expression SEMI
    30          | . LBRACE new_four RBRACE
-   31          | . IF LPAR expression RPAR statement
-   32          | . IF LPAR expression RPAR statement ELSE statement
-   32          | IF LPAR expression RPAR statement ELSE . statement
+   31          | . IF LPAR expression RPAR statement ELSE statement
+   31          | IF LPAR expression RPAR statement ELSE . statement
+   32          | . IF LPAR expression RPAR statement
    33          | . WHILE LPAR expression RPAR statement
    34          | . RETURN expression SEMI
    37 expression: . expression ASSIGN expression
@@ -4031,6 +4017,6 @@ state 134
 
 state 135
 
-   32 statement: IF LPAR expression RPAR statement ELSE statement .
+   31 statement: IF LPAR expression RPAR statement ELSE statement .
 
-    $default  reduce using rule 32 (statement)
+    $default  reduce using rule 31 (statement)

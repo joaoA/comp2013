@@ -1,0 +1,11 @@
+char *id(char *id, char id)
+{
+    char *id, id[12];
+
+    if (id())
+	id();
+    else {
+    }
+    {;
+    }
+}

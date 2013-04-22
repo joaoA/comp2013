@@ -1,0 +1,6 @@
+char id()
+{
+    printf(id("str" * id()) +
+	   *atoi(itoa("str" && id() && id()[itoa(id, 12 && id)], 12)) =
+	   id(*(id), ((id('c', *12)) - -12 || 12)) <= id());
+}

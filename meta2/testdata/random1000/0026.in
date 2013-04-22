@@ -1,0 +1,7 @@
+char *id(char * *id, int id);
+char id()
+{
+    if (printf(12) * atoi("str"));
+}
+
+char id[12];

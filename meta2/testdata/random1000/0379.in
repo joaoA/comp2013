@@ -1,0 +1,17 @@
+char *id, *id[12];
+char *id()
+{
+    char id;
+    char **id[12];;
+} int **id(char id)
+{
+    while (itoa
+	   (printf('c'[itoa(id = id(), id && &12) <= 12]), id(12, -id)))
+	if ('c')
+	    return id(*("str")
+		      && itoa(itoa("str" % 'c' == id(), id()), id()),
+		      "str", +12 - (itoa('c', 'c') && "str"))
+		|| id() % *id + 'c';
+}
+
+char id, **id;

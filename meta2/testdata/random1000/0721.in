@@ -1,0 +1,7 @@
+int id(int *id)
+{
+    int id;
+
+    return !-id() = id()[&id()] >= 'c'
+	&& itoa((atoi(id('c' + id()))), id()) = atoi(id);
+}

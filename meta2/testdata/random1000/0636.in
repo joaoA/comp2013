@@ -1,0 +1,11 @@
+int id()
+{
+    int id;
+
+    if (itoa('c', atoi(id()) + -(id() >= 12 <= id)))
+	while (itoa
+	       (12 >= -atoi(12),
+		id((id) || 12 + &printf('c') && id()
+		   || 12 * id[id() && "str" = 12] <= id * 'c') <= id))
+	    return id;
+}

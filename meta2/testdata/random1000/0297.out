@@ -1,0 +1,16 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Char
+        Id(id)
+    FuncBody
+      Addr
+        ChrLit('c')
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+    FuncBody

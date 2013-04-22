@@ -1,0 +1,5 @@
+int id();
+int id(char * * *id)
+{
+    return itoa('c', "str" + id) >= itoa(id(), *12);
+}

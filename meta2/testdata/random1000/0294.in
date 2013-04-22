@@ -1,0 +1,19 @@
+char *id(char *id);
+char **id(char *id, int id);
+char *id(int *id, int *id)
+{
+    int *id, id[12];
+    int id, id;
+
+    if (&'c')
+	if (12)
+	    if ("str");
+	    else
+		while ("str"[(-(12 * 'c') != itoa(id("str"), 12))])
+		    return id('c' * id());
+}
+
+int *id[12], **id[12];
+char id(char id)
+{
+}

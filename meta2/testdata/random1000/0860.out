@@ -1,0 +1,12 @@
+Program
+  Declaration
+    Int
+    Declarator
+      Id(id)
+  Declaration
+    Int
+    Declarator
+      Id(id)
+    ArrayDeclarator
+      Id(id)
+      IntLit(12)

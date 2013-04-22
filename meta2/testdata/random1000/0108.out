@@ -1,0 +1,26 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Declaration
+        Int
+        ArrayDeclarator
+          Id(id)
+          IntLit(12)
+      Sub
+        ChrLit('c')
+        Deref
+          Atoi
+            And
+              Gt
+                Not
+                  Call
+                    Id(id)
+                Call
+                  Id(id)
+                  ChrLit('c')
+              Atoi
+                Call
+                  Id(id)

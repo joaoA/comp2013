@@ -1,0 +1,24 @@
+char id(int *id, int id);
+int id(int *id)
+{
+    if ((12 && id()))
+	return id() >= itoa(id, +id(id() = id()) = 12);
+    else
+	return itoa('c', &('c') =
+		    itoa("str", "str"[atoi("str")] >= atoi(('c')) && 12
+			 ||
+			 12[id
+			    (id
+			     && ('c' * "str" = id <= id()
+				 || "str") <= atoi(id) / (id("str"
+							     || id < "str",
+							     12)))[atoi
+								   ('c')]])
+		    < id());
+}
+
+int id, *id[12];
+int *id()
+{
+    char *id[12];
+}

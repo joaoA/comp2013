@@ -1,0 +1,15 @@
+char **id()
+{
+    int id, id[12];
+
+    while (12 != id("str", "str"))
+	12; {
+	id(&("str") + itoa(id, printf(&"str")) / 12 <
+	   itoa(12
+		|| id() > *printf(12)[itoa((id()), "str")] =
+		id() % id(itoa("str", itoa(id(), id())), 'c',
+			  "str") != id(), "str" + 'c'),
+	   (12 <= itoa(-'c'[id()], !id()) + *-12 < id(printf(12) / "str")))
+&& 12;
+	}
+}

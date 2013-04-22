@@ -1,0 +1,17 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Declaration
+        Int
+        Declarator
+          Id(id)
+      Call
+        Id(id)
+      StrLit("str")
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Id(id)

@@ -1,0 +1,13 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Declaration
+        Int
+        Declarator
+          Pointer
+          Id(id)
+      Return
+        ChrLit('c')

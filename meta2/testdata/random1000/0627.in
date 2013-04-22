@@ -1,0 +1,7 @@
+int **id(int *id)
+{
+    char *id, id[12]; {
+    } if (id(+"str")) {
+    } else
+	return id();
+}

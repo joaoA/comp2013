@@ -1,0 +1,19 @@
+Program
+  FuncDeclaration
+    Char
+    FuncDeclarator
+      Id(id)
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Char
+        Pointer
+        Pointer
+        Id(id)
+    FuncBody
+      Declaration
+        Int
+        Declarator
+          Id(id)

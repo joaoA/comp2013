@@ -1,0 +1,14 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Int
+        Id(id)
+    FuncBody
+      Declaration
+        Int
+        ArrayDeclarator
+          Id(id)
+          IntLit(12)

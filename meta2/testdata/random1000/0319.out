@@ -1,0 +1,27 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      IfElse
+        Deref
+          Add
+            StrLit("str")
+            Deref
+              Atoi
+                And
+                  StrLit("str")
+                  Ne
+                    Call
+                      Id(id)
+                      ChrLit('c')
+                    Call
+                      Id(id)
+        Null
+        Null
+  FuncDeclaration
+    Char
+    FuncDeclarator
+      Pointer
+      Id(id)

@@ -1,0 +1,11 @@
+Program
+  Declaration
+    Int
+    Declarator
+      Pointer
+      Id(id)
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Pointer
+      Id(id)

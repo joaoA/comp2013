@@ -1,0 +1,10 @@
+int *id(char *id, int id)
+{
+} char id(char * *id)
+{
+    int id;
+    char id[12], *id;
+
+    if (id());
+    else;
+}

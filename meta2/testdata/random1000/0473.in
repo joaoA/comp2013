@@ -1,0 +1,12 @@
+int id(int * *id)
+{
+    if ('c' - 12 && 12 || atoi(+(12)) > id() != id) {
+	return id(printf("str"));
+    } else {
+    }
+}
+
+int id(char *id, char * *id)
+{
+    char **id[12];
+}

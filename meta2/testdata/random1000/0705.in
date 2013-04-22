@@ -1,0 +1,12 @@
+char id(int *id)
+{
+    char *id, id[12];
+
+    return id
+	|| id() + itoa((printf("str" * 12)), -'c' > "str" =
+		       id(12) * id(id() == 'c'))[12];
+    'c';
+}
+
+int **id(int id, char id);
+char *id, *id[12];

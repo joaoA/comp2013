@@ -1,0 +1,5 @@
+int **id()
+{
+    char ***id[12], *id[12];
+    int id;
+}

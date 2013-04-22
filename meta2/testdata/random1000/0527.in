@@ -1,0 +1,38 @@
+int *id, id[12];
+int id[12], *id;
+char ***id, id;
+int *id()
+{
+    if (itoa('c', 12[(-printf(id || *id()) = id)]) || *12 >= id
+	||
+	id(itoa
+	   (("str"), "str" =
+	    id() / (id =
+		    &atoi(itoa(itoa(id, *id()), id))) - id('c'))[id()],
+	   *id(id()) =
+	   12,
+	   printf(id(*(id) + (id()) == id()))) ==
+	atoi("str" - 12 % id()['c']) > 'c'
+	&& id(id() ==
+	      'c'[id
+		  (&itoa(id, printf((itoa("str", 12 - 'c') < "str"))),
+		   12 - itoa(id(), id))], 'c' != (printf(12 > 12))) = 'c');
+    else
+	return printf(id());
+    while (id >
+	   atoi(id
+		(itoa("str" / 12 || id, 'c'),
+		 id[printf(id())] >
+		 (itoa(printf(id()["str"]), id()) - atoi(id[id]) =
+		  id()), (id()) = id(id()) - id - (itoa((id()), "str")) =
+		 ('c')[itoa(id() = id, printf((id) = itoa(id, 12) / id()))]
+		 && itoa("str" > "str", 12[id()]))) || id())
+	if (12)
+	    if (12
+		||
+		id((&itoa(&"str", printf(id)) <=
+		    'c' * +(itoa(id && id, "str")) =
+		    'c'["str"] == id % &12))) {
+	    } else {
+	    }
+}

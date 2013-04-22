@@ -1,0 +1,7 @@
+int id(int id, char *id)
+{
+    while ('c') {
+    }
+}
+
+int id(char *id, int id);

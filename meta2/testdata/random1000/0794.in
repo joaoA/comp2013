@@ -1,0 +1,4 @@
+char **id()
+{
+    return 12;
+}

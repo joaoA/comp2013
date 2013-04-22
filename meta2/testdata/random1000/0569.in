@@ -1,0 +1,10 @@
+int *id()
+{
+    if ("str");
+    else {
+    }
+}
+
+char id(char id)
+{
+}

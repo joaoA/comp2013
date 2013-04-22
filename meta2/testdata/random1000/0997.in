@@ -1,0 +1,11 @@
+char *id(int *id, int id)
+{
+    if (id() <= 12)
+	id(id()) - 'c'['c'] != id();
+}
+
+char id(char *id)
+{
+} int *id(char id, int * *id)
+{
+}

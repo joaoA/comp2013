@@ -1,0 +1,16 @@
+Program
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Declaration
+        Char
+        Declarator
+          Id(id)
+      IfElse
+        Mul
+          ChrLit('c')
+          ChrLit('c')
+        Null
+        Null

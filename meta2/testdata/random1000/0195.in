@@ -1,0 +1,9 @@
+int **id;
+int **id(int id)
+{
+    char *id;
+
+    if (id)
+	while (&(12 || ("str"))); {
+	}
+}

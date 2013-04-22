@@ -1,0 +1,11 @@
+char **id(int *id, char * *id);
+char *id(int id)
+{
+    char id[12];
+} int *id(char id)
+{
+    int id;
+
+    int *id, **id[12], *id; {
+	12;
+}}

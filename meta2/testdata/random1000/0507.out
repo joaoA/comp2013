@@ -1,0 +1,25 @@
+Program
+  FuncDefinition
+    Char
+    FuncDeclarator
+      Id(id)
+    FuncBody
+      Return
+        Itoa
+          Id(id)
+          IntLit(12)
+      IfElse
+        Atoi
+          Store
+            StrLit("str")
+            And
+              Eq
+                Mul
+                  Itoa
+                    IntLit(12)
+                    IntLit(12)
+                  IntLit(12)
+                IntLit(12)
+              IntLit(12)
+        Null
+        Null

@@ -1,0 +1,6 @@
+Program
+  Declaration
+    Char
+    Declarator
+      Pointer
+      Id(id)

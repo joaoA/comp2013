@@ -1,0 +1,11 @@
+int id(int id, int id, char id, char id);
+int **id;
+int **id();
+char id();
+char id()
+{
+    int **id[12];
+    char *id, **id[12];
+
+    return &id[id()];
+}

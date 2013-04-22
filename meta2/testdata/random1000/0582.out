@@ -1,0 +1,20 @@
+Program
+  FuncDeclaration
+    Int
+    FuncDeclarator
+      Pointer
+      Id(id)
+  FuncDefinition
+    Int
+    FuncDeclarator
+      Id(id)
+      ParamDeclaration
+        Int
+        Id(id)
+    FuncBody
+      IfElse
+        Call
+          Id(id)
+        Null
+        Null
+      ChrLit('c')

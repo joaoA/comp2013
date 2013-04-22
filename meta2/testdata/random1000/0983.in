@@ -1,0 +1,5 @@
+int id[12], *id[12];
+char id()
+{
+    return atoi(!id() = printf(-itoa('c', 12) || 12)) > id;
+}
