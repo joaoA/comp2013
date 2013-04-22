@@ -124,7 +124,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 31 "qcparser.y"
+#line 32 "qcparser.y"
 {
 	int valorInteiro;
 	char* valorChar;

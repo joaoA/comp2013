@@ -6,6 +6,7 @@
 
 #include "structures.h"
 #include "functions.h"
+#include "shows.h"
 
 extern int countLines;
 extern int countColumns;
@@ -26,7 +27,7 @@ is_node *myProgram;
 %token <valorString> STRLIT
 %token <valorID> ID
 
-%type <node> expression new_one new_two
+%type <node> expression new_one new_two new_four statement new_six new_seven declarator declaration typeSpecifier new_eight parameterDeclaration new_nine parameterList new_ten functionDeclarator functionDeclaration functionDefinition start new_eleven 
 
 %union{
 	int valorInteiro;
@@ -50,80 +51,82 @@ is_node *myProgram;
 %nonassoc ELSE 
 
 %%
-start: functionDefinition new_twelve
-		|	functionDeclaration new_twelve
-		| 	declaration new_twelve
+start: 		start functionDefinition    {$$=insert_link($1, $2);}
+		|	start functionDeclaration 	{$$=insert_link($1, $2);}
+		| 	start declaration           {$$=insert_link($1, $2);}
+		|   functionDefinition          {$$=$1; myProgram=$$;} 
+		|   functionDeclaration  		{$$=$1; myProgram=$$;}
+		|   declaration 				{$$=$1; myProgram=$$;}
 		;
 
-new_twelve: new_twelve functionDefinition
-		|	new_twelve functionDeclaration
-		|	new_twelve declaration
-		| 
+
+functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four RBRACE 	{$$=insert_function_definition(d_func_definition, $1, $2, $4, $5);}
 		;
 
-functionDefinition: typeSpecifier functionDeclarator LBRACE new_eleven new_four RBRACE
+new_eleven: new_eleven declaration  						{$$=insert_nulls($1, $2);}
+		| 													{$$=insert_token(d_null);}
 		;
 
-new_eleven: new_eleven declaration
-		|
+functionDeclaration: typeSpecifier functionDeclarator SEMI	{$$=insert_function_declaration(d_func_declaration, $1, $2);}
 		;
 
-functionDeclaration: typeSpecifier functionDeclarator SEMI
+functionDeclarator: new_six ID LPAR new_ten RPAR			{$$=insert_function_declarator(d_func_declarator, $1, insert_string(d_id, $2), $4);}
 		;
 
-functionDeclarator: new_six ID LPAR new_ten RPAR
+new_ten: parameterList 										{$$=$1;}
+		|													{$$=insert_token(d_null);}
 		;
 
-new_ten: parameterList
-		|
+parameterList: parameterDeclaration new_nine				{$$=insert_param_list(d_param_list, $1, $2);}
 		;
 
-parameterList: parameterDeclaration new_nine
+new_nine: new_nine COMMA parameterDeclaration 				{$$=insert_nulls($1, $3);}
+		|													{$$=insert_token(d_null);}
 		;
 
-new_nine: new_nine COMMA parameterDeclaration
-		|
+parameterDeclaration: typeSpecifier new_six ID 				{$$=insert_param_declaration(d_param_declaration, $1, $2, insert_string(d_id, $3));}
 		;
 
-parameterDeclaration: typeSpecifier new_six ID
+declaration: typeSpecifier declarator new_eight SEMI		{$$=insert_declaration(d_declaration, $1,$2, $3);}
 		;
 
-declaration: typeSpecifier declarator new_eight SEMI
+new_eight: new_eight COMMA declarator 						{$$=insert_nulls($1, $3);}
+		|													{$$=insert_token(d_null);}
 		;
 
-new_eight: new_eight COMMA declarator
-		|
+typeSpecifier: INT 					{$$=insert_token(d_int);}
+		|	CHAR 					{$$=insert_token(d_char);}
 		;
 
-typeSpecifier: INT
-		|	CHAR
+declarator: new_six ID new_seven	{
+										if($3==NULL){
+											$$=insert_declarator(d_declarator, $1, insert_string(d_id, $2), $3);
+										} else {
+											$$=insert_declarator(d_array_declarator, $1, insert_string(d_id, $2), $3);
+										}
+
+									}
 		;
 
-declarator: new_six ID new_seven
+new_six: new_six AST				{$$=insert_nulls($1, insert_token(d_pointer));}
+		|							{$$=insert_token(d_null);}
 		;
 
-new_six: new_six AST
-		|
+new_seven: LSQ expression RSQ		{$$=$2;}
+		| 							{$$=insert_token(d_null);}
 		;
 
-new_seven: LSQ expression RSQ
-		|
-		;
-
-statement: new_five SEMI
-		|	LBRACE new_four RBRACE
-		|	IF LPAR expression RPAR statement 
-		|	IF LPAR expression RPAR statement ELSE statement
+statement: SEMI													{;}					
+		|	expression SEMI										{$$=$1;}
+		|	LBRACE new_four RBRACE								{$$=$2;}
+		|	IF LPAR expression RPAR statement 					{$$=insert_if(d_if, $3, $5);}
+		|	IF LPAR expression RPAR statement ELSE statement	{$$=insert_if_else(d_if_else, $3, $5, $7);}
 		|	WHILE LPAR expression RPAR statement				{$$=insert_while(d_while, $3, $5);}
 		|	RETURN expression SEMI								{$$=insert_return(d_return, $2);}
 		;
 
-new_four: new_four statement
-		|
-		;
-
-new_five: expression
-		|
+new_four: new_four statement									{$$=insert_nulls($1, $2);}
+		|														{$$=insert_token(d_null);}
 		;
 
 expression: expression ASSIGN expression 					{$$=insert_infix_expression(d_store, $1, $3);}
@@ -143,7 +146,7 @@ expression: expression ASSIGN expression 					{$$=insert_infix_expression(d_stor
 		|	NOT expression 									{$$=insert_unary_expression(d_not, $2);}
 		|	MINUS expression 								{$$=insert_unary_expression(d_minus, $2);}
 		|	PLUS expression 								{$$=insert_unary_expression(d_plus, $2);}
-		|	AST expression 									{$$=insert_unary_expression(d_mul, $2);}
+		|	AST expression 									{$$=insert_unary_expression(d_pointer, $2);}
 		|	AMP expression 									{$$=insert_unary_expression(d_addr, $2);}
 		|	expression LSQ expression RSQ					{$$=insert_infix_expression(d_deref, $1, $3);}
 		|	ID LPAR new_one RPAR							{$$=insert_link(insert_string(d_id, yytext), $3);}
@@ -157,11 +160,11 @@ expression: expression ASSIGN expression 					{$$=insert_infix_expression(d_stor
 		|	ID 												{$$=insert_string(d_id, $1);}
 		  ;
 
-new_one: expression new_two									{$$=insert_link($1, $2);}
+new_one: expression new_two									{$$=insert_nulls($1, $2);}
 		|													{$$=insert_token(d_null);}
 		;
 
-new_two: new_two COMMA expression							{$$=insert_link($1, $3);}
+new_two: new_two COMMA expression							{$$=insert_nulls($1, $3);}
 		|													{$$=insert_token(d_null);}
 		;
 
@@ -169,7 +172,7 @@ new_two: new_two COMMA expression							{$$=insert_link($1, $3);}
 int main()
 {
 	yyparse();
-	
+	show_program(myProgram);
 	return 0;
 }
 
