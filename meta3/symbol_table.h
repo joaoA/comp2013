@@ -1,12 +1,20 @@
+#include "structures.h"
 #ifndef _SYMBOL_TABLE_
 #define _SYMBOL_TABLE_
 
-typedef enum {d_int, d_char, d_func_declarator} basic_type;
+typedef enum {INTe, CHARe} data_type;
+
+typedef struct _t2{
+	data_type type;
+	int pointers;
+	int size;
+} element_data;
 
 //lista ligada de simbolos - um ambiente/registo de activação
 typedef struct _t1{	
 	char name[32];
-	basic_type type;
+	disc_node type;
+	element_data type_data;
 	int offset;		//futura posição na frame, caso seja uma variavel -1, se for uma procedure.
 	struct _t1 *next;
 } table_element;

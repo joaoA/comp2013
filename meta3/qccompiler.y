@@ -7,6 +7,8 @@
 #include "structures.h"
 #include "functions.h"
 #include "shows.h"
+#include "symbol_table.h"
+#include "semantic.h"
 
 extern int countLines;
 extern int countColumns;
@@ -17,6 +19,9 @@ void yyerror (char *s);
 int yylex(void);
 
 is_node *myProgram;
+prog_env *myProgramSemantic;
+
+void show_program_semantic(table_element *table);
 
 %}
 %token RESERVED IF ELSE WHILE ATOI ITOA CHAR PRINTF RETURN EQ ASSIGN GE GT LE LT NE AMP AND AST
@@ -222,11 +227,31 @@ new_two: new_two COMMA expression							{$$=insert_link($3, $1);}
 		;
 
 %%
-int main()
+int main(int argc, char *argv[])
 {
+	int i, show_tree = 0, show_semantic=0;
+
 	if(yyparse()==0){
-		printf("Program\n");
-		show_program(myProgram, 1);
+
+		myProgramSemantic = semantic_analysis(myProgram);
+
+		for(i=0; i<argc; i++){
+			if(strcmp(argv[i], "-t") == 0){
+				show_tree = 1;
+			} else if(strcmp(argv[i], "-s") == 0) {
+				show_semantic = 1;
+			}
+			
+		}
+
+		if(show_tree == 1){
+			printf("Program\n");
+			show_program(myProgram, 1);
+		} 
+		if( show_semantic == 1){
+			show_program_semantic(myProgramSemantic->global);
+		}
+
 	}
 	return 0;
 }
@@ -242,3 +267,30 @@ void yyerror (char *s) {
 	
 }
 
+void show_program_semantic(table_element *table){
+
+	table_element *aux;
+	int i;
+
+	printf("===== Global Symbol Table =====\n");
+
+	for(aux=table; aux; aux = aux->next){
+
+		printf("%s\t", aux->name);
+
+		switch(aux->type_data.type){
+			case(CHARe): printf("char"); break;
+			case(INTe): printf("int"); break;
+		}
+
+		for(i=0; i<aux->type_data.pointers; i++){
+			printf("*");
+		}
+
+		if(aux->type_data.size!=-1){
+			printf("[%d]", aux->type_data.size);
+		}
+		printf("\n");
+	}
+
+}

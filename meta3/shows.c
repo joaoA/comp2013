@@ -51,7 +51,8 @@ void show_expression(is_node * no, int ident){
 			printf("Int\n"); break;
 		case d_char:
 			printf("Char\n"); break;
-		case d_null: 
+		case d_null:
+			//printf("D_NULL\n"); 
 		case d_stat:
 			break;
 		case d_infix_exp:
@@ -140,3 +141,4 @@ void show_expression(is_node * no, int ident){
 
 	}
 }
+
