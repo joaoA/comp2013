@@ -225,8 +225,9 @@ new_two: new_two COMMA expression							{$$=insert_link($3, $1);}
 int main()
 {
 	if(yyparse()==0){
-	printf("Program\n");
-	show_program(myProgram, 1);}
+		printf("Program\n");
+		show_program(myProgram, 1);
+	}
 	return 0;
 }
 
