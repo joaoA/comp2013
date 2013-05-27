@@ -31,6 +31,7 @@ void semantic_analysis_block(prog_env *pe, is_node* ip)
 	{
 	//case d_declaration: semantic_analysis_procedure(pe, ip->data_block.u_procedure);  break;
 	case d_declaration: semantic_analysis_globals(pe, ip); break;
+	case d_func_declaration: semantic_analysis_procedures(pe, ip); break;
 	default: break;
 	}
 		
@@ -133,4 +134,10 @@ table_element* create_symbol(int offset, is_node* node, disc_node type)
 	el->next=NULL;
 	el->offset=offset;
 	return el;
+}
+
+void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
+
+	
+
 }

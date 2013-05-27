@@ -1,10 +1,9 @@
-char *buffer[20], zeze, teste[19];
-char **teste;
-int aaa; 
-int *a;
-int **a[19];
+char *buffer[20];
+
+int novaFuncao();
+
 int main(int argc, char **argv) {
-    int a, b;
+    /*int a, b;
     a = atoi(argv[1]);
     b = atoi(argv[2]);
     if (a == 0) {
@@ -17,5 +16,9 @@ int main(int argc, char **argv) {
                 b = b-a;
         printf(itoa(a, buffer));
         printf("\n");
-    }
+    }*/
 return 0; }
+
+int novaFuncao(){
+    return 0;
+}
