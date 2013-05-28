@@ -281,6 +281,8 @@ void show_program_semantic(table_element *table){
 		switch(aux->type_data.type){
 			case(CHARe): printf("char"); break;
 			case(INTe): printf("int"); break;
+			case(FUNC): printf("function"); break;
+			default: break;
 		}
 
 		for(i=0; i<aux->type_data.pointers; i++){

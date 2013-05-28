@@ -25,13 +25,14 @@ prog_env* semantic_analysis(is_node* myProgram)
 }
 
 void semantic_analysis_block(prog_env *pe, is_node* ip)
-{
+{	
 	//faz a triagem do bloco a analisar
+ 	//show_expression(ip, 0);
  	switch(ip->d_node)
 	{
 	//case d_declaration: semantic_analysis_procedure(pe, ip->data_block.u_procedure);  break;
 	case d_declaration: semantic_analysis_globals(pe, ip); break;
-	case d_func_declaration: semantic_analysis_procedures(pe, ip); break;
+	case d_func_definition: semantic_analysis_procedures(pe, ip); break;
 	default: break;
 	}
 		
@@ -117,6 +118,7 @@ table_element* create_symbol(int offset, is_node* node, disc_node type)
 	switch(type){
 		case d_char: el->type_data.type = CHARe; break;
 		case d_int: el->type_data.type = INTe; break;
+		case d_func_definition: el->type_data.type = FUNC; break;
 		default: break;
 	}
 
@@ -137,7 +139,122 @@ table_element* create_symbol(int offset, is_node* node, disc_node type)
 }
 
 void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
+	environment_list* aux;
+	table_element *te;
+	is_node *stringAux, *stringAux2;
+	environment_list* p1; 
+	disc_node aux_return;
 
-	
+	for(stringAux=ipg->child; stringAux->d_node != d_func_declarator; stringAux=stringAux->next){
+		if(stringAux->d_node != d_null ){
+			aux_return = stringAux->d_node; // Guarda o retorno
+		}
+	}
+
+	for(stringAux2 = stringAux->child; stringAux2->d_node != d_id; stringAux2=stringAux2->next); // procura o nome da funcao
+
+	if(lookup(pe->global, stringAux2->data.string)){
+		printf("PROC %s já existe!\n", stringAux2->data.string);
+	} else {
+
+		p1 = (environment_list*) malloc (sizeof(environment_list));
+
+		te=pe->global;
+
+		if(te==NULL){
+			pe->global = create_symbol(-1, stringAux2, d_func_definition);
+			pe->global->type = d_func_definition;
+		} else {
+			for(; te->next; te=te->next);
+			te->next = create_symbol(-1, stringAux2, d_func_definition);
+			te->next->type = d_func_definition;
+		}
+
+		p1->name = (char*)strdup(stringAux2->data.string);
+		p1->locals = (table_element*) malloc (sizeof(table_element));
+		p1->return_type = aux_return;
+
+		for(; stringAux2; stringAux2=stringAux2->next){
+			if(stringAux2->d_node == d_param_declaration){
+				//Chama funcao de analise de parametros de entrada
+				p1->params=semantic_analysis_create_param_data(pe, stringAux2, p1->params);
+			}
+		}
+
+		if(pe->procs == NULL){
+			pe->procs = p1;
+		} else {
+			for(aux=pe->procs; aux->next; aux=aux->next){
+				aux->next = p1;
+			}
+		}
+	}
 
 }
+
+param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param_data* params){
+
+	table_element *aux;
+	is_node *stringAux;
+	param_data* paramAux;
+
+
+	for(stringAux=pi->child; stringAux->d_node!=d_id; stringAux=stringAux->next);
+	//Verificar se ja existem na tabela de globais
+	if(lookup(pe->global, stringAux->data.string)){
+		printf("Variavel %s já declarada com global\n", stringAux->data.string);
+	} else {
+
+		paramAux = params;
+
+		if(paramAux == NULL){
+			params = create_param(pi->child);
+		} else {
+			for(; paramAux; paramAux=paramAux->next);
+			paramAux = create_param(pi->child);
+		}
+
+	}
+
+	return params;
+}
+
+param_data* create_param(is_node* pip){
+
+	param_data *el = (param_data*) malloc (sizeof(param_data));
+	is_node *aux;
+	el->pointers = 0;
+
+	for(aux=pip; aux; aux=aux->next){
+		
+		switch(pip->d_node){
+			case d_char: el->type = CHARe; break;
+			case d_int: el->type = INTe; break;
+			case d_id: strcpy(el->name, aux->data.string);
+			case d_pointer: el->pointers+=1;
+			default: break;
+		}
+
+	}
+
+	el->next = NULL;
+ 	
+ 	return el;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
