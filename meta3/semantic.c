@@ -141,7 +141,7 @@ table_element* create_symbol(int offset, is_node* node, disc_node type)
 void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 	environment_list* aux;
 	table_element *te;
-	is_node *stringAux, *stringAux2;
+	is_node *stringAux, *stringAux2; //StringAux -> funcdefinition; StringAux2 -> funcdeclarator
 	environment_list* p1; 
 	disc_node aux_return;
 
@@ -175,18 +175,20 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		p1->return_type = aux_return;
 
 		for(; stringAux2; stringAux2=stringAux2->next){
-			if(stringAux2->d_node == d_param_declaration){
+			if(stringAux2->d_node == d_param_declaration){ 
 				//Chama funcao de analise de parametros de entrada
 				p1->params=semantic_analysis_create_param_data(pe, stringAux2, p1->params);
 			}
 		}
 
+
+
+
 		if(pe->procs == NULL){
 			pe->procs = p1;
 		} else {
-			for(aux=pe->procs; aux->next; aux=aux->next){
-				aux->next = p1;
-			}
+			for(aux=pe->procs; aux->next!=NULL; aux=aux->next);
+			aux->next = p1;
 		}
 	}
 
@@ -208,15 +210,15 @@ param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param
 		paramAux = params;
 
 		if(paramAux == NULL){
-			params = create_param(pi->child);
-		} else {
-			for(; paramAux; paramAux=paramAux->next);
 			paramAux = create_param(pi->child);
+		} else {
+			for(; paramAux->next!=NULL; paramAux=paramAux->next);
+			paramAux->next = create_param(pi->child);
 		}
 
 	}
 
-	return params;
+	return paramAux;
 }
 
 param_data* create_param(is_node* pip){
@@ -226,12 +228,12 @@ param_data* create_param(is_node* pip){
 	el->pointers = 0;
 
 	for(aux=pip; aux; aux=aux->next){
-		
-		switch(pip->d_node){
+
+		switch(aux->d_node){
 			case d_char: el->type = CHARe; break;
 			case d_int: el->type = INTe; break;
-			case d_id: strcpy(el->name, aux->data.string);
-			case d_pointer: el->pointers+=1;
+			case d_id: el->name=(char*)strdup(aux->data.string); break;
+			case d_pointer: el->pointers+=1; break;
 			default: break;
 		}
 

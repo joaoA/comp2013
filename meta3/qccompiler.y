@@ -22,6 +22,8 @@ is_node *myProgram;
 prog_env *myProgramSemantic;
 
 void show_program_semantic(table_element *table);
+void show_program_semantic_procedures(environment_list* table);
+
 
 %}
 %token RESERVED IF ELSE WHILE ATOI ITOA CHAR PRINTF RETURN EQ ASSIGN GE GT LE LT NE AMP AND AST
@@ -250,6 +252,7 @@ int main(int argc, char *argv[])
 		} 
 		if( show_semantic == 1){
 			show_program_semantic(myProgramSemantic->global);
+			show_program_semantic_procedures(myProgramSemantic->procs);
 		}
 
 	}
@@ -296,3 +299,54 @@ void show_program_semantic(table_element *table){
 	}
 
 }
+
+
+void show_program_semantic_procedures(environment_list* table)
+{
+
+	
+	environment_list *aux;
+	param_data *data;
+	for(aux=table; aux; aux = aux->next){
+	
+		printf("===== Function %s Symbol Table =====\n", aux->name);
+		
+		printf("return\t");
+		switch(aux->return_type){
+
+			case d_char:
+				printf("char\n");
+				break;
+			case d_int:
+				printf("int\n");
+				break;
+			default: break;
+		}
+
+		for(data=aux->params; data ;data=data->next){
+			printf("%s\t", data->name);
+			switch(data->type){
+
+				case INTe:
+					printf("int");
+					break;
+				case CHARe:
+					printf("char");
+					break;
+				default: break;
+			}
+
+			for(int i=0; i< data->pointers; i++){
+				printf("*");
+			}
+
+			printf("\tparam\n");
+		}
+
+
+	}
+
+
+}
+
+

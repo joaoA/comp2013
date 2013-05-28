@@ -15,8 +15,8 @@ int main(int argc, char **argv) {
         printf(itoa(a, buffer));
         printf("\n");
     }*/
-return 0; }
 
-int teste(){
-    return 0;
+    int a, b;
+
+    return 0; 
 }

@@ -179,6 +179,8 @@ is_node *myProgram;
 prog_env *myProgramSemantic;
 
 void show_program_semantic(table_element *table);
+void show_program_semantic_procedures(environment_list* table);
+
 
 
 
@@ -202,7 +204,7 @@ void show_program_semantic(table_element *table);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 37 "qccompiler.y"
+#line 39 "qccompiler.y"
 {
 	int valorInteiro;
 	char* valorChar;
@@ -211,7 +213,7 @@ typedef union YYSTYPE
 	is_node *node;
 }
 /* Line 193 of yacc.c.  */
-#line 215 "y.tab.c"
+#line 217 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -224,7 +226,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 228 "y.tab.c"
+#line 230 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -539,14 +541,14 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    60,    61,    62,    63,    64,    68,    76,
-      77,    80,    83,    86,    87,    90,    93,    94,    97,   100,
-     103,   104,   107,   108,   111,   121,   122,   125,   126,   129,
-     130,   131,   143,   164,   174,   183,   186,   187,   190,   191,
-     192,   193,   194,   195,   196,   197,   198,   199,   200,   201,
-     202,   203,   204,   205,   206,   207,   208,   209,   210,   211,
-     212,   213,   214,   215,   216,   217,   218,   221,   222,   225,
-     226
+       0,    61,    61,    62,    63,    64,    65,    66,    70,    78,
+      79,    82,    85,    88,    89,    92,    95,    96,    99,   102,
+     105,   106,   109,   110,   113,   123,   124,   127,   128,   131,
+     132,   133,   145,   166,   176,   185,   188,   189,   192,   193,
+     194,   195,   196,   197,   198,   199,   200,   201,   202,   203,
+     204,   205,   206,   207,   208,   209,   210,   211,   212,   213,
+     214,   215,   216,   217,   218,   219,   220,   223,   224,   227,
+     228
 };
 #endif
 
@@ -1626,37 +1628,37 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 59 "qccompiler.y"
-    {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
-    break;
-
-  case 3:
-#line 60 "qccompiler.y"
-    {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
-    break;
-
-  case 4:
 #line 61 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
     break;
 
-  case 5:
+  case 3:
 #line 62 "qccompiler.y"
-    {(yyval.node)=(yyvsp[(1) - (1)].node); myProgram=(yyval.node);}
+    {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
     break;
 
-  case 6:
+  case 4:
 #line 63 "qccompiler.y"
-    {(yyval.node)=(yyvsp[(1) - (1)].node); myProgram=(yyval.node);}
+    {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
     break;
 
-  case 7:
+  case 5:
 #line 64 "qccompiler.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node); myProgram=(yyval.node);}
     break;
 
+  case 6:
+#line 65 "qccompiler.y"
+    {(yyval.node)=(yyvsp[(1) - (1)].node); myProgram=(yyval.node);}
+    break;
+
+  case 7:
+#line 66 "qccompiler.y"
+    {(yyval.node)=(yyvsp[(1) - (1)].node); myProgram=(yyval.node);}
+    break;
+
   case 8:
-#line 68 "qccompiler.y"
+#line 70 "qccompiler.y"
     {
 														(yyvsp[(5) - (6)].node)=reverse((yyvsp[(5) - (6)].node));
 														(yyvsp[(4) - (6)].node)=reverse((yyvsp[(4) - (6)].node));
@@ -1666,82 +1668,82 @@ yyreduce:
     break;
 
   case 9:
-#line 76 "qccompiler.y"
+#line 78 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(2) - (2)].node), (yyvsp[(1) - (2)].node));}
     break;
 
   case 10:
-#line 77 "qccompiler.y"
+#line 79 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 11:
-#line 80 "qccompiler.y"
+#line 82 "qccompiler.y"
     {(yyval.node)=insert_function_declaration(d_func_declaration, (yyvsp[(1) - (3)].node), (yyvsp[(2) - (3)].node));}
     break;
 
   case 12:
-#line 83 "qccompiler.y"
+#line 85 "qccompiler.y"
     {(yyval.node)=insert_function_declarator(d_func_declarator, (yyvsp[(1) - (5)].node), insert_string(d_id, (yyvsp[(2) - (5)].valorID)), (yyvsp[(4) - (5)].node));}
     break;
 
   case 13:
-#line 86 "qccompiler.y"
+#line 88 "qccompiler.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 14:
-#line 87 "qccompiler.y"
+#line 89 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 15:
-#line 90 "qccompiler.y"
+#line 92 "qccompiler.y"
     {/*$$=insert_param_list(d_param_list, $1, $2);*/(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node)); (yyval.node)->next = reverse((yyval.node)->next);}
     break;
 
   case 16:
-#line 93 "qccompiler.y"
+#line 95 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 17:
-#line 94 "qccompiler.y"
+#line 96 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 18:
-#line 97 "qccompiler.y"
+#line 99 "qccompiler.y"
     {(yyval.node)=insert_param_declaration(d_param_declaration, (yyvsp[(1) - (3)].node), (yyvsp[(2) - (3)].node), insert_string(d_id, (yyvsp[(3) - (3)].valorID)));}
     break;
 
   case 19:
-#line 100 "qccompiler.y"
+#line 102 "qccompiler.y"
     {(yyvsp[(3) - (4)].node)=reverse((yyvsp[(3) - (4)].node)); (yyval.node)=insert_declaration(d_declaration, (yyvsp[(1) - (4)].node),(yyvsp[(2) - (4)].node), (yyvsp[(3) - (4)].node));}
     break;
 
   case 20:
-#line 103 "qccompiler.y"
+#line 105 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 21:
-#line 104 "qccompiler.y"
+#line 106 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 22:
-#line 107 "qccompiler.y"
+#line 109 "qccompiler.y"
     {(yyval.node)=insert_token(d_int);}
     break;
 
   case 23:
-#line 108 "qccompiler.y"
+#line 110 "qccompiler.y"
     {(yyval.node)=insert_token(d_char);}
     break;
 
   case 24:
-#line 111 "qccompiler.y"
+#line 113 "qccompiler.y"
     {
 										if((yyvsp[(3) - (3)].node)->d_node==d_null){
 											(yyval.node)=insert_declarator(d_declarator, (yyvsp[(1) - (3)].node), insert_string(d_id, (yyvsp[(2) - (3)].valorID)), (yyvsp[(3) - (3)].node));
@@ -1753,37 +1755,37 @@ yyreduce:
     break;
 
   case 25:
-#line 121 "qccompiler.y"
+#line 123 "qccompiler.y"
     {(yyval.node)=insert_link(insert_token(d_pointer), (yyvsp[(1) - (2)].node));}
     break;
 
   case 26:
-#line 122 "qccompiler.y"
+#line 124 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 27:
-#line 125 "qccompiler.y"
+#line 127 "qccompiler.y"
     {(yyval.node)=(yyvsp[(2) - (3)].node);}
     break;
 
   case 28:
-#line 126 "qccompiler.y"
+#line 128 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 29:
-#line 129 "qccompiler.y"
+#line 131 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 30:
-#line 130 "qccompiler.y"
+#line 132 "qccompiler.y"
     {(yyval.node)=(yyvsp[(1) - (2)].node);}
     break;
 
   case 31:
-#line 131 "qccompiler.y"
+#line 133 "qccompiler.y"
     {
 																	int count = compoundStatCounter((yyvsp[(2) - (3)].node)); 
 																	(yyvsp[(2) - (3)].node)=reverse((yyvsp[(2) - (3)].node)); 																	
@@ -1798,7 +1800,7 @@ yyreduce:
     break;
 
   case 32:
-#line 143 "qccompiler.y"
+#line 145 "qccompiler.y"
     {
 																	is_node * aux1;
 																	is_node * aux2;
@@ -1821,7 +1823,7 @@ yyreduce:
     break;
 
   case 33:
-#line 164 "qccompiler.y"
+#line 166 "qccompiler.y"
     {
 
 
@@ -1835,7 +1837,7 @@ yyreduce:
     break;
 
   case 34:
-#line 174 "qccompiler.y"
+#line 176 "qccompiler.y"
     {
 																int conta = contaStatements((yyvsp[(5) - (5)].node));
 																
@@ -1847,188 +1849,188 @@ yyreduce:
     break;
 
   case 35:
-#line 183 "qccompiler.y"
+#line 185 "qccompiler.y"
     {(yyval.node)=insert_return(d_return, (yyvsp[(2) - (3)].node));}
     break;
 
   case 36:
-#line 186 "qccompiler.y"
+#line 188 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(2) - (2)].node), (yyvsp[(1) - (2)].node));}
     break;
 
   case 37:
-#line 187 "qccompiler.y"
+#line 189 "qccompiler.y"
     {(yyval.node)=insert_token(d_null); }
     break;
 
   case 38:
-#line 190 "qccompiler.y"
+#line 192 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_store, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 39:
-#line 191 "qccompiler.y"
+#line 193 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_or, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 40:
-#line 192 "qccompiler.y"
+#line 194 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_and, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 41:
-#line 193 "qccompiler.y"
+#line 195 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_ge, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 42:
-#line 194 "qccompiler.y"
+#line 196 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_le, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 43:
-#line 195 "qccompiler.y"
+#line 197 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_gt, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 44:
-#line 196 "qccompiler.y"
+#line 198 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_lt, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 45:
-#line 197 "qccompiler.y"
+#line 199 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_ne, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 46:
-#line 198 "qccompiler.y"
+#line 200 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_eq, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 47:
-#line 199 "qccompiler.y"
+#line 201 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_mod, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 48:
-#line 200 "qccompiler.y"
+#line 202 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_div, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 49:
-#line 201 "qccompiler.y"
+#line 203 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_mul, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 50:
-#line 202 "qccompiler.y"
+#line 204 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_sub, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 51:
-#line 203 "qccompiler.y"
+#line 205 "qccompiler.y"
     {(yyval.node)=insert_infix_expression(d_add, (yyvsp[(1) - (3)].node), (yyvsp[(3) - (3)].node));}
     break;
 
   case 52:
-#line 204 "qccompiler.y"
+#line 206 "qccompiler.y"
     {(yyval.node)=insert_unary_expression(d_not, (yyvsp[(2) - (2)].node));}
     break;
 
   case 53:
-#line 205 "qccompiler.y"
+#line 207 "qccompiler.y"
     {(yyval.node)=insert_unary_expression(d_minus, (yyvsp[(2) - (2)].node));}
     break;
 
   case 54:
-#line 206 "qccompiler.y"
+#line 208 "qccompiler.y"
     {(yyval.node)=insert_unary_expression(d_plus, (yyvsp[(2) - (2)].node));}
     break;
 
   case 55:
-#line 207 "qccompiler.y"
+#line 209 "qccompiler.y"
     {(yyval.node)=insert_unary_expression(d_deref, (yyvsp[(2) - (2)].node));}
     break;
 
   case 56:
-#line 208 "qccompiler.y"
+#line 210 "qccompiler.y"
     {(yyval.node)=insert_unary_expression(d_addr, (yyvsp[(2) - (2)].node));}
     break;
 
   case 57:
-#line 209 "qccompiler.y"
+#line 211 "qccompiler.y"
     {is_node *add = insert_add(d_add, (yyvsp[(1) - (4)].node), (yyvsp[(3) - (4)].node)); (yyval.node)=insert_unary_expression(d_deref, add);}
     break;
 
   case 58:
-#line 210 "qccompiler.y"
+#line 212 "qccompiler.y"
     {is_node * tmp = reverse((yyvsp[(3) - (4)].node)->next); (yyvsp[(3) - (4)].node)->next = tmp; tmp=insert_link(insert_string(d_id, (yyvsp[(1) - (4)].valorID)), (yyvsp[(3) - (4)].node)); (yyval.node)=insert_call(d_call, tmp);}
     break;
 
   case 59:
-#line 211 "qccompiler.y"
+#line 213 "qccompiler.y"
     {(yyval.node)=insert_atoi(d_atoi, (yyvsp[(3) - (4)].node));}
     break;
 
   case 60:
-#line 212 "qccompiler.y"
+#line 214 "qccompiler.y"
     {(yyval.node)=insert_printf(d_print, (yyvsp[(3) - (4)].node));}
     break;
 
   case 61:
-#line 213 "qccompiler.y"
+#line 215 "qccompiler.y"
     {(yyval.node)=insert_itoa(d_itoa, (yyvsp[(3) - (6)].node), (yyvsp[(5) - (6)].node));}
     break;
 
   case 62:
-#line 214 "qccompiler.y"
+#line 216 "qccompiler.y"
     {(yyval.node)=(yyvsp[(2) - (3)].node);}
     break;
 
   case 63:
-#line 215 "qccompiler.y"
+#line 217 "qccompiler.y"
     {(yyval.node)=insert_string(d_strlit, (yyvsp[(1) - (1)].valorString));}
     break;
 
   case 64:
-#line 216 "qccompiler.y"
+#line 218 "qccompiler.y"
     {(yyval.node)=insert_string(d_charlit, (yyvsp[(1) - (1)].valorChar));}
     break;
 
   case 65:
-#line 217 "qccompiler.y"
+#line 219 "qccompiler.y"
     {(yyval.node)=insert_number(d_intlit, (yyvsp[(1) - (1)].valorInteiro));}
     break;
 
   case 66:
-#line 218 "qccompiler.y"
+#line 220 "qccompiler.y"
     {(yyval.node)=insert_string(d_id, (yyvsp[(1) - (1)].valorID));}
     break;
 
   case 67:
-#line 221 "qccompiler.y"
+#line 223 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(1) - (2)].node), (yyvsp[(2) - (2)].node));}
     break;
 
   case 68:
-#line 222 "qccompiler.y"
+#line 224 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
   case 69:
-#line 225 "qccompiler.y"
+#line 227 "qccompiler.y"
     {(yyval.node)=insert_link((yyvsp[(3) - (3)].node), (yyvsp[(1) - (3)].node));}
     break;
 
   case 70:
-#line 226 "qccompiler.y"
+#line 228 "qccompiler.y"
     {(yyval.node)=insert_token(d_null);}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2032 "y.tab.c"
+#line 2034 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2242,7 +2244,7 @@ yyreturn:
 }
 
 
-#line 229 "qccompiler.y"
+#line 231 "qccompiler.y"
 
 int main(int argc, char *argv[])
 {
@@ -2267,6 +2269,7 @@ int main(int argc, char *argv[])
 		} 
 		if( show_semantic == 1){
 			show_program_semantic(myProgramSemantic->global);
+			show_program_semantic_procedures(myProgramSemantic->procs);
 		}
 
 	}
@@ -2313,3 +2316,55 @@ void show_program_semantic(table_element *table){
 	}
 
 }
+
+
+void show_program_semantic_procedures(environment_list* table)
+{
+
+	
+	environment_list *aux;
+	param_data *data;
+	for(aux=table; aux; aux = aux->next){
+	
+		printf("===== Function %s Symbol Table =====\n", aux->name);
+		
+		printf("return\t");
+		switch(aux->return_type){
+
+			case d_char:
+				printf("char\n");
+				break;
+			case d_int:
+				printf("int\n");
+				break;
+			default: break;
+		}
+
+		for(data=aux->params; data ;data=data->next){
+			printf("%s\t", data->name);
+			switch(data->type){
+
+				case INTe:
+					printf("int");
+					break;
+				case CHARe:
+					printf("char");
+					break;
+				default: break;
+			}
+
+			for(int i=0; i< data->pointers; i++){
+				printf("*");
+			}
+
+			printf("\tparam\n");
+		}
+
+
+	}
+
+
+}
+
+
+
