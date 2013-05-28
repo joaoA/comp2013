@@ -18,12 +18,18 @@ Program
         Pointer
         Id(argv)
     FuncBody
+      Declaration
+        Int
+        Declarator
+          Id(a)
+        Declarator
+          Id(b)
       Return
         IntLit(0)
-  FuncDefinition
-    Int
-    FuncDeclarator
-      Id(teste)
-    FuncBody
-      Return
-        IntLit(0)
+===== Global Symbol Table =====
+buffer	char*[20]
+main	function
+===== Function main Symbol Table =====
+return	int
+argc	int	param
+argv	char**	param
