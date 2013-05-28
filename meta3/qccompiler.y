@@ -306,7 +306,10 @@ void show_program_semantic_procedures(environment_list* table)
 
 	
 	environment_list *aux;
+	table_element* aux2;
 	param_data *data;
+	int i;
+
 	for(aux=table; aux; aux = aux->next){
 	
 		printf("===== Function %s Symbol Table =====\n", aux->name);
@@ -341,6 +344,25 @@ void show_program_semantic_procedures(environment_list* table)
 			}
 
 			printf("\tparam\n");
+		}
+
+		for(aux2=aux->locals; aux2; aux2=aux2->next){
+			printf("%s\t", aux2->name);
+
+			switch(aux2->type_data.type){
+				case(CHARe): printf("char"); break;
+				case(INTe): printf("int"); break;
+				default: break;
+			}
+
+			for(i=0; i<aux2->type_data.pointers; i++){
+				printf("*");
+			}
+
+			if(aux2->type_data.size!=-1){
+				printf("[%d]", aux2->type_data.size);
+			}
+			printf("\n");
 		}
 
 
