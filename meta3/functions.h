@@ -33,4 +33,3 @@ is_node* insert_call(disc_node type, is_node *son1);
 is_node * insert_null_node();
 int flatten(is_node * lista, is_node * actual);
 int contaStatements(is_node * head);
-

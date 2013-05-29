@@ -1,8 +1,9 @@
+#include "shows.h"
+#include "structures.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "shows.h"
-#include "structures.h"
+
 
 void add_space(int n)
 {
@@ -50,8 +51,7 @@ void show_expression(is_node * no, int ident){
 			printf("Int\n"); break;
 		case d_char:
 			printf("Char\n"); break;
-		case d_null:
-			//printf("D_NULL\n"); 
+		case d_null: break;
 		case d_stat:
 			break;
 		case d_infix_exp:
@@ -140,4 +140,3 @@ void show_expression(is_node * no, int ident){
 
 	}
 }
-

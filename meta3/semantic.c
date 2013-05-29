@@ -33,6 +33,7 @@ void semantic_analysis_block(prog_env *pe, is_node* ip)
 	//case d_declaration: semantic_analysis_procedure(pe, ip->data_block.u_procedure);  break;
 	case d_declaration: semantic_analysis_globals(pe, ip); break;
 	case d_func_definition: semantic_analysis_procedures(pe, ip); break;
+	case d_func_declaration: semantic_analysis_procedures(pe, ip); break;
 	default: break;
 	}
 		
@@ -125,7 +126,7 @@ table_element* create_symbol(int offset, is_node* node, disc_node type)
 	for(aux=node; aux; aux=aux->next){
 		switch(aux->d_node){
 			case d_id: strcpy(el->name, aux->data.string); break;
-			case d_intlit: el->type_data.size = aux->data.number; break;
+			case d_intlit: el->type_data.size = aux->data.number;break;
 			case d_pointer: el->type_data.pointers += 1; break;
 			default: break;
 		}
@@ -144,6 +145,7 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 	is_node *stringAux, *stringAux2; //StringAux -> funcdefinition; StringAux2 -> funcdeclarator
 	environment_list* p1; 
 	disc_node aux_return;
+	int nPointers=0;
 	int offset=0;
 
 	for(stringAux=ipg->child; stringAux->d_node != d_func_declarator; stringAux=stringAux->next){
@@ -152,10 +154,29 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		}
 	}
 
-	for(stringAux2 = stringAux->child; stringAux2->d_node != d_id; stringAux2=stringAux2->next); // procura o nome da funcao
+	for(stringAux2 = stringAux->child; stringAux2->d_node != d_id; stringAux2=stringAux2->next){ // procura o nome da funcao
+		if(stringAux2->d_node == d_pointer){
+			nPointers++;
+		}
 
+	}
 	if(lookup(pe->global, stringAux2->data.string)){
-		printf("PROC %s já existe!\n", stringAux2->data.string);
+		for(p1=pe->procs; strcmp(p1->name, stringAux2->data.string); p1=p1->next);
+		for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
+		if(stringAux != NULL && stringAux->d_node == d_func_body){
+			for(stringAux=stringAux->child; stringAux; stringAux=stringAux->next){
+
+				if(stringAux->d_node == d_declaration){
+					//Envia declaration para ser analisado
+					p1->locals = semantic_analysis_create_locals(offset++, stringAux->child, p1->locals, p1);
+				
+				}
+
+			}
+		}
+
+	
+
 	} else {
 
 		p1 = (environment_list*) malloc (sizeof(environment_list));
@@ -174,6 +195,7 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		p1->name = (char*)strdup(stringAux2->data.string);
 		p1->locals = (table_element*) malloc (sizeof(table_element));
 		p1->return_type = aux_return;
+		p1->pointers = nPointers;
 
 		for(; stringAux2; stringAux2=stringAux2->next){
 			if(stringAux2->d_node == d_param_declaration){ 
@@ -183,18 +205,19 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		}
 
 		p1->locals = NULL;
-		for(; stringAux->d_node != d_func_body; stringAux=stringAux->next);
-		
-		for(stringAux=stringAux->child; stringAux; stringAux=stringAux->next){
+		for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
 
-			if(stringAux->d_node == d_declaration){
-				//Envia declaration para ser analisado
-				p1->locals = semantic_analysis_create_locals(offset++, stringAux->child, p1->locals, p1);
-			
+		if(stringAux != NULL && stringAux->d_node == d_func_body){
+			for(stringAux=stringAux->child; stringAux; stringAux=stringAux->next){
+
+				if(stringAux->d_node == d_declaration){
+					//Envia declaration para ser analisado
+					p1->locals = semantic_analysis_create_locals(offset++, stringAux->child, p1->locals, p1);
+				
+				}
+
 			}
-
 		}
-
 		if(pe->procs == NULL){
 			pe->procs = p1;
 		} else {
@@ -255,37 +278,24 @@ param_data* create_param(is_node* pip){
  	return el;
 }
 
-table_element* semantic_analysis_create_locals_list(int scope, prog_env* pe, is_node* ip, table_element* locals, environment_list* ev){
-
-	is_node *stringAux;
-	table_element* localsAux = ev->locals;
-	int offset=0;
-
-	
-
-	return localsAux;
-}
-
 table_element* semantic_analysis_create_locals(int offset, is_node* ip, table_element* locals, environment_list* ev){
 
 	is_node * stringAux2;
 	disc_node type;
 	table_element* localsAux;
 
-	localsAux=locals;
+
 
 	for(stringAux2=ip; stringAux2->d_node == d_null; stringAux2=stringAux2->next);
 	type = stringAux2->d_node;
 
-	for(; stringAux2; stringAux2=stringAux2->next){
-
-		if(stringAux2->d_node == d_declarator){
-
+	for(stringAux2=ip; stringAux2; stringAux2=stringAux2->next){
+		if(stringAux2->d_node == d_declarator || stringAux2->d_node == d_array_declarator){
+			localsAux=locals;
 			if(localsAux==NULL){
 				locals = create_symbol(offset, stringAux2->child, type);
 			} else {
-				for(; localsAux->next!=NULL; localsAux=localsAux->next){
-					//printf("B->%s\n",localsAux->name);
+				for(localsAux=locals; localsAux->next!=NULL; localsAux=localsAux->next){
 				}
 				localsAux->next = create_symbol(offset, stringAux2->child, type);
 			}
@@ -298,10 +308,16 @@ table_element* semantic_analysis_create_locals(int offset, is_node* ip, table_el
 
 }
 
+environment_list *lookup_proc(environment_list* ev, char *str)
+{
+environment_list *aux;
 
+for(aux=ev; aux; aux=aux->next)
+	if(strcmp(aux->name, str)==0)
+		return aux;
 
-
-
+return 0;
+}
 
 
 

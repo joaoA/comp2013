@@ -318,13 +318,18 @@ void show_program_semantic_procedures(environment_list* table)
 		switch(aux->return_type){
 
 			case d_char:
-				printf("char\n");
+				printf("char");
 				break;
 			case d_int:
-				printf("int\n");
+				printf("int");
 				break;
 			default: break;
 		}
+
+		for(i=0; i<aux->pointers; i++){
+			printf("*");
+		}
+		printf("\n");
 
 		for(data=aux->params; data ;data=data->next){
 			printf("%s\t", data->name);
