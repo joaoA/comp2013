@@ -80,7 +80,7 @@ table_element* semantic_analysis_vardec(int offset, prog_env* pe, table_element*
 	//procura por uma vari‡vel com o mesmo nome
 	for(aux=last=stmp; aux; last=aux, aux=aux->next){
 		if(strcmp(stringAux->data.string, aux->name)==0){
-			break;
+			return stmp;
 		}
 	}
 	if(last==NULL){	//se n‹o existe e a tabela est‡ vazia
@@ -91,7 +91,7 @@ table_element* semantic_analysis_vardec(int offset, prog_env* pe, table_element*
 			last->next=create_symbol(offset, iv->child, type);//coloca no final da stable
 		}
 		else{				//EXISTE! J‡ est‡ definida!!!
-			printf("Error: %s already defined!\n", stringAux->data.string);
+			//printf("Error: %s already defined!\n", stringAux->data.string);
 		}
 	}
 	return stmp;
@@ -160,7 +160,9 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		}
 
 	}
+
 	if(lookup(pe->global, stringAux2->data.string)){
+
 		for(p1=pe->procs; strcmp(p1->name, stringAux2->data.string); p1=p1->next);
 		for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
 		if(stringAux != NULL && stringAux->d_node == d_func_body){
@@ -236,10 +238,8 @@ param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param
 
 
 	for(stringAux=pi->child; stringAux->d_node!=d_id; stringAux=stringAux->next);
-	//Verificar se ja existem na tabela de globais
-	if(lookup(pe->global, stringAux->data.string)){
-		printf("Variavel %s já declarada com global\n", stringAux->data.string);
-	} else {
+	//Nao Verifica se ja existem na tabela de globais
+	
 
 		paramAux = params;
 
@@ -250,7 +250,7 @@ param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param
 			paramAux->next = create_param(pi->child);
 		}
 
-	}
+
 
 	return params;
 }

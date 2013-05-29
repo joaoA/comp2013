@@ -1,13 +1,15 @@
-char buffer[20];
+int a;
+int b,c,d;
+int ** l() { int k, l, c; int d; }
+int a;
 
-int teste(char v);
-
-int main(int argc, char **argv) {
-    int a, b;
-    
-    return 0;
-}
-
-int teste(char v){
-    char c;
-}
+int main(int a, char **b) { }
+int ** o(int **k, char b, int p);
+int llll, **lpo;
+int ** o(int **k, char b, int p);
+char * gg(int hf) { char **k[200], *l[2], oo[222]; }
+int ** o(int ** k, char b, int p) { }
+int a;
+int c,d,b;
+int *** i();
+int ffff;
