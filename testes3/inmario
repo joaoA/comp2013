@@ -1,0 +1,44 @@
+int low[1000];
+int nVert, nRoad, count, nRoadToPrint;
+
+int art(int act);
+int compare(char* x, char* y);
+int mini(int a, int b);
+
+int main(){
+
+	int i, x, y;
+
+	int mini;
+
+	while(1 != -1){
+		if(i<5){
+			printf("%d\n");
+		}
+	}
+	return 0;
+}
+
+int art(int act){
+
+	int i, w;
+
+}
+
+int mini(int a, int b){
+	if(a<b){
+		return a;
+	} else {
+		return b;
+	}
+}
+
+int compare(char* x, char* y){
+	x = "ola";
+	y = "adeus";
+	return 2;
+}
+
+int main(){
+	
+}

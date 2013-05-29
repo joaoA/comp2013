@@ -1,0 +1,31 @@
+int b;
+int a;
+int **c;
+int d;
+int e;
+int g[100], *f[100];
+int main(int argc,char ** argv);
+
+int main(int argc, char **argv) {
+	int a, b;
+	a = atoi(argv[1]);
+	b = atoi(argv[2]);
+	if (a == 0) {
+		printf(itoa(b, buffer));
+		printf("\n");
+	} else {
+		while (b > 0)
+			if (a > b)
+				a = a-b;
+			else
+				b = b-a;
+		printf(itoa(a, buffer));
+		printf("\n");
+		}
+	return 0;
+}
+
+int hh;
+char ** charS;
+
+int size;

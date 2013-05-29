@@ -1,0 +1,9 @@
+int a;
+int b,c,j;
+char e,f,k;
+char g;
+
+int main(int argc, char ** argv){return 0;}
+
+char d,tt;
+int x,ii;
