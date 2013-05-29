@@ -1,6 +1,7 @@
-#include "structures.h"
 #ifndef _SYMBOL_TABLE_
 #define _SYMBOL_TABLE_
+
+#include "structures.h"
 
 typedef enum {INTe, CHARe, INTePointer, CHARePointer, FUNC} data_type;
 
@@ -45,3 +46,4 @@ typedef struct _t5{
 	environment_list* procs;
 }prog_env;
 #endif
+

@@ -339,7 +339,7 @@ void show_program_semantic_procedures(environment_list* table)
 				default: break;
 			}
 
-			for(int i=0; i< data->pointers; i++){
+			for(i=0; i< data->pointers; i++){
 				printf("*");
 			}
 

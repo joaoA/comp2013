@@ -1,9 +1,8 @@
-#include "shows.h"
-#include "structures.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include "shows.h"
+#include "structures.h"
 
 void add_space(int n)
 {

@@ -11,5 +11,6 @@ table_element* create_symbol(int offset, is_node* node, disc_node type);
 void semantic_analysis_procedures(prog_env *pe, is_node* ipg);
 param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param_data* params);
 param_data* create_param(is_node* pip);
-table_element* semantic_analysis_create_locals_list(int scope, prog_env* pe, is_node* ip, table_element* locals);
-table_element* semantic_analysis_create_locals(int offset, is_node* ip, table_element* locals);
+table_element* semantic_analysis_create_locals_list(int scope, prog_env* pe, is_node* ip, table_element* locals, environment_list* ev);
+table_element* semantic_analysis_create_locals(int offset, is_node* ip, table_element* locals, environment_list* ev);
+
