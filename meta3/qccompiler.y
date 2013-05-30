@@ -17,6 +17,7 @@ extern char* yytext;
 
 void yyerror (char *s);
 int yylex(void);
+void semantic_error_print (char *s);
 
 is_node *myProgram;
 prog_env *myProgramSemantic;
@@ -274,6 +275,19 @@ void show_program_semantic(table_element *table){
 
 	table_element *aux;
 	int i;
+	int foundMain=0;
+
+
+	for(aux=table; aux; aux = aux->next){	
+		if(strcmp(aux->name, "main")==0){
+			foundMain=1;
+			break;
+		}
+	}
+
+	if(!foundMain)
+		semantic_error_print("Function main not defined");
+
 
 	printf("===== Global Symbol Table =====\n");
 
@@ -377,3 +391,10 @@ void show_program_semantic_procedures(environment_list* table)
 }
 
 
+
+void semantic_error_print (char *s) 
+{
+	printf("%s\n",s);
+	exit(0);
+	
+}
