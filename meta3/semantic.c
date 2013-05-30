@@ -24,6 +24,7 @@ prog_env* semantic_analysis(is_node* myProgram)
 	return pe;
 }
 
+
 void semantic_analysis_block(prog_env *pe, is_node* ip)
 {	
 	//faz a triagem do bloco a analisar
