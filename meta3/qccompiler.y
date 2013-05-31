@@ -289,7 +289,7 @@ void show_program_semantic(table_element *table){
 	if(!foundMain)
 		semantic_error_print("Function main not defined");
 
-
+	// verificar redefinicao de funcoes antes ou depois da tabela de simbolos impressa ??
 
 	printf("===== Global Symbol Table =====\n");
 

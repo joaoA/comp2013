@@ -1,15 +1,25 @@
 int a;
-int b,c,d;
-int ** l() { int k, l, c; int d; }
-int a;
 
-int main(int a, char **b) { }
-int ** o(int **k, char b, int p);
-int llll, **lpo;
-int ** o(int **k, char b, int p);
-char * gg(int hf) { char **k[200], *l[2], oo[222]; }
-int ** o(int ** k, char b, int p) { }
-int a;
-int c,d,b;
-int *** i();
-int ffff;
+int duasCenas(int a, int c);
+
+
+int cenas(int a, int b){
+	int c;
+	return 0;
+}
+
+int*** adasd(int a){cenas(1,3,2,4);return 0; }
+
+int*** adasd(int a,int asdas);
+
+int main(int a, char **b) 
+{
+	int d;
+	cenas(a, b);
+	duas_cenas();
+
+
+
+	return 0;
+ }
+

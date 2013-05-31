@@ -148,10 +148,8 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 	disc_node aux_return;
 	int nPointers=0;
 	int offset=0;
+	int nParameters=0;
 
-	// *******************************//
-	// ipg  -> Functio definiction
-	// *******************************//
 
 	for(stringAux=ipg->child; stringAux->d_node != d_func_declarator; stringAux=stringAux->next){
 		if(stringAux->d_node != d_null ){
@@ -159,7 +157,7 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		}
 	}
 
-	// procura o nome da funcao
+	// conta os ponteiros da variavel de retorno
 	for(stringAux2 = stringAux->child; stringAux2->d_node != d_id; stringAux2=stringAux2->next){ 
 		if(stringAux2->d_node == d_pointer){
 			nPointers++;
@@ -167,25 +165,43 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 
 	}
 
-	if(lookup(pe->global, stringAux2->data.string)){
+	for(aux=pe->procs; aux!=NULL && strcmp(aux->name, stringAux2->data.string)!=0; aux=aux->next){};
+	if(aux!=NULL && strcmp(aux->name, stringAux2->data.string)==0){    // se existir na lista de procedimentos -> BODE
 
-		for(p1=pe->procs; strcmp(p1->name, stringAux2->data.string); p1=p1->next);
-		for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
-		if(stringAux != NULL && stringAux->d_node == d_func_body){
-			for(stringAux=stringAux->child; stringAux; stringAux=stringAux->next){
+		printf("Function %s redefined\n",stringAux2->data.string);
+//	if(lookup(pe->global, stringAux2->data.string)){
 
-				if(stringAux->d_node == d_declaration){
-					//Envia declaration para ser analisado
-					p1->locals = semantic_analysis_create_locals(offset++, stringAux->child, p1->locals, p1);
+		// isto n tá aqui a fazer nada... ele nunca entra aqui!
+
+		// for(p1=pe->procs; strcmp(p1->name, stringAux2->data.string); p1=p1->next);
+		// for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
+		// if(stringAux != NULL && stringAux->d_node == d_func_body){
+		// 	for(stringAux=stringAux->child; stringAux; stringAux=stringAux->next){
+
+		// 		if(stringAux->d_node == d_declaration){
+		// 			//Envia declaration para ser analisado
+		// 			p1->locals = semantic_analysis_create_locals(offset++, stringAux->child, p1->locals, p1);
 				
-				}
+		// 		}
 
-			}
-		}
+		// 	}
+		// }
 
 	
 
 	} else {
+
+		// sera' qq coisa deste genero acho eu
+
+		//if(show_expression==FuncDeclaration)
+		// p1 -> declarated = 1;
+		//else {
+		// p1->definition = 1;
+		// p1->declaration = 1 ;
+		// }
+
+
+
 
 		p1 = (environment_list*) malloc (sizeof(environment_list));
 
@@ -209,9 +225,10 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 			if(stringAux2->d_node == d_param_declaration){ 
 				//Chama funcao de analise de parametros de entrada
 				p1->params=semantic_analysis_create_param_data(pe, stringAux2, p1->params);
+				nParameters++;
 			}
 		}
-
+		p1->param=nParameters;
 		p1->locals = NULL;
 		for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
 
@@ -251,6 +268,7 @@ void semantic_analysis_procedures_funcBody(prog_env *pe, is_node *node, environm
 					case d_call:
 						semantic_analysis_procedures_funcBody_call(pe, stringAux->child,env_list);
 						break;
+
 					default:
 						continue;
 
@@ -265,24 +283,38 @@ void semantic_analysis_procedures_funcBody_call(prog_env *pe, is_node *node, env
 
 	is_node *stringAux;
 	environment_list *p1;
+	table_element *te;
+	int number_of_arguments_in_call=0;
 
-	if(lookup(pe->global, node->data.string)){
-		printf("\nencontrou\n");	
-		// verifica se os argumentos enviados correspondem aos que sao pedidos
-		for(stringAux=node; stringAux ; stringAux=stringAux->next){
+
+	if(lookup(pe->global, node->data.string)){   // caso encontre
+
+		// verifica numero de argumentos no call de uma funcao
+		for(stringAux=node->next; stringAux ; stringAux=stringAux->next){
 			if( stringAux->d_node!=d_null){
-
-				// correr env_list e verificar se o tipo das variaveis enviadas correspondem ao pedido pela funcao
-
-				printf("%s ", stringAux->data.string);
-				show_expression(stringAux, 0);
-				printf("\n");
+				number_of_arguments_in_call++;
 			}
 		}
 
+		// verificar o numero de argumentos necessarios pela funcao
+
+		for(p1=pe->procs; p1 ; p1=p1->next){
+			if(strcmp(p1->name, node->data.string)==0){
+				if(number_of_arguments_in_call != p1->param){
+				//	printf("\nfuncao: %s\tenviads: %d\tnecessarios: %d \n", node->data.string, number_of_arguments_in_call, p1->param);
+					printf("Wrong number of arguments in call to function %s (got %d, required %d)\n", node->data.string,number_of_arguments_in_call,p1->param );
+
+				}
+				// else{
+				// 	printf("\nparametros bem no CALL de funcao %s\n", node->data.string);
+				// }
+			}
+		}
+
+
 	}
-	else{
-		printf("\n Nao encontrou\n");
+	else{     // nao encontrou
+		 printf("Symbol %s is not a function\n", node->data.string);
 		// TODO: nao sei qual e' o erro para imprimir				
 	}
 

@@ -35,7 +35,8 @@ typedef struct _t4{
 	disc_node return_type;
 	int pointers; //Numero de ponteiros
 	param_data* params; //Parametros de entrada
-
+	int func_declared;
+	int func_defined;
 	table_element *locals;
 	struct _t4 *next;
 }environment_list;
