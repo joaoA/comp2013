@@ -149,13 +149,18 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 	int nPointers=0;
 	int offset=0;
 
+	// *******************************//
+	// ipg  -> Functio definiction
+	// *******************************//
+
 	for(stringAux=ipg->child; stringAux->d_node != d_func_declarator; stringAux=stringAux->next){
 		if(stringAux->d_node != d_null ){
 			aux_return = stringAux->d_node; // Guarda o retorno
 		}
 	}
 
-	for(stringAux2 = stringAux->child; stringAux2->d_node != d_id; stringAux2=stringAux2->next){ // procura o nome da funcao
+	// procura o nome da funcao
+	for(stringAux2 = stringAux->child; stringAux2->d_node != d_id; stringAux2=stringAux2->next){ 
 		if(stringAux2->d_node == d_pointer){
 			nPointers++;
 		}
@@ -211,6 +216,7 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 		for(; stringAux !=NULL && stringAux->d_node != d_func_body ; stringAux=stringAux->next);
 
 		if(stringAux != NULL && stringAux->d_node == d_func_body){
+			stringAux2= stringAux;
 			for(stringAux=stringAux->child; stringAux; stringAux=stringAux->next){
 
 				if(stringAux->d_node == d_declaration){
@@ -220,6 +226,8 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 				}
 
 			}
+			// analisa o funcbody do procedimento
+			semantic_analysis_procedures_funcBody(pe, stringAux2->child,p1);
 		}
 		if(pe->procs == NULL){
 			pe->procs = p1;
@@ -228,6 +236,57 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 			aux->next = p1;
 		}
 	}
+
+	
+}
+
+
+void semantic_analysis_procedures_funcBody(prog_env *pe, is_node *node, environment_list *env_list)
+{
+	is_node *stringAux;
+	
+	for(stringAux=node; stringAux; stringAux=stringAux->next){
+				
+				switch(stringAux->d_node){
+					case d_call:
+						semantic_analysis_procedures_funcBody_call(pe, stringAux->child,env_list);
+						break;
+					default:
+						continue;
+
+				}
+		}
+
+}
+
+void semantic_analysis_procedures_funcBody_call(prog_env *pe, is_node *node, environment_list *env_list)
+{
+	// verifica se e' possivel fazer o call de uma funcao
+
+	is_node *stringAux;
+	environment_list *p1;
+
+	if(lookup(pe->global, node->data.string)){
+		printf("\nencontrou\n");	
+		// verifica se os argumentos enviados correspondem aos que sao pedidos
+		for(stringAux=node; stringAux ; stringAux=stringAux->next){
+			if( stringAux->d_node!=d_null){
+
+				// correr env_list e verificar se o tipo das variaveis enviadas correspondem ao pedido pela funcao
+
+				printf("%s ", stringAux->data.string);
+				show_expression(stringAux, 0);
+				printf("\n");
+			}
+		}
+
+	}
+	else{
+		printf("\n Nao encontrou\n");
+		// TODO: nao sei qual e' o erro para imprimir				
+	}
+
+
 
 }
 

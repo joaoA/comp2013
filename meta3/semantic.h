@@ -14,4 +14,8 @@ param_data* create_param(is_node* pip);
 table_element* semantic_analysis_create_locals_list(int scope, prog_env* pe, is_node* ip, table_element* locals, environment_list* ev);
 table_element* semantic_analysis_create_locals(int offset, is_node* ip, table_element* locals, environment_list* ev);
 environment_list *lookup_proc(environment_list* ev, char *str);
+void semantic_analysis_procedures_funcBody(prog_env *pe, is_node *node, environment_list *env_list);
+void semantic_analysis_procedures_funcBody_call(prog_env *pe, is_node *node, environment_list *env_list);
+
+
 

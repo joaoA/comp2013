@@ -285,8 +285,10 @@ void show_program_semantic(table_element *table){
 		}
 	}
 
+
 	if(!foundMain)
 		semantic_error_print("Function main not defined");
+
 
 
 	printf("===== Global Symbol Table =====\n");
