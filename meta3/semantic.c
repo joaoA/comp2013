@@ -74,7 +74,7 @@ table_element* semantic_analysis_vardec(int offset, prog_env* pe, table_element*
 
 	if(aux!=0 && aux->type==d_func_definition)		//se existir e for um procedimento, temos um erro!
 	{
-		//printf("Error: Cannot define %s, already defined as procedure!\n", iv->child->data.string);
+		printf("Error: Cannot define %s, already defined as procedure!\n", iv->child->data.string);
 		return stmp;
 	}
 
@@ -167,10 +167,8 @@ void semantic_analysis_procedures(prog_env *pe, is_node* ipg){
 
 	for(aux=pe->procs; aux!=NULL && strcmp(aux->name, stringAux2->data.string)!=0; aux=aux->next){};
 	if(aux!=NULL && strcmp(aux->name, stringAux2->data.string)==0){    // se existir na lista de procedimentos -> BODE
-		printf("Function %s redefined\n",stringAux2->data.string);
-		exit(0);
+		//printf("Function %s redefined\n",stringAux2->data.string);}
 	}
-	
 	if(lookup(pe->global, stringAux2->data.string)){
 
 		for(p1=pe->procs; strcmp(p1->name, stringAux2->data.string); p1=p1->next);
@@ -283,6 +281,7 @@ void semantic_analysis_procedures_funcBody_call(prog_env *pe, is_node *node, env
 
 	is_node *stringAux;
 	environment_list *p1;
+	table_element *te;
 	int number_of_arguments_in_call=0;
 
 
@@ -297,32 +296,33 @@ void semantic_analysis_procedures_funcBody_call(prog_env *pe, is_node *node, env
 
 		// verificar o numero de argumentos necessarios pela funcao
 
-		for(p1=pe->procs; p1 ; p1=p1->next){
-			if(strcmp(p1->name, node->data.string)==0){
-				if(number_of_arguments_in_call != p1->param){
-				//	printf("\nfuncao: %s\tenviads: %d\tnecessarios: %d \n", node->data.string, number_of_arguments_in_call, p1->param);
-					printf("Wrong number of arguments in call to function %s (got %d, required %d)\n", node->data.string,number_of_arguments_in_call,p1->param );
-					exit(0);
-				}	
-				// else{
-				// 	printf("\nparametros bem no CALL de funcao %s\n", node->data.string);
-				// }
-			}
-		}
+		// for(p1=pe->procs; p1 ; p1=p1->next){
+		// 	if(strcmp(p1->name, node->data.string)==0){
+		// 		if(number_of_arguments_in_call != p1->param){
+		// 		//	printf("\nfuncao: %s\tenviads: %d\tnecessarios: %d \n", node->data.string, number_of_arguments_in_call, p1->param);
+		// 			//printf("Wrong number of arguments in call to function %s (got %d, required %d)\n", node->data.string,number_of_arguments_in_call,p1->param );
+
+		// 		}
+		// 		// else{
+		// 		// 	printf("\nparametros bem no CALL de funcao %s\n", node->data.string);
+		// 		// }
+		// 	}
+		// }
 
 
 	}
-	else{     // nao encontrou
-		printf("Symbol %s is not a function\n", node->data.string);
-		// TODO: nao sei qual e' o erro para imprimir				
-	}
+	// else{     // nao encontrou
+	// 	// printf("Symbol %s is not a function\n", node->data.string);
+	// 	// TODO: nao sei qual e' o erro para imprimir				
+	// }
 
 
 
 }
 
-param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param_data* params)
-{
+param_data* semantic_analysis_create_param_data(prog_env* pe, is_node* pi, param_data* params){
+
+	table_element *aux;
 	is_node *stringAux;
 	param_data* paramAux;
 
